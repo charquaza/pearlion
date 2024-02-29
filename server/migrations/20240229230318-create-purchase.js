@@ -30,7 +30,7 @@ module.exports = {
             onUpdate: 'CASCADE',
             onDelete: 'RESTRICT'
          },
-         quantity_purchased: {
+         quantityPurchased: {
             type: Sequelize.INTEGER,
             allowNull: false
          },
