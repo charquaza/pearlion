@@ -164,7 +164,7 @@ exports.getById = [
          if (userData === null) {
             res.status(404).json({ errors: ['User not found'] });
          } else {
-            res.json({ data: userData });
+            res.json({ data: userData.get() });
          }
       } catch (err) {
          return next(err);
