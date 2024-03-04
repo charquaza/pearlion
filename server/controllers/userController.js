@@ -120,6 +120,10 @@ exports.getAll = [
          return res.status(404).json({ errors: ['User not found'] });
       }
 
+      if (req.user.privilege !== 'admin') {
+         return res.status(403).json({ errors: ['Not allowed'] });
+      }
+
       return next();
    },
 
@@ -140,6 +144,10 @@ exports.getById = [
    async function checkPermissions(req, res, next) {
       if (!req.user) {
          return res.status(404).json({ errors: ['User not found'] });
+      }
+
+      if (req.user.id !== req.params.userId && req.user.privilege !== 'admin') {
+         return res.status(403).json({ errors: ['Not allowed'] });
       }
 
       return next();
