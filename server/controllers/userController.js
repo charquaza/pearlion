@@ -1,4 +1,3 @@
-const { body, param, validationResult } = require('express-validator');
 const passport = require('passport');
 const bcrypt = require('bcryptjs');
 const db = require('../models/index');
