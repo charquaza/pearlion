@@ -153,7 +153,7 @@ exports.getById = [
       return next();
    },
 
-   userValidators.getById,
+   userValidators.checkIdParam,
 
    async function (req, res, next) {
       try {

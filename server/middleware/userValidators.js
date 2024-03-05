@@ -93,13 +93,6 @@ exports.logIn = [
    checkValidation
 ];
 
-exports.getById = [
-   param('userId').isString().withMessage('Invalid value for userId').bail()
-      .trim().notEmpty().withMessage('userId cannot be blank'),
-
-   checkValidation
-];
-
 exports.update = [
    body('firstName').isString().withMessage('Invalid value for First Name').bail()
       .trim().notEmpty().withMessage('First name cannot be blank')
