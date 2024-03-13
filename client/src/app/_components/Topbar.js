@@ -17,4 +17,4 @@ export default function Topbar() {
          </ul>
       </nav>
    );
-}
+};

@@ -8,4 +8,4 @@ export default function Footer() {
          <p className={styles.copyright}>Copyright &copy; {currDate.getFullYear()} Pearlion</p>
       </footer>
    );
-}
+};
