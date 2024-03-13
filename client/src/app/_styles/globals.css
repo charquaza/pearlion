@@ -1,0 +1,18 @@
+@import "normalize.css";
+
+body {
+  margin: 0;
+  line-height: 1.4;
+  min-height: 100vh;
+  display: grid;
+  grid-template-areas:
+    "header   header"
+    "sidebar  main"
+    "footer   footer";
+  grid-template-rows: auto 1fr auto;
+  grid-template-columns: auto 1fr;
+}
+
+main {
+  grid-area: main;
+}

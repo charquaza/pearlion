@@ -1,0 +1,27 @@
+.sidebar {
+   grid-area: sidebar;
+}
+
+.nav-list {
+   display: flex;
+   flex-direction: column;
+   list-style-type: none;
+   padding: 0 5rem 0 1rem;
+   margin: 0;
+}
+
+.nav-list li {
+   font-size: 1.2rem;
+   padding-bottom: 1rem;
+}
+
+.nav-list a {
+   text-decoration: none;
+   color: black;
+}
+.nav-list a:hover {
+   color: palevioletred;
+}
+.nav-list a:active {
+   color: rgb(214, 37, 96);
+}

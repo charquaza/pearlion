@@ -1,0 +1,11 @@
+.footer {
+   grid-area: footer;
+   align-self: end;
+   display: flex;
+   flex-direction: column;
+}
+.copyright {
+   align-self: center;
+   font-size: 0.6rem;
+   margin: 0.3rem 0;
+}

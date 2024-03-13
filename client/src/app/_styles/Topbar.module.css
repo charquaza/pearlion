@@ -1,0 +1,25 @@
+.topbar {
+   align-self: flex-end;
+}
+
+.nav-list {
+   display: flex;
+   list-style-type: none;
+   padding: 0 1rem 0 0;
+   margin: 0;
+}
+
+.nav-list li {
+   padding: 0 0.5rem;
+}
+
+.nav-list a {
+   text-decoration: none;
+   color: black;
+}
+.nav-list a:hover {
+   text-decoration: underline;
+}
+.nav-list a:active {
+   color: rgb(214, 37, 96);
+}
