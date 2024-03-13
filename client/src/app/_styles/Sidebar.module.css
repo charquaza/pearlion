@@ -1,12 +1,13 @@
 .sidebar {
    grid-area: sidebar;
+   padding-top: 1rem;
 }
 
 .nav-list {
    display: flex;
    flex-direction: column;
    list-style-type: none;
-   padding: 0 5rem 0 1rem;
+   padding: 0 1rem 0 1.5rem;
    margin: 0;
 }
 

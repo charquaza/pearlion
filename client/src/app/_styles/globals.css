@@ -1,8 +1,12 @@
 @import "normalize.css";
 
+:root {
+  --sidebar-width: 15vw;
+}
+
 body {
   margin: 0;
-  line-height: 1.4;
+  line-height: 1.5;
   min-height: 100vh;
   display: grid;
   grid-template-areas:
@@ -10,7 +14,7 @@ body {
     "sidebar  main"
     "footer   footer";
   grid-template-rows: auto 1fr auto;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: var(--sidebar-width) 1fr;
 }
 
 main {

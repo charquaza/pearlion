@@ -1,0 +1,19 @@
+.about-us-page {
+   --video-width: 60vw;
+   padding-top: 1rem;
+   padding-left: calc((100vw - var(--video-width)) / 2 - var(--sidebar-width));
+   /* display: flex;
+   flex-direction: column;
+   align-items: center; */
+}
+
+.about-us-page iframe {
+   display: block;
+   width: var(--video-width);
+   height: calc(var(--video-width) * 9 / 16);
+}
+
+.about-us-page p {
+   text-indent: 3rem;
+   padding-right: calc((100vw - var(--video-width)) / 2);
+}
