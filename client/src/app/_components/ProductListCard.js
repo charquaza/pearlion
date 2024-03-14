@@ -5,7 +5,8 @@ export default function ProductListCard({ product }) {
    return (
       <article className={styles['product-list-card']}>
          <Image 
-            src={product.image} 
+            src={product.image}
+            alt={product.name}
             quality={100}
             sizes='50vw'         
          />
