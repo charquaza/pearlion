@@ -1,0 +1,22 @@
+.slideshow-card {
+   width: 20vw;
+   padding: 1vw;
+   box-shadow: 0.3vw 0.6vw 0.6vw 0 rgba(224, 23, 23, 0.2);
+   border-radius: 5%;
+}
+
+.slideshow-card img {
+   display: block;
+   width: 20vw;
+   height: 20vw;
+   object-fit: cover;
+   border-radius: 10%;
+}
+
+.slideshow-card h2 {
+   margin-bottom: 0.3vw;
+}
+
+.slideshow-card p {
+   margin: 0;
+}

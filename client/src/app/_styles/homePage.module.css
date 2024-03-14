@@ -1,0 +1,36 @@
+.slideshow-container {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+}
+
+.new-arrivals ul {
+   list-style-type: none;
+   display: flex;
+   justify-content: space-evenly;
+   padding-left: 0;
+}
+
+.new-arrivals ul li {
+   padding: 0 1.7vw 1vw 1.7vw;
+   animation: 0.7s ease-in-out fadeIn;
+}
+
+.best-sellers ul {
+   list-style-type: none;
+   display: grid;
+   grid-template-columns: 1fr 1fr;
+}
+
+.best-sellers ul li {
+   padding-bottom: 3vw;
+}
+
+@keyframes fadeIn {
+   0% { 
+      opacity: 0; 
+   }
+   100% { 
+      opacity: 1; 
+   }
+}

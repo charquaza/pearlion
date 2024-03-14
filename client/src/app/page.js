@@ -1,7 +1,109 @@
-export default function Home() {
+'use client';
+
+import { useState } from 'react';
+import SlideshowCard from './_components/SlideshowCard';
+import ProductListCard from './_components/ProductListCard';
+import earringImageList from './_images/earringImageList'
+import necklaceImageList from './_images/necklaceImageList';
+import styles from './_styles/homePage.module.css';
+
+export default function HomePage() {
+   const [ newArrivals, setNewArrivals ] = useState(
+      earringImageList.filter(
+         earring => earring.status === 'new'
+      ).concat(
+         necklaceImageList.filter(
+            necklace => necklace.status === 'new'
+         )
+      )
+   );
+   const [ bestSellers, setBestSellers ] = useState(
+      earringImageList.filter(
+         earring => earring.status === 'bestseller'
+      ).concat(
+         necklaceImageList.filter(
+            necklace => necklace.status === 'bestseller'
+         )
+      )
+   );
+   const [ slideshow, setSlideshow ] = useState(
+      new Map([ ['startIndex', 0], ['count', 3] ])
+   );
+
+   var currSlideshowList = newArrivals; 
+   if (newArrivals.length > slideshow.get('count')) {
+      currSlideshowList = []; 
+      for (
+         let i = slideshow.get('startIndex'); 
+         i < slideshow.get('startIndex') + slideshow.get('count'); 
+         i++
+      ) {
+         if (i >= newArrivals.length) {
+            currSlideshowList.push(newArrivals[ i - newArrivals.length ]);
+         } else {
+            currSlideshowList.push(newArrivals[i]);
+         }
+      }
+   }
+
+   function handleSlideshowNavigation(e) {
+      if (e.target.id === 'previous') {
+         let previousIndex = slideshow.get('startIndex') - 1;
+         if (previousIndex === -1) {
+            previousIndex = newArrivals.length - 1;
+         }
+         setSlideshow(new Map([ ...slideshow, ['startIndex', previousIndex] ]));
+      } else if (e.target.id === 'next') {
+         let nextIndex = slideshow.get('startIndex') + 1;
+         if (nextIndex === newArrivals.length) {
+            nextIndex = 0;
+         }
+         setSlideshow(new Map([ ...slideshow, ['startIndex', nextIndex] ]));
+      } else {
+         e.stopPropagation();
+      }
+   }
+
    return (
       <main>
-         <h1>Home Page</h1>
+         <article className={styles['new-arrivals']}>
+            <h2>New Arrivals</h2>
+
+            <div className={styles['slideshow-container']}>
+               <ul>
+                  {
+                     currSlideshowList.map(product => {
+                        return (
+                           <li key={product.id}>
+                              <SlideshowCard product={product} />
+                           </li>
+                        );
+                     })
+                  }
+               </ul>
+   
+               <div onClick={handleSlideshowNavigation}>
+                  <button id='previous'> ← </button>
+                  <button id='next'> → </button>
+               </div>
+            </div>
+         </article>
+
+         <article className={styles['best-sellers']}>
+            <h2>Best Sellers</h2>
+
+            <ul>
+               {
+                  bestSellers.map(product => {
+                     return (
+                        <li key={product.id}>
+                           <ProductListCard product={product} />
+                        </li>
+                     );
+                  })
+               }
+            </ul>
+         </article>
       </main>
    );
 };
