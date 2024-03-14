@@ -1,0 +1,22 @@
+.product-list-card {
+   width: 30vw;
+   padding: 1vw;
+   box-shadow: 0.3vw 0.6vw 0.6vw 0 rgba(224, 23, 23, 0.2);
+   border-radius: 5%;
+}
+
+.product-list-card img {
+   display: block;
+   width: 30vw;
+   height: 30vw;
+   object-fit: cover;
+   border-radius: 10%;
+}
+
+.product-list-card h2 {
+   margin-bottom: 0.3vw;
+}
+
+.product-list-card p {
+   margin: 0;
+}

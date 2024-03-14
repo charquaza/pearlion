@@ -1,0 +1,9 @@
+.new-arrivals-page ul {
+   list-style-type: none;
+   display: grid;
+   grid-template-columns: 1fr 1fr;
+}
+
+.new-arrivals-page ul li {
+   padding-bottom: 3vw;
+}
