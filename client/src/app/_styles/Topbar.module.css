@@ -5,12 +5,12 @@
 .nav-list {
    display: flex;
    list-style-type: none;
-   padding: 0 1rem 0 0;
+   padding: 0 1.25vw 0 0;
    margin: 0;
 }
 
 .nav-list li {
-   padding: 0 0.5rem;
+   padding: 0 0.625vw;
 }
 
 .nav-list a {
