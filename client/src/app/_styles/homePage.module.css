@@ -18,8 +18,10 @@
 
 .best-sellers ul {
    list-style-type: none;
-   display: grid;
-   grid-template-columns: 1fr 1fr;
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: space-evenly;
+   padding-left: 0;
 }
 
 .best-sellers ul li {

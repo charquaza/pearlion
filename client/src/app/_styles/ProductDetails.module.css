@@ -1,0 +1,58 @@
+.main-page {
+   padding: 1.5vw;
+}
+
+.images-description-container {
+   display: flex;
+}
+
+.description-container {
+   width: 35vw;
+   padding-left: 3vw;
+}
+.description-container h1 {
+   margin: 0;
+}
+.description-container a {
+   text-decoration: none;
+   color: black;
+   font-weight: bold;
+   font-size: 1.1rem;
+}
+.description-container a:hover {
+   text-decoration: underline;
+}
+.description-container a:active {
+   color: rgba(224, 23, 23, 0.7);
+}
+.description-container .bold {
+   font-weight: bold;
+}
+
+.purchase-controls {
+   padding-top: 1.5vw;
+}
+.purchase-controls button {
+   margin-right: 1vw;
+   font-weight: bold;
+   background-color: rgba(224, 23, 23, 0.2);
+   padding: 0.5vw;
+   border-radius: 0.7vw;
+}
+
+.product-details p {
+   width: 60vw;
+}
+
+.reviews h2 {
+   margin-top: 3.5vw;
+   font-size: 1.9rem;
+}
+.reviews ul {
+   list-style-type: none;
+   padding-top: 2vw;
+}
+.reviews li {
+   width: 50vw;
+   padding-bottom: 2vw;
+}

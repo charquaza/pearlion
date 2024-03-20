@@ -1,0 +1,90 @@
+.product-image-list-container {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+}
+
+.curr-image-controls-container {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   width: 40vw;
+}
+.curr-image-controls-container button {
+   font-size: 1.5vw;
+   width: 2vw;
+   height: 2vw;
+   background: rgb(239, 238, 238);
+   border: none;
+   border-radius: 30%;
+}
+.curr-image-controls-container button:hover {
+   background-color: rgb(224, 224, 224);
+}
+.curr-image-controls-container button:active {
+   background-color: rgb(170, 169, 169);
+}
+
+.curr-image-container {
+   width: 35vw;
+   height: 35vw;
+   background: radial-gradient(rgb(220, 220, 220), white 80%)
+}
+.curr-image-container img {
+   width: 100%;
+   height: 100%;
+   object-fit: contain;
+}
+
+.slideshow-container {
+   display: flex;
+   width: 34vw;
+   justify-content: center;
+   align-items: center;
+}
+.slideshow-container button {
+   background: rgb(239, 238, 238);
+   border: none;
+   border-radius: 30%;
+}
+.slideshow-container button:hover {
+   background-color: rgb(224, 224, 224);
+}
+.slideshow-container button:active {
+   background-color: rgb(170, 169, 169);
+}
+
+.image-list {
+   list-style-type: none;
+   margin: 1vw 0;
+   padding: 0;
+   display: flex;
+   justify-content: center;
+   background: radial-gradient(rgb(217, 214, 214), white);
+}
+.image-list li {
+   width: 6vw;
+   height: 6vw;
+   box-sizing: border-box;
+   margin: 0 0.7vw;
+}
+.image-list li:hover {
+   cursor: pointer;
+}
+.image-list img {
+   width: 100%;
+   height: 100%;
+   object-fit: contain;
+   opacity: 50%;
+}
+.image-list img:hover {
+   opacity: 100%;
+}
+
+li.selected-image-container {
+   background-color: white;
+   border: 0.4vh solid rgba(224, 23, 23, 0.2);
+}
+li.selected-image-container img {
+   opacity: 100%;
+}

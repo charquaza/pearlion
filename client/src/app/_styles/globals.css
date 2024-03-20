@@ -20,3 +20,7 @@ body {
 main {
   grid-area: main;
 }
+
+button:hover {
+  cursor: pointer;
+}

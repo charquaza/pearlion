@@ -1,0 +1,10 @@
+.review {
+   padding: 1vw;
+   background-color: rgba(224, 23, 23, 0.03);
+   box-shadow: 0.3vw 0.6vw 0.6vw 0 rgba(224, 23, 23, 0.2);
+   border-radius: 2vw 1vw 5vw 2vw;
+}
+
+.review h3 {
+   margin-top: 1vw;
+}
