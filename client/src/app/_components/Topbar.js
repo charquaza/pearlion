@@ -9,7 +9,7 @@ export default function Topbar() {
                <Link href='/'>Log In</Link>
             </li>
             <li>
-               <Link href='/'>Sign Up</Link>
+               <Link href='/sign-up'>Sign Up</Link>
             </li>
             <li>
                <Link href='/'>Cart</Link>
