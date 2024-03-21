@@ -12,7 +12,7 @@ export default function Topbar() {
                <Link href='/sign-up'>Sign Up</Link>
             </li>
             <li>
-               <Link href='/'>Cart</Link>
+               <Link href='/cart' aria-label='shopping cart'>🛒</Link>
             </li>
          </ul>
       </nav>

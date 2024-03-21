@@ -3,9 +3,10 @@
    align-self: end;
    display: flex;
    flex-direction: column;
+   padding-top: 3vw;
 }
 .copyright {
    align-self: center;
-   font-size: 0.6rem;
+   font-size: 0.7rem;
    margin: 0.375vw 0;
 }

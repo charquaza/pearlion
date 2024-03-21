@@ -1,0 +1,38 @@
+.cart {
+   width: 58vw;
+}
+
+.cart ul {
+   list-style-type: none;
+   padding-left: 3vw;
+}
+
+.cart ul li {
+   padding-bottom: 1.8vw;
+}
+
+.total-and-checkout {
+   display: flex;
+   flex-direction: column;
+   align-items: flex-end;
+   border-top: 1px solid black;
+   padding-top: 1.5vw;
+   margin-left: 3vw;
+}
+.total-and-checkout p {
+   margin: 0;
+}
+
+span.subtotal-text {
+   font-size: 1.2rem;
+}
+
+span.subtotal-number {
+   font-size: 1.3rem;
+   font-weight: bold;
+}
+
+p.taxes-shipping-text {
+   font-size: 0.9rem;
+   margin-bottom: 2vw;
+}
