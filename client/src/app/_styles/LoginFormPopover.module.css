@@ -1,0 +1,14 @@
+.login-form {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   padding: 2vh;
+}
+
+.login-form input {
+   width: 15vw;
+}
+
+.login-form button {
+   margin-top: 2vh;
+}

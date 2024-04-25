@@ -23,3 +23,21 @@
 .nav-list a:active {
    color: rgb(214, 37, 96);
 }
+
+.popover-control {
+   position: relative;
+}
+
+.login-popover-open {
+   position: absolute;
+   left: -7vw;
+   top: 6vh;
+   z-index: 1;
+   width: 18vw;
+   background-color: white;
+   border-radius: 1vw;
+   box-shadow: 0.3vw 0.6vw 0.6vw 0 rgba(224, 23, 23, 0.2);
+}
+.login-popover-closed {
+   display:none;
+}

@@ -1,12 +1,66 @@
+'use client';
+
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import LoginFormPopover from './LoginFormPopover';
 import styles from '@/app/_styles/Topbar.module.css';
 
 export default function Topbar() {
+   const [ showLoginPopover, setShowLoginPopover ] = useState(false);
+
+   useEffect(function addEventListeners() {
+      //do not mix native browser events with React's synthetic events
+
+      function toggleLoginPopover(e) {
+         setShowLoginPopover(prev => !prev);
+         e.stopPropagation();
+      }
+      function closeLoginPopover(e) {
+         setShowLoginPopover(false);
+      }
+      function handlePopoverClick(e) {
+         e.stopPropagation();
+      }
+
+      var loginButton = document.getElementById('login-button');
+      var popover = document.getElementById('popover');
+
+      loginButton.addEventListener('click', toggleLoginPopover, false);
+      popover.addEventListener('click', handlePopoverClick, false);
+      document.body.addEventListener('click', closeLoginPopover, false);
+
+      return () => {
+         loginButton.removeEventListener('click', toggleLoginPopover, false);
+         popover.removeEventListener('click', handlePopoverClick, false);
+         document.body.removeEventListener('click', closeLoginPopover, false);
+      };
+   }, []);
+
    return (
-      <nav className={styles.topbar}>
+      <nav className={styles['topbar']}>
          <ul className={styles['nav-list']}>
             <li>
-               <Link href='/'>Log In</Link>
+               <div className={styles['popover-control']}>
+                  <button 
+                     id='login-button'
+                  >
+                     { showLoginPopover ? 'Close' : 'Log In' }
+                  </button>
+   
+                  <div 
+                     className={
+                        showLoginPopover 
+                           ? styles['login-popover-open']
+                           : styles['login-popover-closed']
+                     }
+                     id='popover'
+                  >
+                     {
+                        showLoginPopover &&
+                           <LoginFormPopover />
+                     }
+                  </div>
+               </div>            
             </li>
             <li>
                <Link href='/sign-up'>Sign Up</Link>
