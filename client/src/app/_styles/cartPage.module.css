@@ -2,13 +2,26 @@
    width: 58vw;
 }
 
-.cart ul {
-   list-style-type: none;
+.items-container {
    padding-left: 3vw;
+   padding-bottom: 2vw;
 }
 
-.cart ul li {
+.items-container ul {
+   list-style-type: none;
+   padding: 0;
+   margin-bottom: 0;
+}
+
+.items-container ul li {
    padding-bottom: 1.8vw;
+}
+
+.shop-link {
+   color: rgb(206, 57, 106);
+}
+.shop-link:active {
+   color: rgb(244, 146, 179);
 }
 
 .total-and-checkout {

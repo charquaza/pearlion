@@ -1,0 +1,67 @@
+'use client';
+
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import styles from '@/app/_styles/PurchaseControls.module.css';
+
+export default function PurchaseControls({ productId }) {
+   const [ quantity, setQuantity ] = useState('1');
+   
+   const router = useRouter();
+
+   function handleQuantityChange(e) {
+      //in the future: consider limiting quantity based on quantity in stock
+
+      var currInput = e.target.value;
+      if (
+         currInput.length <= 2 &&   
+         !(currInput.length === 1 && currInput === '0') &&  //forbid leading zeros
+         !currInput.match(/\D/)
+      ) {
+         setQuantity(currInput);
+      }
+   }
+
+   function validateQuantity(e) {
+      //reset quantity to 1 if user leaves input blank
+      if (quantity === '') {
+         setQuantity('1');
+      }
+   }
+
+   function handleAddToCart(e) {
+      var cart = localStorage.getItem('cart')
+         ? JSON.parse(localStorage.getItem('cart'))
+         : {};
+
+      var prevQuantityInCart = Number.isInteger(cart[productId])
+         ? Math.abs(Math.trunc(cart[productId]))
+         : 0;
+
+      var newQuantity = prevQuantityInCart + Number(quantity) < 100
+         ? prevQuantityInCart + Number(quantity)
+         : 99;
+
+      cart[productId] = newQuantity;
+      localStorage.setItem('cart', JSON.stringify(cart));
+
+      router.push('/cart');
+   }
+
+   return (
+      <div className={styles['purchase-controls']}>
+         <label className={styles['bold']}>Quantity:&nbsp; 
+            <input type='text' required value={quantity}
+               className={styles['quantity-input']} 
+               onChange={handleQuantityChange}
+               onBlur={validateQuantity}
+            />
+         </label>
+
+         <div className={styles['buttons-container']}>
+            <button>Buy Now</button>
+            <button onClick={handleAddToCart}>Add to Cart</button>
+         </div>
+      </div>
+   );
+};

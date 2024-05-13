@@ -1,6 +1,7 @@
 import Link from 'next/link';
-import ProductImageList from '@/app/_components/ProductImageList';
-import ReviewCard from '@/app/_components/ReviewCard';
+import ProductImageList from './ProductImageList';
+import PurchaseControls from './PurchaseControls';
+import ReviewCard from './ReviewCard';
 import styles from '@/app/_styles/ProductDetails.module.css';
 
 export default function ProductDetails({ product }) {
@@ -14,14 +15,8 @@ export default function ProductDetails({ product }) {
                <p>{product.description}</p>
                <p>☆☆☆☆☆ <Link href='#reviews'>Reviews</Link></p>
                <p><span className={styles['bold']}>Price:</span> ${product.price}</p>
-               <label className={styles['bold']}>Quantity:&nbsp; 
-                  <input type='number' min='1' max='99' />
-               </label>
-      
-               <div className={styles['purchase-controls']}>
-                  <button>Buy Now</button>
-                  <button>Add to Cart</button>
-               </div>
+               
+               <PurchaseControls productId={product.id} />
             </div>
          </div>
 

@@ -1,0 +1,18 @@
+.bold {
+   font-weight: bold;
+}
+
+.quantity-input {
+   width: 1.5rem;
+}
+
+.buttons-container {
+   padding-top: 1.5vw;
+}
+.buttons-container button {
+   margin-right: 1vw;
+   font-weight: bold;
+   background-color: rgba(224, 23, 23, 0.2);
+   padding: 0.5vw;
+   border-radius: 0.7vw;
+}

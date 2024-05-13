@@ -15,6 +15,22 @@
    display: flex;
    column-gap: 1vw;
 }
+.image-and-details a {
+   text-decoration: none;
+   color: black;
+}
+.image-and-details a:hover {
+   text-decoration: underline;
+}
+
+.quantity-input {
+   width: 1.5rem;
+}
+
+.remove-button {
+   display: block;
+   margin-top: 1vw;
+}
 
 .image-container {
    width: 10vw;
