@@ -1,4 +1,4 @@
-.main-page {
+.product-details {
    padding: 1.5vw;
 }
 
@@ -29,30 +29,6 @@
    font-weight: bold;
 }
 
-.purchase-controls {
-   padding-top: 1.5vw;
-}
-.purchase-controls button {
-   margin-right: 1vw;
-   font-weight: bold;
-   background-color: rgba(224, 23, 23, 0.2);
-   padding: 0.5vw;
-   border-radius: 0.7vw;
-}
-
-.product-details p {
+.details-section p {
    width: 60vw;
-}
-
-.reviews h2 {
-   margin-top: 3.5vw;
-   font-size: 1.9rem;
-}
-.reviews ul {
-   list-style-type: none;
-   padding-top: 2vw;
-}
-.reviews li {
-   width: 50vw;
-   padding-bottom: 2vw;
 }

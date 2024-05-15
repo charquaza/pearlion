@@ -1,0 +1,16 @@
+.review-pagination {
+   padding-top: 2.6vw;
+   font-size: 0.9rem;
+}
+
+.reviews-per-page {
+   padding: 0 0 0 3rem;
+}
+
+.pages-list {
+   list-style-type: none;
+   padding: 0 0 0.4vw calc(3rem + 7.5vw);
+   width: 35vw;
+   display: flex;
+   justify-content: space-between;
+}

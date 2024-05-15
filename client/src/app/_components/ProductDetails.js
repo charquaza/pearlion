@@ -1,12 +1,11 @@
 import Link from 'next/link';
 import ProductImageList from './ProductImageList';
 import PurchaseControls from './PurchaseControls';
-import ReviewCard from './ReviewCard';
 import styles from '@/app/_styles/ProductDetails.module.css';
 
 export default function ProductDetails({ product }) {
    return (
-      <main className={styles['main-page']}>
+      <article className={styles['product-details']}>
          <div className={styles['images-description-container']}>
             <ProductImageList product={product} />
    
@@ -20,7 +19,7 @@ export default function ProductDetails({ product }) {
             </div>
          </div>
 
-         <section className={styles['product-details']}>
+         <section className={styles['details-section']}>
             <h2>Product Details</h2>
 
             <ul>
@@ -34,30 +33,6 @@ export default function ProductDetails({ product }) {
                Et molestie ac feugiat sed. Facilisis gravida neque convallis a. Donec adipiscing tristique risus nec feugiat in fermentum posuere. Vitae proin sagittis nisl rhoncus mattis rhoncus urna neque. Fringilla ut morbi tincidunt augue interdum. Dolor sit amet consectetur adipiscing elit duis tristique. Arcu non sodales neque sodales ut etiam. Sit amet facilisis magna etiam tempor orci eu lobortis. Malesuada bibendum arcu vitae elementum curabitur vitae nunc. Enim sed faucibus turpis in eu mi bibendum. Nisl rhoncus mattis rhoncus urna neque viverra justo nec ultrices. Et tortor consequat id porta nibh venenatis cras sed.
             </p>
          </section>
-
-         <article className={styles['reviews']}>
-            <h2 id='reviews'>Reviews</h2>
-            <p>☆☆☆☆☆</p>
-            <p>(--insert review image list here--)</p>
-
-            <button>Add a Review</button>
-
-            <ul>
-               {
-                  product.reviews.length > 0
-                     ? 
-                        product.reviews.map((review, index) => {
-                           return (
-                              <li key={index}>
-                                 <ReviewCard product={product} review={review} />
-                              </li>
-                           );
-                        })
-                     : <li>No reviews</li>
-               }
-            </ul>
-            <p>(--insert review pagination here--)</p>
-         </article>
-      </main>
+      </article>
    );
 };
