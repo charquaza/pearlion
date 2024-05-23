@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import NewReviewForm from './NewReviewForm';
 import ReviewCard from './ReviewCard';
 import ReviewPagination from './ReviewPagination';
 import styles from '@/app/_styles/Reviews.module.css';
@@ -19,7 +20,7 @@ export default function Reviews({ product }) {
          <p>☆☆☆☆☆</p>
          <p>(--insert review image list here--)</p>
 
-         <button>Add a Review</button>
+         <NewReviewForm product={product} />
 
          <ReviewPagination product={product} 
             reviewsPerPage={reviewsPerPage} setReviewsPerPage={setReviewsPerPage}
