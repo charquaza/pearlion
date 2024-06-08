@@ -32,6 +32,19 @@
    text-decoration: underline;
 }
 
+.rating-and-reviews-link {
+   --size: 1.4vw;
+
+   display: flex;
+   height: var(--size);
+   padding-top: calc( var(--size) / 2 );
+}
+.rating-and-reviews-link a {
+   padding-left: calc( var(--size) * 0.7 );
+   font-size: var(--size);
+   line-height: var(--size);
+}
+
 .reviews-link {
    text-decoration: none;
    color: black;

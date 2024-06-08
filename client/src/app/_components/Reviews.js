@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import RatingBar from './RatingBar';
 import NewReviewForm from './NewReviewForm';
 import ReviewCard from './ReviewCard';
 import ReviewPagination from './ReviewPagination';
@@ -17,7 +18,7 @@ export default function Reviews({ product }) {
    return (
       <article className={styles['reviews']}>
          <h2 id='reviews'>Reviews</h2>
-         <p>☆☆☆☆☆</p>
+         <RatingBar reviews={product.reviews} context={'reviews'} />
          <p>(--insert review image list here--)</p>
 
          <NewReviewForm product={product} />

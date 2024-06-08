@@ -1,0 +1,59 @@
+.rating-container {
+   --bar-width: max(100px, 10vw);
+   --bar-height: calc( var(--bar-width) / 5 );
+
+   display: flex;
+   font-size: var(--bar-height);
+   line-height: var(--bar-height);
+}
+
+.rating-bar {
+   width: var(--bar-width);
+   height: var(--bar-height);
+   padding: 0;
+   margin: 0;
+   background-image: url("../_images/star-empty.svg");
+   background-origin: border-box;
+   background-clip: border-box;
+}
+
+.filled {
+   border: none;
+   padding: 0;
+   margin: 0;
+   width: calc( var(--bar-width) * ( var(--rating) / 5 ) );
+   height: var(--bar-height);
+   background-image: url("../_images/star-filled.svg");
+   background-origin: border-box;
+   background-clip: border-box;
+}
+
+.rating {
+   margin: 0;
+   padding-left: 0.3em;
+}
+
+.no-rating {
+   margin: 0;
+   font-style: italic;
+   font-size: calc( var(--bar-height) * 0.9 );
+   color: rgb(80, 80, 80);
+}
+
+/* Overrides based on context */
+/* size variable from RatingBar's parent component  */
+
+/* overrides for ProductDetails component */
+.product-details {
+   --bar-width: calc( var(--size) * 5 );  
+}
+
+/* overrides for ProductListCard component */
+.product-list-card {
+   --bar-width: calc( var(--size) * 5 );  
+}
+
+/* overrides for SlideshowCard component */
+.slideshow-card {
+   --bar-width: calc( var(--size) * 5 );  
+}

@@ -29,6 +29,19 @@
    font-weight: bold;
 }
 
+.rating-and-reviews-link {
+   --size: 1.4vw;
+
+   display: flex;
+   height: var(--size);
+   padding-top: calc( var(--size) / 2 );
+}
+.rating-and-reviews-link a {
+   padding-left: var(--size);
+   font-size: var(--size);
+   line-height: var(--size);
+}
+
 .details-section p {
    width: 60vw;
 }

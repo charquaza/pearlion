@@ -99,7 +99,7 @@
    height: var(--label-width);
    padding: var(--label-width) 0 0;
    overflow: hidden;
-   background: url("../_images/star-selected.svg") no-repeat;
+   background: url("../_images/star-filled.svg") no-repeat;
 }
 
 .rating label:hover {
@@ -109,7 +109,7 @@
 .rating:not(:hover) input:indeterminate ~ label,
 .rating:not(:hover) input:checked ~ input + label,
 .rating label:hover ~ label {
-   background: url("../_images/star-unselected.svg") no-repeat;
+   background: url("../_images/star-empty.svg") no-repeat;
 }
 
 .rating:not(:hover) input:focus-visible + label {

@@ -17,19 +17,19 @@ const necklaces = [
          {
             date: '3/14/24',
             client: 'Sam',
-            rating: '☆☆☆☆☆',
+            rating: 5,
             review: 'Odio tempor orci dapibus ultrices. Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Nisi est sit amet facilisis magna etiam tempor orci. Pellentesque dignissim enim sit amet venenatis urna cursus. Imperdiet dui accumsan sit amet nulla. Quis auctor elit sed vulputate. Auctor neque vitae tempus quam pellentesque nec nam aliquam sem. Amet consectetur adipiscing elit pellentesque.'
          },
          {
             date: '1/1/24',
             client: 'Kim',
-            rating: '☆☆☆☆☆',
+            rating: 5,
             review: 'Odio tempor orci dapibus ultrices. Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Nisi est sit amet facilisis magna etiam tempor orci. Pellentesque dignissim enim sit amet venenatis urna cursus. Imperdiet dui accumsan sit amet nulla. Quis auctor elit sed vulputate. Auctor neque vitae tempus quam pellentesque nec nam aliquam sem. Amet consectetur adipiscing elit pellentesque.'
          },
          {
             date: '12/20/23',
             client: 'Val',
-            rating: '☆☆☆☆☆',
+            rating: 5,
             review: 'Odio tempor orci dapibus ultrices. Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Nisi est sit amet facilisis magna etiam tempor orci. Pellentesque dignissim enim sit amet venenatis urna cursus. Imperdiet dui accumsan sit amet nulla. Quis auctor elit sed vulputate. Auctor neque vitae tempus quam pellentesque nec nam aliquam sem. Amet consectetur adipiscing elit pellentesque.'
          }
       ]
@@ -49,19 +49,19 @@ const necklaces = [
          {
             date: '3/14/24',
             client: 'Sam',
-            rating: '☆☆☆☆☆',
+            rating: 5,
             review: 'Odio tempor orci dapibus ultrices. Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Nisi est sit amet facilisis magna etiam tempor orci. Pellentesque dignissim enim sit amet venenatis urna cursus. Imperdiet dui accumsan sit amet nulla. Quis auctor elit sed vulputate. Auctor neque vitae tempus quam pellentesque nec nam aliquam sem. Amet consectetur adipiscing elit pellentesque.'
          },
          {
             date: '1/1/24',
             client: 'Kim',
-            rating: '☆☆☆☆☆',
+            rating: 5,
             review: 'Odio tempor orci dapibus ultrices. Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Nisi est sit amet facilisis magna etiam tempor orci. Pellentesque dignissim enim sit amet venenatis urna cursus. Imperdiet dui accumsan sit amet nulla. Quis auctor elit sed vulputate. Auctor neque vitae tempus quam pellentesque nec nam aliquam sem. Amet consectetur adipiscing elit pellentesque.'
          },
          {
             date: '12/20/23',
             client: 'Val',
-            rating: '☆☆☆☆☆',
+            rating: 5,
             review: 'Odio tempor orci dapibus ultrices. Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Nisi est sit amet facilisis magna etiam tempor orci. Pellentesque dignissim enim sit amet venenatis urna cursus. Imperdiet dui accumsan sit amet nulla. Quis auctor elit sed vulputate. Auctor neque vitae tempus quam pellentesque nec nam aliquam sem. Amet consectetur adipiscing elit pellentesque.'
          }
       ]
@@ -74,19 +74,19 @@ const necklaces = [
          {
             date: '3/14/24',
             client: 'Sam',
-            rating: '☆☆☆☆☆',
+            rating: 5,
             review: 'Odio tempor orci dapibus ultrices. Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Nisi est sit amet facilisis magna etiam tempor orci. Pellentesque dignissim enim sit amet venenatis urna cursus. Imperdiet dui accumsan sit amet nulla. Quis auctor elit sed vulputate. Auctor neque vitae tempus quam pellentesque nec nam aliquam sem. Amet consectetur adipiscing elit pellentesque.'
          },
          {
             date: '1/1/24',
             client: 'Kim',
-            rating: '☆☆☆☆☆',
+            rating: 5,
             review: 'Odio tempor orci dapibus ultrices. Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Nisi est sit amet facilisis magna etiam tempor orci. Pellentesque dignissim enim sit amet venenatis urna cursus. Imperdiet dui accumsan sit amet nulla. Quis auctor elit sed vulputate. Auctor neque vitae tempus quam pellentesque nec nam aliquam sem. Amet consectetur adipiscing elit pellentesque.'
          },
          {
             date: '12/20/23',
             client: 'Val',
-            rating: '☆☆☆☆☆',
+            rating: 5,
             review: 'Odio tempor orci dapibus ultrices. Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Nisi est sit amet facilisis magna etiam tempor orci. Pellentesque dignissim enim sit amet venenatis urna cursus. Imperdiet dui accumsan sit amet nulla. Quis auctor elit sed vulputate. Auctor neque vitae tempus quam pellentesque nec nam aliquam sem. Amet consectetur adipiscing elit pellentesque.'
          }
       ]
@@ -99,19 +99,19 @@ const necklaces = [
          {
             date: '3/14/24',
             client: 'Sam',
-            rating: '☆☆☆☆☆',
+            rating: 5,
             review: 'Odio tempor orci dapibus ultrices. Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Nisi est sit amet facilisis magna etiam tempor orci. Pellentesque dignissim enim sit amet venenatis urna cursus. Imperdiet dui accumsan sit amet nulla. Quis auctor elit sed vulputate. Auctor neque vitae tempus quam pellentesque nec nam aliquam sem. Amet consectetur adipiscing elit pellentesque.'
          },
          {
             date: '1/1/24',
             client: 'Kim',
-            rating: '☆☆☆☆☆',
+            rating: 5,
             review: 'Odio tempor orci dapibus ultrices. Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Nisi est sit amet facilisis magna etiam tempor orci. Pellentesque dignissim enim sit amet venenatis urna cursus. Imperdiet dui accumsan sit amet nulla. Quis auctor elit sed vulputate. Auctor neque vitae tempus quam pellentesque nec nam aliquam sem. Amet consectetur adipiscing elit pellentesque.'
          },
          {
             date: '12/20/23',
             client: 'Val',
-            rating: '☆☆☆☆☆',
+            rating: 5,
             review: 'Odio tempor orci dapibus ultrices. Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Nisi est sit amet facilisis magna etiam tempor orci. Pellentesque dignissim enim sit amet venenatis urna cursus. Imperdiet dui accumsan sit amet nulla. Quis auctor elit sed vulputate. Auctor neque vitae tempus quam pellentesque nec nam aliquam sem. Amet consectetur adipiscing elit pellentesque.'
          }
       ]
@@ -124,19 +124,19 @@ const necklaces = [
          {
             date: '3/14/24',
             client: 'Sam',
-            rating: '☆☆☆☆☆',
+            rating: 5,
             review: 'Odio tempor orci dapibus ultrices. Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Nisi est sit amet facilisis magna etiam tempor orci. Pellentesque dignissim enim sit amet venenatis urna cursus. Imperdiet dui accumsan sit amet nulla. Quis auctor elit sed vulputate. Auctor neque vitae tempus quam pellentesque nec nam aliquam sem. Amet consectetur adipiscing elit pellentesque.'
          },
          {
             date: '1/1/24',
             client: 'Kim',
-            rating: '☆☆☆☆☆',
+            rating: 5,
             review: 'Odio tempor orci dapibus ultrices. Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Nisi est sit amet facilisis magna etiam tempor orci. Pellentesque dignissim enim sit amet venenatis urna cursus. Imperdiet dui accumsan sit amet nulla. Quis auctor elit sed vulputate. Auctor neque vitae tempus quam pellentesque nec nam aliquam sem. Amet consectetur adipiscing elit pellentesque.'
          },
          {
             date: '12/20/23',
             client: 'Val',
-            rating: '☆☆☆☆☆',
+            rating: 5,
             review: 'Odio tempor orci dapibus ultrices. Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Nisi est sit amet facilisis magna etiam tempor orci. Pellentesque dignissim enim sit amet venenatis urna cursus. Imperdiet dui accumsan sit amet nulla. Quis auctor elit sed vulputate. Auctor neque vitae tempus quam pellentesque nec nam aliquam sem. Amet consectetur adipiscing elit pellentesque.'
          }
       ]
@@ -163,19 +163,19 @@ const necklaces = [
          {
             date: '3/14/24',
             client: 'Sam',
-            rating: '☆☆☆☆☆',
+            rating: 5,
             review: 'Odio tempor orci dapibus ultrices. Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Nisi est sit amet facilisis magna etiam tempor orci. Pellentesque dignissim enim sit amet venenatis urna cursus. Imperdiet dui accumsan sit amet nulla. Quis auctor elit sed vulputate. Auctor neque vitae tempus quam pellentesque nec nam aliquam sem. Amet consectetur adipiscing elit pellentesque.'
          },
          {
             date: '1/1/24',
             client: 'Kim',
-            rating: '☆☆☆☆☆',
+            rating: 5,
             review: 'Odio tempor orci dapibus ultrices. Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Nisi est sit amet facilisis magna etiam tempor orci. Pellentesque dignissim enim sit amet venenatis urna cursus. Imperdiet dui accumsan sit amet nulla. Quis auctor elit sed vulputate. Auctor neque vitae tempus quam pellentesque nec nam aliquam sem. Amet consectetur adipiscing elit pellentesque.'
          },
          {
             date: '12/20/23',
             client: 'Val',
-            rating: '☆☆☆☆☆',
+            rating: 5,
             review: 'Odio tempor orci dapibus ultrices. Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Nisi est sit amet facilisis magna etiam tempor orci. Pellentesque dignissim enim sit amet venenatis urna cursus. Imperdiet dui accumsan sit amet nulla. Quis auctor elit sed vulputate. Auctor neque vitae tempus quam pellentesque nec nam aliquam sem. Amet consectetur adipiscing elit pellentesque.'
          }
       ]

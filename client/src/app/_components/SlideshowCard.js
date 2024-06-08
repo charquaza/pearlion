@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import RatingBar from './RatingBar';
 import styles from '@/app/_styles/SlideshowCard.module.css';
 
 export default function SlideshowCard({ product }) {
@@ -23,15 +24,15 @@ export default function SlideshowCard({ product }) {
             </Link>
          </h2>
          
-         <p>
-            ☆☆☆☆☆&nbsp; 
+         <div className={styles['rating-and-reviews-link']}>
+            <RatingBar reviews={product.reviews} context={'slideshow-card'} />
             <Link 
                href={`/${product.category}/${product.id}#reviews`}
                className={styles['reviews-link']}
             >
                Reviews
             </Link>
-         </p>
+         </div>
       </article>
    );
 };

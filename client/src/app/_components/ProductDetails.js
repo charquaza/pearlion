@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import ProductImageList from './ProductImageList';
+import RatingBar from './RatingBar';
 import PurchaseControls from './PurchaseControls';
 import styles from '@/app/_styles/ProductDetails.module.css';
 
@@ -11,8 +12,11 @@ export default function ProductDetails({ product }) {
    
             <div className={styles['description-container']}>
                <h1>{product.name}</h1>
+               <div className={styles['rating-and-reviews-link']}>
+                  <RatingBar reviews={product.reviews} context={'product-details'} />
+                  <Link href='#reviews'>Reviews</Link>
+               </div>
                <p>{product.description}</p>
-               <p>☆☆☆☆☆ <Link href='#reviews'>Reviews</Link></p>
                <p><span className={styles['bold']}>Price:</span> ${product.price}</p>
                
                <PurchaseControls productId={product.id} />
