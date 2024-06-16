@@ -337,18 +337,21 @@ const earrings = [
             date: '3/14/24',
             client: 'Sam',
             rating: 1,
+            images: [ e3_1, e3_2, e3_3, e3_1, e3_2, e3_3, e3_1, e3_2, e3_3 ],
             review: 'Odio tempor orci dapibus ultrices. Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Nisi est sit amet facilisis magna etiam tempor orci. Pellentesque dignissim enim sit amet venenatis urna cursus. Imperdiet dui accumsan sit amet nulla. Quis auctor elit sed vulputate. Auctor neque vitae tempus quam pellentesque nec nam aliquam sem. Amet consectetur adipiscing elit pellentesque.'
          },
          {
             date: '1/1/24',
             client: 'Kim',
             rating: 2,
+            images: [ e3_2 ],
             review: 'Odio tempor orci dapibus ultrices. Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Nisi est sit amet facilisis magna etiam tempor orci. Pellentesque dignissim enim sit amet venenatis urna cursus. Imperdiet dui accumsan sit amet nulla. Quis auctor elit sed vulputate. Auctor neque vitae tempus quam pellentesque nec nam aliquam sem. Amet consectetur adipiscing elit pellentesque.'
          },
          {
             date: '12/20/23',
             client: 'Val',
             rating: 3,
+            images: [ e3_3 ],
             review: 'Odio tempor orci dapibus ultrices. Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Nisi est sit amet facilisis magna etiam tempor orci. Pellentesque dignissim enim sit amet venenatis urna cursus. Imperdiet dui accumsan sit amet nulla. Quis auctor elit sed vulputate. Auctor neque vitae tempus quam pellentesque nec nam aliquam sem. Amet consectetur adipiscing elit pellentesque.'
          }
       ]

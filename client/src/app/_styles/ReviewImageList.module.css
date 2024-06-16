@@ -1,0 +1,39 @@
+.review-image-list-container {
+   display: flex;
+   width: 45vw;
+   padding-left: 1vw;
+}
+.review-image-list-container button {
+   background: rgb(239, 238, 238);
+   border: none;
+   border-radius: 50%;
+}
+.review-image-list-container button:hover {
+   background-color: rgb(224, 224, 224);
+}
+.review-image-list-container button:active {
+   background-color: rgb(170, 169, 169);
+}
+
+.image-list {
+   list-style-type: none;
+   margin: 1vw 0;
+   padding: 0;
+   display: flex;
+   justify-content: center;
+   background: radial-gradient(rgb(217, 214, 214), white);
+}
+.image-list li {
+   width: 5vw;
+   height: 5vw;
+   box-sizing: border-box;
+   margin: 0 0.7vw;
+}
+.image-list li:hover {
+   cursor: pointer;
+}
+.image-list img {
+   width: 100%;
+   height: 100%;
+   object-fit: contain;
+}

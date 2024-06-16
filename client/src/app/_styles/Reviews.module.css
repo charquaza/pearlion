@@ -8,7 +8,7 @@
    padding: 0 0 0 3rem;
    margin: 0;
 }
-.reviews-list li {
+.reviews-list > li {
    width: 50vw;
    padding-bottom: 2vw;
 }
