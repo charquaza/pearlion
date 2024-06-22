@@ -1,4 +1,10 @@
+.add-review-button {
+   display: block;
+   margin: 3vw 0;
+}
+
 .new-review-form {
+   margin: 3vw 0;
    width: 50vw;
    padding: 1.8vw;
    border-radius: 1vw 7vw 7vw 1vw;

@@ -105,6 +105,10 @@ export default function NewReviewForm({ product }) {
                </button>
             </form>
          : 
-            <button onClick={toggleReviewForm}>Add a Review</button>
+            <button className={styles['add-review-button']}
+               onClick={toggleReviewForm}
+            >
+               Add a Review
+            </button>
    )
 };

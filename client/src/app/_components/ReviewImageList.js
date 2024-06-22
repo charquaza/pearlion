@@ -4,10 +4,10 @@ import { useState } from 'react';
 import Image from 'next/image';
 import styles from '@/app/_styles/ReviewImageList.module.css';
 
-export default function ReviewImageList({ review }) {
+export default function ReviewImageList({ product, review }) {
    //remove check after normalizing database: review.images should be
    // set to empty array if no images
-   if (!review.images) {
+   if (review && !review.images) {
       return null;
    }
 
@@ -15,6 +15,12 @@ export default function ReviewImageList({ review }) {
       new Map([ ['startIndex', 0], ['count', 6] ])
    );
 
+   //remove ternary expression and simply return review.images
+   // once database is normalized
+   var imageList = product 
+      ?  product.reviews.flatMap(review => review.images ? review.images : [])
+      : review.images;
+   
    function handleSlideshowToggle(e) {
       if (e.target.id === 'previous-slide') {
          setSlideshow(
@@ -32,53 +38,56 @@ export default function ReviewImageList({ review }) {
    }
 
    return (
-      <div className={styles['review-image-list-container']}>
-         {
-            review.images.length > slideshow.get('count') &&
-               <button id='previous-slide' disabled={slideshow.get('startIndex') === 0}
-                  onClick={handleSlideshowToggle}
-               > &lt; </button>
-         }
-
-         <ul className={styles['image-list']}>
+      imageList.length > 0 &&
+         <div className={styles['review-image-list-container'] 
+            + (product ? ' ' + styles['all-reviews'] : '')}
+         >
             {
-               review.images.map((image, index) => {
-                  if (
-                     index < slideshow.get('startIndex') || 
-                     index >= slideshow.get('startIndex') + slideshow.get('count')
-                  ) {
-                     return null;
-                  } else {
-                     return (
-                        <li 
-                           key={index}
-                           data-index={index}
-                           onClick={handleSlideClick}
-                        >
-                           <Image
-                              src={image}
-                              alt='image from customer review'
-                              quality={100}
-                              sizes='50vw'
-                           />
-                        </li>
-                     );
-                  }
-               })
-            } 
-         </ul>
+               imageList.length > slideshow.get('count') &&
+                  <button id='previous-slide' disabled={slideshow.get('startIndex') === 0}
+                     onClick={handleSlideshowToggle}
+                  > &lt; </button>
+            }
 
-         {
-            review.images.length > slideshow.get('count') &&
-               <button 
-                  id='next-slide' 
-                  disabled={
-                     slideshow.get('startIndex') + slideshow.get('count') 
-                        >= review.images.length
-                  }
-                  onClick={handleSlideshowToggle}
-               > &gt; </button>
-         }
-      </div>
+            <ul className={styles['image-list']}>
+               {
+                  imageList.map((image, index) => {
+                     if (
+                        index < slideshow.get('startIndex') || 
+                        index >= slideshow.get('startIndex') + slideshow.get('count')
+                     ) {
+                        return null;
+                     } else {
+                        return (
+                           <li 
+                              key={index}
+                              data-index={index}
+                              onClick={handleSlideClick}
+                           >
+                              <Image
+                                 src={image}
+                                 alt='image from customer review'
+                                 quality={100}
+                                 sizes='50vw'
+                              />
+                           </li>
+                        );
+                     }
+                  })
+               } 
+            </ul>
+
+            {
+               imageList.length > slideshow.get('count') &&
+                  <button 
+                     id='next-slide' 
+                     disabled={
+                        slideshow.get('startIndex') + slideshow.get('count') 
+                           >= imageList.length
+                     }
+                     onClick={handleSlideshowToggle}
+                  > &gt; </button>
+            }
+         </div>
    );
 };

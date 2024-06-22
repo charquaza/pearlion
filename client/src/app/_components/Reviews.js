@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import RatingBar from './RatingBar';
+import ReviewImageList from './ReviewImageList';
 import NewReviewForm from './NewReviewForm';
 import ReviewCard from './ReviewCard';
 import ReviewPagination from './ReviewPagination';
@@ -19,7 +20,8 @@ export default function Reviews({ product }) {
       <article className={styles['reviews']}>
          <h2 id='reviews'>Reviews</h2>
          <RatingBar reviews={product.reviews} context={'reviews'} />
-         <p>(--insert review image list here--)</p>
+         
+         <ReviewImageList product={product} />
 
          <NewReviewForm product={product} />
 

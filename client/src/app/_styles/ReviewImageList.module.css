@@ -1,7 +1,7 @@
 .review-image-list-container {
    display: flex;
-   width: 45vw;
    padding-left: 1vw;
+   margin: 1.5vw 0;
 }
 .review-image-list-container button {
    background: rgb(239, 238, 238);
@@ -36,4 +36,12 @@
    width: 100%;
    height: 100%;
    object-fit: contain;
+}
+
+/* styles for image list comprised of images from all reviews */
+.all-reviews .image-list li {
+   width: 7vw;
+   height: 7vw;
+   box-sizing: border-box;
+   margin: 0 0.7vw;
 }
