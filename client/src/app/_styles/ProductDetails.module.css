@@ -3,13 +3,11 @@
 }
 
 .images-description-container {
-   display: flex;
+   display: grid;
+   grid-template-columns: 40vw 35vw;
+   column-gap: 3vw;
 }
 
-.description-container {
-   width: 35vw;
-   padding-left: 3vw;
-}
 .description-container h1 {
    margin: 0;
 }

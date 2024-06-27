@@ -8,12 +8,12 @@
    display: flex;
    align-items: center;
    justify-content: space-between;
-   width: 40vw;
+   width: 100%;
 }
 .curr-image-controls-container button {
    font-size: 1.5vw;
-   width: 2vw;
-   height: 2vw;
+   aspect-ratio: 1 / 1;
+   width: 5%;
    background: rgb(239, 238, 238);
    border: none;
    border-radius: 30%;
@@ -26,8 +26,8 @@
 }
 
 .curr-image-container {
-   width: 35vw;
-   height: 35vw;
+   aspect-ratio: 1 / 1;
+   width: 100%;
    background: radial-gradient(rgb(220, 220, 220), white 80%)
 }
 .curr-image-container img {
@@ -38,7 +38,7 @@
 
 .slideshow-container {
    display: flex;
-   width: 34vw;
+   width: 100%;
    justify-content: center;
    align-items: center;
 }
@@ -56,17 +56,18 @@
 
 .image-list {
    list-style-type: none;
-   margin: 1vw 0;
+   width: 75%;
+   margin: 1% 0;
    padding: 0;
    display: flex;
    justify-content: center;
    background: radial-gradient(rgb(217, 214, 214), white);
 }
 .image-list li {
-   width: 6vw;
-   height: 6vw;
+   aspect-ratio: 1 / 1;
+   width: 20%;
    box-sizing: border-box;
-   margin: 0 0.7vw;
+   margin: 0 2%;
 }
 .image-list li:hover {
    cursor: pointer;
