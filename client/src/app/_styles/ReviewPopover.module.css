@@ -1,0 +1,89 @@
+.review-popover {
+   position: fixed;
+}
+.review-popover::before {
+   content: "";
+   position: fixed;
+   top: 0;
+   left: 0;
+   width: 100vw;
+   height: 100vh;
+   background-color: black;
+   opacity: 40%;
+}
+
+.prev-review-btn, .next-review-btn {
+   position: fixed;
+   top: 10vh;
+   width: 5vw;
+   height: 80vh;
+   color: white;
+   font-size: 3rem;
+   background: linear-gradient(rgb(0,0,0,0), black, rgba(0,0,0,0));
+   border: 0;
+}
+.prev-review-btn {
+   left: 10vw;
+}
+.next-review-btn {
+   right: 10vw;
+}
+
+.prev-review-btn:hover, .next-review-btn:hover {
+   font-size: 4.5rem;
+   background: linear-gradient(rgb(0,0,0,0), rgb(69, 69, 69), rgba(0,0,0,0));
+}
+.prev-review-btn:disabled, .next-review-btn:disabled {
+   color: rgb(160, 160, 160);
+   font-size: 3rem;
+   background: linear-gradient(rgb(0,0,0,0), rgb(195, 195, 195), rgba(0,0,0,0));
+}
+
+.main-popover {
+   --main-top: 5vh;
+   --main-left: 15vw;
+   --main-width: 70vw;
+   --main-height: 90vh;
+
+   position: fixed;
+   top: var(--main-top);
+   left: var(--main-left);
+   box-sizing: border-box;
+   width: var(--main-width);
+   height: var(--main-height);
+   padding: 1.4vw;
+   border-radius: 1vw;
+   background-color: white;
+
+   display: grid;
+   grid-template-columns: 1.25fr 1fr;
+   gap: 3vw;
+
+   overflow: scroll;
+}
+
+.review {
+   text-wrap: pretty;
+   overflow: scroll;
+}
+
+.close-btn {
+   --btn-width: max(3.2vw, 25px);
+
+   position: fixed;
+   left: calc(var(--main-left) + var(--main-width) - (var(--btn-width) / 2) );
+   top: calc( var(--main-top) - (var(--btn-width) / 2) );
+   width: var(--btn-width);
+   height: var(--btn-width);
+   padding: 0;
+   border: none;
+   border-radius: 50%;
+   background-color: rgb(245, 169, 182);
+   font-size: calc( var(--btn-width) * 0.6 );
+}
+.close-btn:hover {
+   background-color: rgb(226, 116, 135);
+}
+.close-btn:active {
+   background-color: rgb(196, 67, 89);
+}

@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import styles from '@/app/_styles/ReviewImageList.module.css';
 
-export default function ReviewImageList({ product, review }) {
+export default function ReviewImageList({ product, review, reviewIndex, toggleReviewPopover }) {
    //remove check after normalizing database: review.images should be
    // set to empty array if no images
    if (review && !review.images) {
@@ -17,9 +17,21 @@ export default function ReviewImageList({ product, review }) {
 
    //remove ternary expression and simply return review.images
    // once database is normalized
+   // also - imageList should be a state variable
    var imageList = product 
-      ?  product.reviews.flatMap(review => review.images ? review.images : [])
-      : review.images;
+      ? 
+         product.reviews.flatMap((review, reviewIndex) => {
+            return !review.images 
+               ? []
+               : 
+                  review.images.map((image, imageIndex) => {
+                     return { image, reviewIndex, imageIndex };
+                  });
+         })
+      : 
+         review.images.map((image, imageIndex) => {
+            return { image, reviewIndex, imageIndex };
+         });
    
    function handleSlideshowToggle(e) {
       if (e.target.id === 'previous-slide') {
@@ -33,8 +45,11 @@ export default function ReviewImageList({ product, review }) {
       }
    }
 
-   function handleSlideClick(e) {
-      //let index = e.currentTarget.getAttribute('data-index');
+   function handleImageClick(e) {
+      var index = e.currentTarget.getAttribute('data-index');
+      var imageDetails = imageList[index];
+
+      toggleReviewPopover(imageDetails.reviewIndex, imageDetails.imageIndex);
    }
 
    return (
@@ -51,28 +66,28 @@ export default function ReviewImageList({ product, review }) {
 
             <ul className={styles['image-list']}>
                {
-                  imageList.map((image, index) => {
+                  imageList.map((imageDetails, index) => {
                      if (
                         index < slideshow.get('startIndex') || 
                         index >= slideshow.get('startIndex') + slideshow.get('count')
                      ) {
                         return null;
-                     } else {
-                        return (
-                           <li 
-                              key={index}
-                              data-index={index}
-                              onClick={handleSlideClick}
-                           >
-                              <Image
-                                 src={image}
-                                 alt='image from customer review'
-                                 quality={100}
-                                 sizes='50vw'
-                              />
-                           </li>
-                        );
-                     }
+                     } 
+
+                     return (
+                        <li 
+                           key={index}
+                           data-index={index}
+                           onClick={handleImageClick}
+                        >
+                           <Image
+                              src={imageDetails.image}
+                              alt='image from customer review'
+                              quality={100}
+                              sizes='50vw'
+                           />
+                        </li>
+                     );
                   })
                } 
             </ul>

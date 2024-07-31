@@ -6,22 +6,39 @@ import ReviewImageList from './ReviewImageList';
 import NewReviewForm from './NewReviewForm';
 import ReviewCard from './ReviewCard';
 import ReviewPagination from './ReviewPagination';
+import ReviewPopover from './ReviewPopover';
 import styles from '@/app/_styles/Reviews.module.css';
 
 export default function Reviews({ product }) {
    const [ reviewsPerPage, setReviewsPerPage ] = useState(5);
    const [ currPage, setCurrPage ] = useState(1);
+   const [ reviewPopoverInfo, setReviewPopoverInfo ] = useState({
+      show: false, reviewIndex: undefined, imageIndex: undefined 
+   });
 
-   var currReviewList = product.reviews.slice(
+   const currReviewList = product.reviews.slice(
       reviewsPerPage * (currPage - 1), reviewsPerPage * currPage
    );
+
+   function toggleReviewPopover(reviewIndex, imageIndex) {
+      setReviewPopoverInfo(prev => { 
+         document.body.style.overflow = prev.show ? '' : 'hidden';
+         document.body.ariaDisabled = prev.show ? null : 'true';
+         
+         return { show: !prev.show, reviewIndex, imageIndex }
+      });
+   }
+
+   function updateReviewPopover(newReviewIndex) {
+      setReviewPopoverInfo({ show: true, reviewIndex: newReviewIndex, imageIndex: 0 });
+   }
 
    return (
       <article className={styles['reviews']}>
          <h2 id='reviews'>Reviews</h2>
          <RatingBar reviews={product.reviews} context={'reviews'} />
          
-         <ReviewImageList product={product} />
+         <ReviewImageList product={product} toggleReviewPopover={toggleReviewPopover} />
 
          <NewReviewForm product={product} />
 
@@ -39,7 +56,10 @@ export default function Reviews({ product }) {
                            return (
                               //after linking database, replace key with review.id
                               <li key={index}>
-                                 <ReviewCard product={product} review={review} />
+                                 <ReviewCard product={product} review={review} 
+                                    reviewIndex={index}
+                                    toggleReviewPopover={toggleReviewPopover}
+                                 />
                               </li>
                            );
                         })
@@ -53,6 +73,18 @@ export default function Reviews({ product }) {
             reviewsPerPage={reviewsPerPage} setReviewsPerPage={setReviewsPerPage}
             currPage={currPage} setCurrPage={setCurrPage}
          />
+
+         {
+            reviewPopoverInfo.show &&
+               <ReviewPopover 
+                  product={product} 
+                  review={product.reviews[reviewPopoverInfo.reviewIndex]} 
+                  reviewIndex={reviewPopoverInfo.reviewIndex}
+                  imageIndex={reviewPopoverInfo.imageIndex}
+                  toggleReviewPopover={toggleReviewPopover}
+                  updateReviewPopover={updateReviewPopover}
+               />
+         }
       </article>
    );
 };

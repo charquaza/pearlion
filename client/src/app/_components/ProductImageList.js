@@ -4,10 +4,18 @@ import { useState } from 'react';
 import Image from 'next/image';
 import styles from '@/app/_styles/ProductImageList.module.css';
 
-export default function ProductImageList({ product }) {
-   const [ currImageIndex, setCurrImageIndex ] = useState(0);
-   const [ slideshow, setSlideshow ] = useState(
-      new Map([ ['startIndex', 0], ['count', 4] ])
+export default function ProductImageList({ product, review, imageIndex }) {
+   const imageList = review ? review.images : product.images;
+
+   const [ currImageIndex, setCurrImageIndex ] = useState(imageIndex || 0);
+   const [ slideshowLength, setSlideshowLength ] = useState(4);
+   const [ slideshowStartIndex, setSlideshowStartIndex ] = useState(
+      imageIndex
+         ? 
+            (imageIndex + slideshowLength > imageList.length) 
+               ? Math.max(imageList.length - slideshowLength, 0)
+               : imageIndex
+         : 0
    );
 
    function handleImageToggle(e) {
@@ -17,12 +25,12 @@ export default function ProductImageList({ product }) {
             : prev + 1;
 
          //make sure selected image is visible in slideshow
-         if (currIndex < slideshow.get('startIndex')) {
-            let diff = slideshow.get('startIndex') - currIndex;
-            setSlideshow(new Map([ ...slideshow, ['startIndex', slideshow.get('startIndex') - diff] ]));
-         } else if (currIndex >= slideshow.get('startIndex') + slideshow.get('count')) {
-            let diff = currIndex - slideshow.get('startIndex') - slideshow.get('count') + 1;
-            setSlideshow(new Map([ ...slideshow, ['startIndex', slideshow.get('startIndex') + diff] ]));
+         if (currIndex < slideshowStartIndex) {
+            let diff = slideshowStartIndex - currIndex;
+            setSlideshowStartIndex(prev => prev - diff);
+         } else if (currIndex >= slideshowStartIndex + slideshowLength) {
+            let diff = currIndex - slideshowStartIndex - slideshowLength + 1;
+            setSlideshowStartIndex(prev => prev + diff);
          }
 
          return currIndex;
@@ -31,9 +39,9 @@ export default function ProductImageList({ product }) {
 
    function handleSlideshowToggle(e) {
       if (e.target.id === 'previous-slide') {
-         setSlideshow(new Map([ ...slideshow, ['startIndex', slideshow.get('startIndex') - 1] ]));
+         setSlideshowStartIndex(prev => prev - 1);
       } else if (e.target.id === 'next-slide') {
-         setSlideshow(new Map([ ...slideshow, ['startIndex', slideshow.get('startIndex') + 1] ]));
+         setSlideshowStartIndex(prev => prev + 1);
       }
    }
 
@@ -52,32 +60,32 @@ export default function ProductImageList({ product }) {
             > &lt; </button>
             <div className={styles['curr-image-container']}>
                <Image
-                  src={product.images[currImageIndex]}
+                  src={imageList[currImageIndex]}
                   alt={product.name}
                   quality={100}
                   sizes='50vw'
                   priority={true}
                />
             </div>
-            <button id='next-img' disabled={currImageIndex === product.images.length - 1}
+            <button id='next-img' disabled={currImageIndex === imageList.length - 1}
                onClick={handleImageToggle}
             > &gt; </button>
          </div>
 
          <div className={styles['slideshow-container']}>
             {
-               product.images.length > slideshow.get('count') &&
-                  <button id='previous-slide' disabled={slideshow.get('startIndex') === 0}
+               imageList.length > slideshowLength &&
+                  <button id='previous-slide' disabled={slideshowStartIndex === 0}
                      onClick={handleSlideshowToggle}
                   > &lt; </button>
             }
 
             <ul className={styles['image-list']}>
                {
-                  product.images.map((image, index) => {
+                  imageList.map((image, index) => {
                      if (
-                        index < slideshow.get('startIndex') || 
-                        index >= slideshow.get('startIndex') + slideshow.get('count')
+                        index < slideshowStartIndex || 
+                        index >= slideshowStartIndex + slideshowLength
                      ) {
                         return null;
                      } else {
@@ -104,8 +112,8 @@ export default function ProductImageList({ product }) {
             </ul>
 
             {
-               product.images.length > slideshow.get('count') &&
-                  <button id='next-slide' disabled={slideshow.get('startIndex') + slideshow.get('count') >= product.images.length}
+               imageList.length > slideshowLength &&
+                  <button id='next-slide' disabled={slideshowStartIndex + slideshowLength >= imageList.length}
                      onClick={handleSlideshowToggle}
                   > &gt; </button>
             }
