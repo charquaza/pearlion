@@ -34,7 +34,7 @@ exports.signUp = [
          let newUser = await db.User.create({
             firstName: req.body.firstName,
             lastName: req.body.lastName,
-            privilege: req.body.privilege,
+            privilege: 'user',
             username: req.body.username,
             password: hashedPassword,
             email: req.body.email,
