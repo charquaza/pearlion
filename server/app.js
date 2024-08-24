@@ -80,6 +80,7 @@ app.use(cors(corsOptions));
 //Set up sessions and passport
 app.use(session({
    secret: process.env.SESSION_SECRET,
+   name: 'sid',
    resave: false,
    saveUninitialized: false,
    cookie: {
