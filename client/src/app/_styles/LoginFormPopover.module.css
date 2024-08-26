@@ -5,6 +5,13 @@
    padding: 2vh;
 }
 
+.login-form .error-msg {
+   color: rgb(255, 72, 0);
+   font-style: italic;
+   font-size: 0.9em;
+   margin-top: 0;
+}
+
 .login-form input {
    width: 15vw;
 }
