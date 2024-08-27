@@ -32,10 +32,6 @@ module.exports = {
             type: Sequelize.BIGINT,
             allowNull: false
          },
-         purchaseTotal: {
-            type: Sequelize.BIGINT,
-            allowNull: false
-         },
          fulfillmentStatus: {
             type: Sequelize.STRING(100),
             allowNull: false

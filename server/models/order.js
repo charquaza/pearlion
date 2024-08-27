@@ -42,10 +42,6 @@ module.exports = (sequelize, DataTypes) => {
          type: DataTypes.BIGINT,
          allowNull: false
       },
-      purchaseTotal: {
-         type: DataTypes.BIGINT,
-         allowNull: false
-      },
       fulfillmentStatus: {
          type: DataTypes.STRING(100),
          allowNull: false
