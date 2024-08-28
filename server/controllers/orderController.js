@@ -116,7 +116,6 @@ exports.update = [
    async function (req, res, next) {
       try {
          let fieldsToUpdate = {
-            client: req.user.id,
             purchaseDate: Date.now(),
             shippingCost: req.body.shippingCost,
             tax: req.body.tax,
