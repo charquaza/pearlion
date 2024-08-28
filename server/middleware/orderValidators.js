@@ -41,16 +41,6 @@ exports.create = [
          }
          return true;
       }),
-   body('purchaseTotal')
-      .custom((value) => {
-         if (!Number.isInteger(value)) {
-            throw new Error('Invalid value for Purchase Total');
-         }
-         if (value < 0) {
-            throw new Error('Purchase Total cannot be less than zero');
-         }
-         return true;
-      }),
    body('fulfillmentStatus')
       .isString().withMessage('Invalid value for Fulfillment Status').bail()
       .trim().custom((value) => {
@@ -107,16 +97,6 @@ exports.update = [
          }
          if (value < 0) {
             throw new Error('Tax cannot be less than zero');
-         }
-         return true;
-      }),
-   body('purchaseTotal')
-      .custom((value) => {
-         if (!Number.isInteger(value)) {
-            throw new Error('Invalid value for Purchase Total');
-         }
-         if (value < 0) {
-            throw new Error('Purchase Total cannot be less than zero');
          }
          return true;
       }),
