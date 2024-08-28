@@ -1,5 +1,5 @@
 const { body, param, validationResult } = require('express-validator');
-const { Op } = require("sequelize");
+const { Op } = require('sequelize');
 const bcrypt = require('bcryptjs');
 const db = require('../models/index');
 
