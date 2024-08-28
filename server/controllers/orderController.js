@@ -71,7 +71,6 @@ exports.create = [
                purchaseDate: Date.now(),
                shippingCost: req.body.shippingCost,
                tax: req.body.tax,
-               purchaseTotal: req.body.purchaseTotal,
                fulfillmentStatus: req.body.fulfillmentStatus,
                deliveryDate: req.body.deliveryDate,
                returnStatus: req.body.returnStatus
@@ -82,6 +81,7 @@ exports.create = [
                return db.Purchase.create({
                   order: newOrder.id,
                   product: purchaseData.productId,
+                  unitPrice: purchaseData.unitPrice,
                   quantityPurchased: purchaseData.quantityPurchased
                }, { transaction: t });
             }));
