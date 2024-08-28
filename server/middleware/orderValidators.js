@@ -59,15 +59,34 @@ exports.create = [
       }).withMessage('Invalid value for Return Status'),
    body('productsPurchased')
       .isArray().withMessage('Invalid value for Products Purchased').bail()
-      .custom((value) => {
-         if (value.length === 0) {
+      .custom(async (productsPurchased) => {
+         if (productsPurchased.length === 0) {
             throw new Error('Products Purchased must contain at least one product');
          }
-         
-         for (let i = 0; i < value.length; i++) {
+
+         for (let i = 0; i < productsPurchased.length; i++) {
+            let purchaseData = productsPurchased[i];
+
+            try {
+               var product = await db.Product.findByPk(purchaseData.productId);
+            } catch(err) {
+               throw new Error('Error in confirming product details. Please try again later, or report the issue.');
+            }
+
+            if (!product || product.status !== 'sale') {
+               throw new Error('Products Purchased contains a product that isn\'t for sale');
+            }
+
             if (
-               !Number.isInteger(value[i].quantityPurchased) ||
-               value[i].quantityPurchased <= 0
+               !Number.isInteger(purchaseData.unitPrice) ||
+               purchaseData.quantityPurchased <= 0
+            ) {
+               throw new Error('Products Purchased contains an invalid unit price');
+            }
+
+            if (
+               !Number.isInteger(purchaseData.quantityPurchased) ||
+               purchaseData.quantityPurchased <= 0
             ) {
                throw new Error('Products Purchased contains an invalid purchase quantity');
             }
