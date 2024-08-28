@@ -2,7 +2,7 @@ const db = require('../models/index');
 const orderValidators = require('../middleware/orderValidators');
 
 exports.getAll = [
-   async function checkPermissions(req, res, next) {
+   function checkPermissions(req, res, next) {
       if (!req.user) {
          return res.status(404).json({ errors: ['Order not found'] });
       }
@@ -23,7 +23,7 @@ exports.getAll = [
 ];
 
 exports.getById = [
-   async function checkPermissions(req, res, next) {
+   function checkPermissions(req, res, next) {
       if (!req.user) {
          return res.status(404).json({ errors: ['Order not found'] });
       }
@@ -52,7 +52,7 @@ exports.getById = [
 ];
 
 exports.create = [
-   async function checkPermissions(req, res, next) {
+   function checkPermissions(req, res, next) {
       if (!req.user) {
          return res.status(404).json({ errors: ['Order not found'] });
       }
@@ -99,7 +99,7 @@ exports.create = [
 exports.update = [
    orderValidators.checkIdParam,
 
-   async function checkPermissions(req, res, next) {
+   function checkPermissions(req, res, next) {
       if (!req.user) {
          return res.status(404).json({ errors: ['Order not found'] });
       }
@@ -140,7 +140,7 @@ exports.update = [
 ];
 
 exports.delete = [
-   async function checkPermissions(req, res, next) {
+   function checkPermissions(req, res, next) {
       if (!req.user) {
          return res.status(404).json({ errors: ['Order not found'] });
       }

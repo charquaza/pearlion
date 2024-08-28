@@ -2,7 +2,7 @@ const { body, param, validationResult } = require('express-validator');
 const { Op } = require("sequelize");
 const db = require('../models/index');
 
-async function checkValidation(req, res, next) {
+function checkValidation(req, res, next) {
    var validationErrors = validationResult(req);
 
    if (!validationErrors.isEmpty()) {

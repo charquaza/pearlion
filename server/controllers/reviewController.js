@@ -31,7 +31,7 @@ exports.getById = [
 ];
 
 exports.create = [
-   async function checkPermissions(req, res, next) {
+   function checkPermissions(req, res, next) {
       if (!req.user) {
          return res.status(404).json({ errors: ['Review not found'] });
       }
@@ -66,7 +66,7 @@ exports.update = [
       }
 
       try {
-         let review = db.Review.findByPk(req.params.reviewId);
+         let review = await db.Review.findByPk(req.params.reviewId);
 
          if (review === null) {
             return res.status(404).json({ errors: ['Review not found'] });
@@ -114,7 +114,7 @@ exports.delete = [
       }
 
       try {
-         let review = db.Review.findByPk(req.params.reviewId);
+         let review = await db.Review.findByPk(req.params.reviewId);
 
          if (review === null) {
             return res.status(404).json({ errors: ['Review not found'] });
