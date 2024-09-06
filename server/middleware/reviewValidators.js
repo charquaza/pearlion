@@ -1,5 +1,4 @@
 const { body, param, validationResult } = require('express-validator');
-const { Op } = require('sequelize');
 const db = require('../models/index');
 
 function checkValidation(req, res, next) {
