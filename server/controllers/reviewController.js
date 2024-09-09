@@ -2,10 +2,61 @@ const db = require('../models/index');
 const reviewValidators = require('../middleware/reviewValidators');
 
 exports.getAll = [
+   reviewValidators.checkProjectIdQuery,
+
    async function (req, res, next) {
+      var findOptions;
+      if (req.query.projectId) {
+         findOptions = { 
+            where: { product: req.query.projectId },
+            raw: true 
+         };
+      } else {
+         if (req.user.privilege !== 'admin') {
+            return res.status(404).json({ errors: ['Review not found'] });
+         }
+
+         findOptions = { raw: true };
+      }
+
       try {
-         let reviewList = await db.Review.findAll({ raw: true })
-         res.json({ data: reviewList });
+         let reviewList = await db.Review.findAll(findOptions);
+
+         if (reviewList.length === 0) {
+            return res.status(404).json({ errors: ['Review not found'] });
+         }
+
+         let allReviewImages = await Promise.all(reviewList.map(review => {
+            return db.ReviewImages.findAll({
+               where: { review: review.id },
+               raw: true
+            });
+         }));
+         
+         let allImages = await Promise.all(allReviewImages.map(reviewImageList => {
+            return Promise.all(reviewImageList.map(reviewImage => {
+               return db.Image.findByPk(reviewImage.image, { raw: true });
+            }));
+         })); 
+         
+         allImages.forEach(imageList => {
+            imageList.sort((a, b) => {
+               if (a.name < b.name) {
+                  return -1;
+               } else if (a.name === b.name) {
+                  return 0;
+               } else {
+                  return 1;
+               }
+            });
+         });
+
+         //append images to each review
+         reviewList.forEach((review, index) => {
+            review.images = allImages[index];
+         });
+
+         return res.json({ data: reviewList });
       } catch (err) {
          return next(err);
       }

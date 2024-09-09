@@ -1,4 +1,4 @@
-const { body, param, validationResult } = require('express-validator');
+const { body, param, query, validationResult } = require('express-validator');
 const db = require('../models/index');
 
 function checkValidation(req, res, next) {
@@ -15,6 +15,14 @@ function checkValidation(req, res, next) {
 exports.checkIdParam = [
    param('reviewId').isString().withMessage('Invalid value for reviewId').bail()
       .trim().notEmpty().withMessage('reviewId cannot be blank'),
+
+   checkValidation
+];
+
+exports.checkProjectIdQuery = [
+   query('projectId').optional({ values: 'falsy' })
+      .isString().withMessage('Invalid value for projectId').bail()
+      .trim(),
 
    checkValidation
 ];
