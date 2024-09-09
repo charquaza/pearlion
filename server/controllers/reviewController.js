@@ -17,12 +17,33 @@ exports.getById = [
 
    async function (req, res, next) {
       try {
-         let reviewData = await db.Review.findByPk(req.params.reviewId);
+         let reviewData = await db.Review.findByPk(req.params.reviewId, { raw: true });
 
          if (reviewData === null) {
-            res.status(404).json({ errors: ['Review not found'] });
+            return res.status(404).json({ errors: ['Review not found'] });
          } else {
-            res.json({ data: reviewData.get() });
+            //get review images
+            let reviewImages = await db.ReviewImages.findAll({
+               where: { review: req.params.reviewId },
+               raw: true
+            });
+            
+            let images = await Promise.all(reviewImages.map(reviewImage => {
+               return db.Image.findByPk(reviewImage.image, { raw: true });
+            }));
+            images.sort((a, b) => {
+               if (a.name < b.name) {
+                  return -1;
+               } else if (a.name === b.name) {
+                  return 0;
+               } else {
+                  return 1;
+               }
+            });
+
+            reviewData.images = images;
+
+            return res.json({ data: reviewData });
          }
       } catch (err) {
          return next(err);
