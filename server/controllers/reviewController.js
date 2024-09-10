@@ -136,9 +136,9 @@ exports.create = [
                review: req.body.review
             }, { raw: true, transaction: t });
 
-            const images = await Promise.all(req.files.map((imageFile, index) => {
+            const images = await Promise.all(req.files.map(file => {
                return db.Image.create({
-                  name: req.user.username + '_' + req.body.productId + '_' + index,
+                  name: req.user.username + '_' + req.body.productId,
                   description: 'Customer image uploaded with product review',
                   data: imageFile.buffer
                }, { raw: true, transaction: t });
