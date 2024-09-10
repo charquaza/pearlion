@@ -1,5 +1,17 @@
+const multer = require('multer');
 const db = require('../models/index');
 const reviewValidators = require('../middleware/reviewValidators');
+
+const upload = multer({
+   storage: multer.memoryStorage(),
+   fileFilter: (req, file, cb) => {
+      if (file.mimetype.startsWith('image/')) {
+         cb(null, true); 
+      } else {
+         cb(new Error('Invalid file type: please submit an image'), false);
+      }
+   }
+});
 
 exports.getAll = [
    reviewValidators.checkProjectIdQuery,
@@ -27,7 +39,7 @@ exports.getAll = [
          }
 
          let allReviewImages = await Promise.all(reviewList.map(review => {
-            return db.ReviewImages.findAll({
+            return db.ReviewImage.findAll({
                where: { review: review.id },
                raw: true
             });
@@ -74,7 +86,7 @@ exports.getById = [
             return res.status(404).json({ errors: ['Review not found'] });
          } else {
             //get review images
-            let reviewImages = await db.ReviewImages.findAll({
+            let reviewImages = await db.ReviewImage.findAll({
                where: { review: req.params.reviewId },
                raw: true
             });
@@ -112,17 +124,37 @@ exports.create = [
    },
 
    reviewValidators.create,
+   upload.array('images'),
 
    async function (req, res, next) {
       try {
-         const newReview = await db.Review.create({
-            client: req.user.id,
-            product: req.body.productId,
-            rating: req.body.rating,
-            review: req.body.review
+         const result = await sequelize.transaction(async t => {
+            const newReview = await db.Review.create({
+               client: req.user.id,
+               product: req.body.productId,
+               rating: req.body.rating,
+               review: req.body.review
+            }, { raw: true, transaction: t });
+
+            const images = await Promise.all(req.files.map((imageFile, index) => {
+               return db.Image.create({
+                  name: req.user.username + '_' + req.body.productId + '_' + index,
+                  description: 'Customer image uploaded with product review',
+                  data: imageFile.buffer
+               }, { raw: true, transaction: t });
+            }));
+
+            const reviewImages = await Promise.all(images.map(image => {
+               return db.ReviewImage.create({
+                  review: newReview.id,
+                  image: image.id
+               }, { raw: true, transaction: t });
+            }));
+
+            return newReview;
          });
 
-         res.json({ data: newReview.get() });
+         res.json({ data: result });
       } catch (err) {
          return next(err);
       }
