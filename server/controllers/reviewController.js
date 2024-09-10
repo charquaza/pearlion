@@ -267,11 +267,24 @@ exports.delete = [
          let reviewToDelete = await db.Review.findByPk(req.params.reviewId);
 
          if (reviewToDelete === null) {
-            res.status(404).json({ errors: ['Review not found'] });
-         } else {
-            await reviewToDelete.destroy();
-            res.json({ data: { msg: 'Review delete successful' } });   
-         }
+            return res.status(404).json({ errors: ['Review not found'] });
+         } 
+
+         await db.sequelize.transaction(async t => {
+            let reviewImages = await db.ReviewImage.findAll({ 
+               where: { review: reviewToDelete.id },
+               raw: true,
+               transaction: t 
+            });
+
+            let imagesToDelete = Promise.all(reviewImages.map(reviewImage => {
+               db.Image.destroy({ where: { id: reviewImage.image }, transaction: t });
+            }));
+
+            await Promise.all([ reviewToDelete.destroy({ transaction: t }), imagesToDelete ]);
+         });
+
+         res.json({ data: { msg: 'Review delete successful' } });   
       } catch (err) {
          return next(err);
       }
