@@ -128,7 +128,7 @@ exports.create = [
 
    async function (req, res, next) {
       try {
-         const result = await sequelize.transaction(async t => {
+         const result = await db.sequelize.transaction(async t => {
             const newReview = await db.Review.create({
                client: req.user.id,
                product: req.body.productId,
@@ -187,22 +187,50 @@ exports.update = [
    },
    
    reviewValidators.update,
+   upload.array('newImages'),
 
    async function (req, res, next) {
       try {
-         let fieldsToUpdate = {
-            rating: req.body.rating,
-            review: req.body.review
-         };
-
-         let reviewToUpdate = await db.Review.findByPk(req.params.reviewId);
+         let reviewToUpdate = await db.Review.findByPk(req.params.reviewId, { raw: true });
 
          if (reviewToUpdate === null) {
-            res.status(404).json({ errors: ['Review not found'] });
-         } else {
-            let updatedReview = await reviewToUpdate.update(fieldsToUpdate);
-            res.json({ data: updatedReview.get() });
+            return res.status(404).json({ errors: ['Review not found'] });
          }
+
+         const updateResult = await db.sequelize.transaction(async t => {
+            let reviewFieldsToUpdate = {
+               rating: req.body.rating,
+               review: req.body.review
+            };
+
+            let updateReviewPromise = reviewToUpdate.update(reviewFieldsToUpdate, 
+               { raw: true, transaction: t}
+            );
+
+            let createImagesPromise = Promise.all(req.files.map(file => {
+               return db.Image.create({
+                  name: req.user.username + '_' + reviewToUpdate.product,
+                  description: 'Customer image uploaded with product review',
+                  data: file.buffer
+               }, { raw: true, transaction: t });
+            }));
+
+            let deleteImagesPromise = req.body.deletedImages 
+               ?
+                  db.Image.destroy({
+                     where: { id: req.body.deletedImages },
+                     transaction: t
+                  })
+               : null;
+            
+            let [ updatedReview ] = await Promise.all([ 
+               updateReviewPromise, createImagesPromise, deleteImagesPromise
+            ]);
+
+            return updatedReview;
+         });
+
+         res.json({ data: updateResult });
       } catch (err) {
          return next(err);
       }

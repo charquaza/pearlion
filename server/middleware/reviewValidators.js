@@ -77,6 +77,8 @@ exports.update = [
    body('review').isString().withMessage('Invalid value for Review').bail()
       .trim().notEmpty().withMessage('Review cannot be blank')
       .escape(),
-   
+   body('deletedImages').optional({ values: 'falsy' })
+      .isArray({ min: 1 }).withMessage('Invalid value for deletedImages'),
+
    checkValidation
 ];
