@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import useUser from '../_hooks/useUser';
 import RatingBar from './RatingBar';
 import ReviewImageList from './ReviewImageList';
 import NewReviewForm from './NewReviewForm';
@@ -15,6 +16,8 @@ export default function Reviews({ product }) {
    const [ reviewPopoverInfo, setReviewPopoverInfo ] = useState({
       show: false, reviewIndex: undefined, imageIndex: undefined 
    });
+
+   const { user } = useUser();
 
    const currReviewList = product.reviews.slice(
       reviewsPerPage * (currPage - 1), reviewsPerPage * currPage
@@ -40,7 +43,10 @@ export default function Reviews({ product }) {
          
          <ReviewImageList product={product} toggleReviewPopover={toggleReviewPopover} />
 
-         <NewReviewForm product={product} />
+         {
+            (user && user.data) &&
+               <NewReviewForm product={product} />
+         }
 
          <ReviewPagination product={product} 
             reviewsPerPage={reviewsPerPage} setReviewsPerPage={setReviewsPerPage}
