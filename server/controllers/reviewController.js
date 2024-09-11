@@ -1,17 +1,6 @@
-const multer = require('multer');
 const db = require('../models/index');
 const reviewValidators = require('../middleware/reviewValidators');
-
-const upload = multer({
-   storage: multer.memoryStorage(),
-   fileFilter: (req, file, cb) => {
-      if (file.mimetype.startsWith('image/')) {
-         cb(null, true); 
-      } else {
-         cb(new Error('Invalid file type: please submit an image'), false);
-      }
-   }
-});
+const { imageUpload } = require('../middleware/multerUploads');
 
 exports.getAll = [
    reviewValidators.checkProjectIdQuery,
@@ -124,7 +113,7 @@ exports.create = [
    },
 
    reviewValidators.create,
-   upload.array('images'),
+   imageUpload.array('images'),
 
    async function (req, res, next) {
       try {
@@ -187,7 +176,7 @@ exports.update = [
    },
    
    reviewValidators.update,
-   upload.array('newImages'),
+   imageUpload.array('newImages'),
 
    async function (req, res, next) {
       try {
