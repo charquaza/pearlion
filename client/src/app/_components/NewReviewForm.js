@@ -5,6 +5,7 @@ import styles from '@/app/_styles/NewReviewForm.module.css';
 export default function NewReviewForm({ product }) {
    const [ showReviewForm, setShowReviewForm ] = useState(false);
    const [ inputValues, setInputValues ] = useState({ rating: '0', review: '' });
+   const [ formErrors, setFormErrors ] = useState([]);
 
    function toggleReviewForm(e) {
       setInputValues({ rating: '0', review: '' });
@@ -41,6 +42,13 @@ export default function NewReviewForm({ product }) {
                      {product.name}
                   </p>
                </div>
+
+               {
+                  formErrors.length > 0 &&
+                     <ul className={styles['form-errors']}>
+                        {formErrors.map(errMsg => <li key={errMsg}>{errMsg}</li>)}
+                     </ul>
+               }
 
                <fieldset className={styles['rating-fieldset']}>
                   <legend>Rating:</legend>
@@ -92,7 +100,7 @@ export default function NewReviewForm({ product }) {
                   <textarea
                      placeholder='Write your review here'
                      name='review' value={inputValues.review}
-                     onChange={handleInput}
+                     onChange={handleInput} required
                   />
                </label>
 

@@ -17,6 +17,11 @@
    font-size: 1.3rem;
 }
 
+.new-review-form .form-errors {
+   color: rgb(255, 72, 0);
+   font-style: italic;
+}
+
 .new-review-form label {
    display: block;
    padding: 0.8vw 0;
