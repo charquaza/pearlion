@@ -1,19 +1,49 @@
 import { useState } from 'react';
 import Image from 'next/image';
+import { isValidImageType, formatFileSize } from '../_utils/utils';
 import styles from '@/app/_styles/NewReviewForm.module.css';
 
 export default function NewReviewForm({ product }) {
    const [ showReviewForm, setShowReviewForm ] = useState(false);
    const [ inputValues, setInputValues ] = useState({ rating: '0', review: '' });
+   const [ uploadPreview, setUploadPreview ] = useState([]);
    const [ formErrors, setFormErrors ] = useState([]);
 
    function toggleReviewForm(e) {
       setInputValues({ rating: '0', review: '' });
+      setUploadPreview([]);
       setShowReviewForm(prev => !prev);
    }
 
    function handleInput(e) {
       setInputValues({ ...inputValues, [e.target.name]: e.target.value });
+   }
+
+   function handleUpload(e) {
+      const currFiles = e.target.files;
+
+      if (currFiles.length === 0) {
+         setUploadPreview([]);
+      } else {
+         let newUploadPreview = [];
+
+         for (const file of currFiles) {
+            let previewInfo = {};
+
+            if (isValidImageType(file)) {
+               previewInfo.text = `${file.name} (${formatFileSize(file.size)})`;
+               previewInfo.imgSrc = URL.createObjectURL(file);
+               previewInfo.imgAlt = file.name;
+            } else {
+               previewInfo.text = `'${file.name}' is not a valid image, please choose a
+                  different image`;
+            }
+
+            newUploadPreview.push(previewInfo);
+         }
+
+         setUploadPreview(newUploadPreview);
+      }
    }
 
    function handleFormSubmit(e) {
@@ -24,6 +54,7 @@ export default function NewReviewForm({ product }) {
       showReviewForm
          ? 
             <form className={styles['new-review-form']}
+               encType='multipart/form-data'
                onSubmit={handleFormSubmit}
             >
                <h3>Your Review for:</h3>
@@ -103,6 +134,43 @@ export default function NewReviewForm({ product }) {
                      onChange={handleInput} required
                   />
                </label>
+
+               <label className={styles['file-upload-label']}>
+                  Add Images
+                  <input 
+                     type='file' 
+                     accept='image/apng, image/avif, image/gif, 
+                        image/jpeg, image/png, image/svg+xml, 
+                        image/webp' 
+                     multiple 
+                     onChange={handleUpload}
+                  />
+               </label>
+
+               <ul className={styles['file-upload-list']}>
+                  {
+                     uploadPreview.map(info => {
+                        return (
+                           <li key={info.text}>
+                              <div className={styles['file-upload-image-ctnr']}>
+                                 {
+                                    (info.imgSrc && info.imgAlt) &&
+                                       <Image
+                                          src={info.imgSrc}
+                                          alt={info.imgAlt}
+                                          fill
+                                          quality={50}
+                                          sizes='10vw'
+                                       />
+                                 }
+                              </div>
+
+                              <p>{info.text}</p>
+                           </li>
+                        );
+                     })
+                  }
+               </ul>
 
                <button type='submit'>Submit</button>
 
