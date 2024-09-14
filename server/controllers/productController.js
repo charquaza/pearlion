@@ -50,6 +50,7 @@ exports.create = [
          let newProduct = await db.Product.create({
             name: req.body.name,
             description: req.body.description,
+            category: req.body.category,
             price: req.body.price,
             quantityInStock: req.body.quantityInStock,
             status: req.body.status
@@ -84,6 +85,7 @@ exports.update = [
          let fieldsToUpdate = {
             name: req.body.name,
             description: req.body.description,
+            category: req.body.category,
             price: req.body.price,
             quantityInStock: req.body.quantityInStock,
             status: req.body.status

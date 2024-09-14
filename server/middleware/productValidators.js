@@ -23,7 +23,7 @@ exports.checkIdParam = [
 exports.create = [
    body('name').isString().withMessage('Invalid value for Name').bail()
       .trim().notEmpty().withMessage('Name cannot be blank')
-      .isLength({ max: 200 }).withMessage('Name cannot be longer than 20 characters')
+      .isLength({ max: 200 }).withMessage('Name cannot be longer than 200 characters')
       .bail().custom(async (value) => {
          try {
             var product = await db.Product.findOne({ where: { name: value } });
@@ -38,6 +38,9 @@ exports.create = [
    body('description').isString().withMessage('Invalid value for Description').bail()
       .trim().notEmpty().withMessage('Description cannot be blank')
       .escape(),
+   body('category').isString().withMessage('Invalid value for Category').bail()
+      .trim().notEmpty().withMessage('Category cannot be blank')
+      .isLength({ max: 100 }).withMessage('Category cannot be longer than 100 characters'),
    body('price')
       .custom((value) => {
          if (!Number.isInteger(value)) {
@@ -91,6 +94,9 @@ exports.update = [
    body('description').isString().withMessage('Invalid value for Description').bail()
       .trim().notEmpty().withMessage('Description cannot be blank')
       .escape(),
+   body('category').isString().withMessage('Invalid value for Category').bail()
+      .trim().notEmpty().withMessage('Category cannot be blank')
+      .isLength({ max: 100 }).withMessage('Category cannot be longer than 100 characters'),
    body('price')
       .custom((value) => {
          if (!Number.isInteger(value)) {
