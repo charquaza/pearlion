@@ -39,7 +39,7 @@ exports.create = [
          if (product === null) {
             throw new Error('Cannot leave a review for this product');
          }
-      }),
+      }).bail({ level: 'request' }),
    body('rating')
       .custom((value) => {
          if (!Number.isInteger(value)) {

@@ -64,7 +64,7 @@ exports.signUp = [
       .trim().notEmpty().withMessage('Email cannot be blank')
       .isLength({ max: 324 }).withMessage('Email is too long; please enter a valid email address')
       .isEmail({ allow_underscores: true }).withMessage('Please enter a valid email address, e.g. username@aol.com')
-      .custom(async (value) => {
+      .bail().custom(async (value) => {
          try {
             var user = await db.User.findOne({ where: { email: value } });
          } catch (err) {
@@ -151,7 +151,7 @@ exports.update = [
       .trim().notEmpty().withMessage('Email cannot be blank')
       .isLength({ max: 324 }).withMessage('Email is too long; please enter a valid email address')
       .isEmail({ allow_underscores: true }).withMessage('Please enter a valid email address, e.g. username@aol.com')
-      .custom(async (value, { req }) => {
+      .bail().custom(async (value, { req }) => {
          try {
             var user = await db.User.findOne({ 
                where: { 
