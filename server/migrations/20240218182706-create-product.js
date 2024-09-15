@@ -19,6 +19,10 @@ module.exports = {
             type: Sequelize.TEXT,
             allowNull: false
          },
+         category: {
+            type: Sequelize.STRING(100),
+            allowNull: false
+         },   
          price: {
             type: Sequelize.BIGINT,
             allowNull: false
@@ -29,7 +33,7 @@ module.exports = {
          },
          status: {
             type: Sequelize.STRING(100),
-            defaultValue: 'sale',
+            defaultValue: 'for sale',
             allowNull: false
          },
          createdAt: {
