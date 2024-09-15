@@ -120,7 +120,7 @@ exports.update = [
    body('status').optional({ values: 'falsy' })
       .isString().withMessage('Invalid value for Status').bail()
       .trim().custom((value) => {
-         const allowedValues = [ 'sale', 'not for sale' ];
+         const allowedValues = [ 'for sale', 'not for sale', 'new', 'bestseller' ];
          return allowedValues.includes(value); 
       }).withMessage('Invalid value for Status'),
    

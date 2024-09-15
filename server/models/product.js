@@ -43,7 +43,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       status: {
          type: DataTypes.STRING(100),
-         defaultValue: 'sale',
+         defaultValue: 'for sale',
          allowNull: false
       }
    }, {
