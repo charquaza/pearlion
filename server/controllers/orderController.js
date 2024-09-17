@@ -43,7 +43,7 @@ exports.getById = [
          ) {
             res.status(404).json({ errors: ['Order not found'] });
          } else {
-            res.json({ data: orderData.get() });
+            res.json({ data: orderData.get({ plain: true }) });
          }
       } catch (err) {
          return next(err);
@@ -89,7 +89,7 @@ exports.create = [
             return newOrder;
          });
 
-         res.json({ data: result.get() });
+         res.json({ data: result.get({ plain: true }) });
       } catch (err) {
          return next(err);
       }
@@ -131,7 +131,7 @@ exports.update = [
             res.status(404).json({ errors: ['Order not found'] });
          } else {
             let updatedOrder = await orderToUpdate.update(fieldsToUpdate);
-            res.json({ data: updatedOrder.get() });
+            res.json({ data: updatedOrder.get({ plain: true }) });
          }
       } catch (err) {
          return next(err);

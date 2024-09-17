@@ -109,6 +109,7 @@ exports.create = [
          return res.status(404).json({ errors: ['Review not found'] });
       }
       //user should only be allowed to write 1 review per product
+      //restrict review creation for production
 
       return next();
    },

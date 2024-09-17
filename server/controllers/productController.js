@@ -22,7 +22,7 @@ exports.getById = [
          if (productData === null) {
             res.status(404).json({ errors: ['Product not found'] });
          } else {
-            res.json({ data: productData.get() });
+            res.json({ data: productData.get({ plain: true }) });
          }
       } catch (err) {
          return next(err);
@@ -56,7 +56,7 @@ exports.create = [
             status: req.body.status
          });
 
-         res.json({ data: newProduct.get() });
+         res.json({ data: newProduct.get({ plain: true }) });
       } catch (err) {
          return next(err);
       }
@@ -97,7 +97,7 @@ exports.update = [
             res.status(404).json({ errors: ['Product not found'] });
          } else {
             let updatedProduct = await productToUpdate.update(fieldsToUpdate);
-            res.json({ data: updatedProduct.get() });
+            res.json({ data: updatedProduct.get({ plain: true }) });
          }
       } catch (err) {
          return next(err);

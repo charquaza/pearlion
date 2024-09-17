@@ -40,7 +40,7 @@ exports.signUp = [
             email: req.body.email,
             phone: req.body.phone
          });
-         newUser = newUser.get();
+         newUser = newUser.get({ plain: true });
 
          req.login(newUser, next);
       } catch (err) {
@@ -164,7 +164,7 @@ exports.getById = [
          if (userData === null) {
             res.status(404).json({ errors: ['User not found'] });
          } else {
-            res.json({ data: userData.get() });
+            res.json({ data: userData.get({ plain: true }) });
          }
       } catch (err) {
          return next(err);
@@ -211,7 +211,7 @@ exports.update = [
          } else {
             let updatedUser = await userToUpdate.update(fieldsToUpdate);
 
-            let userDataCopy = updatedUser.get();
+            let userDataCopy = updatedUser.get({ plain: true });
             delete userDataCopy.password;
             res.json({ data: userDataCopy });
          }
