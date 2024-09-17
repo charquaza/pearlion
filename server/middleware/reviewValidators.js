@@ -39,16 +39,20 @@ exports.create = [
          if (product === null) {
             throw new Error('Cannot leave a review for this product');
          }
+
+         return true;
       }).bail({ level: 'request' }),
    body('rating')
       .custom((value) => {
-         if (!Number.isInteger(value)) {
+         const rating = Number(value);
+
+         if (!Number.isInteger(rating)) {
             throw new Error('Invalid value for Rating');
          }
-         if (value < 1) {
+         if (rating < 1) {
             throw new Error('Rating cannot be less than 1');
          }
-         if (value > 5) {
+         if (rating > 5) {
             throw new Error('Rating cannot be greater than 5');
          }
          return true;
