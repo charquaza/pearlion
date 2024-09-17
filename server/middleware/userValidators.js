@@ -143,10 +143,12 @@ exports.update = [
       .withMessage('New Passwords do not match'),
    body('currPassword')
       .custom(
-         (value, { req }) => {
-            const passwordsMatch = bcrypt.compareSync(value, req.user.password);
-            return passwordsMatch;
-         }).withMessage('Incorrect password'),
+         async (value, { req }) => {
+            const passwordsMatch = await bcrypt.compare(value, req.user.password);
+            if (!passwordsMatch) {
+               throw new Error('Incorrect password');
+            }
+         }),
    body('email').isString().withMessage('Invalid value for Email').bail()
       .trim().notEmpty().withMessage('Email cannot be blank')
       .isLength({ max: 324 }).withMessage('Email is too long; please enter a valid email address')
