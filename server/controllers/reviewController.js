@@ -108,12 +108,13 @@ exports.create = [
       if (!req.user) {
          return res.status(404).json({ errors: ['Review not found'] });
       }
+      //user should only be allowed to write 1 review per product
 
       return next();
    },
 
+   imageUpload.array('images'),  //parse multipart/form-data first to populate req.body
    reviewValidators.create,
-   imageUpload.array('images'),
 
    async function (req, res, next) {
       try {
@@ -125,11 +126,11 @@ exports.create = [
                review: req.body.review
             }, { raw: true, transaction: t });
 
-            const images = await Promise.all(req.files.map(file => {
+            const images = await Promise.all(req.files.map((file, index) => {
                return db.Image.create({
-                  name: req.user.username + '_' + req.body.productId,
+                  name: req.user.username + '_' + index + '_' + req.body.productId,
                   description: 'Customer image uploaded with product review',
-                  data: imageFile.buffer
+                  data: file.buffer
                }, { raw: true, transaction: t });
             }));
 
