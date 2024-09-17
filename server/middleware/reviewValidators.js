@@ -39,8 +39,6 @@ exports.create = [
          if (product === null) {
             throw new Error('Cannot leave a review for this product');
          }
-
-         return true;
       }).bail({ level: 'request' }),
    body('rating')
       .custom((value) => {
