@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { isValidImageType, formatFileSize } from '../_utils/utils';
+import { apiURL } from '@/root/config';
 import styles from '@/app/_styles/NewReviewForm.module.css';
 
 export default function NewReviewForm({ product }) {
@@ -12,6 +13,7 @@ export default function NewReviewForm({ product }) {
    function toggleReviewForm(e) {
       setInputValues({ rating: '0', review: '' });
       setUploadPreview([]);
+      setFormErrors([]);
       setShowReviewForm(prev => !prev);
    }
 
@@ -46,8 +48,38 @@ export default function NewReviewForm({ product }) {
       }
    }
 
-   function handleFormSubmit(e) {
+   async function handleFormSubmit(e) {
       e.preventDefault();
+
+      const formData = new FormData(e.target);
+      // remove hard-coded productID after testing
+      formData.append('productId', '3a1f6246-4230-4023-9ea6-1fc72731733e');
+      //formData.append('productId', product.id);
+      
+      const fetchOptions = {
+         method: 'POST',
+         body: formData,
+         mode: 'cors',
+         credentials: 'include',
+         cache: 'no-store'
+      }
+      const fetchURL = apiURL + '/reviews';
+
+      try {
+         let res = await fetch(fetchURL, fetchOptions);
+
+         if (res.ok) {
+            setInputValues({ rating: '0', review: '' });
+            setUploadPreview([]); 
+            setFormErrors([]);     
+            setShowReviewForm(false);
+         } else {
+            let data = await res.json();
+            setFormErrors(data.errors);
+         }
+      } catch (e) {
+         setFormErrors(e.errors || e);
+      }
    }
 
    return (
@@ -138,7 +170,7 @@ export default function NewReviewForm({ product }) {
                <label className={styles['file-upload-label']}>
                   Add Images
                   <input 
-                     type='file' 
+                     type='file' name='images'
                      accept='image/apng, image/avif, image/gif, 
                         image/jpeg, image/png, image/svg+xml, 
                         image/webp' 
