@@ -19,9 +19,9 @@ exports.checkIdParam = [
    checkValidation
 ];
 
-exports.checkProjectIdQuery = [
-   query('projectId').optional({ values: 'falsy' })
-      .isString().withMessage('Invalid value for projectId').bail()
+exports.checkProductIdQuery = [
+   query('productId').optional({ values: 'falsy' })
+      .isString().withMessage('Invalid value for productId').bail()
       .trim(),
 
    checkValidation

@@ -3,13 +3,13 @@ const reviewValidators = require('../middleware/reviewValidators');
 const { imageUpload } = require('../middleware/multerUploads');
 
 exports.getAll = [
-   reviewValidators.checkProjectIdQuery,
+   reviewValidators.checkProductIdQuery,
 
    async function (req, res, next) {
       var findOptions;
-      if (req.query.projectId) {
+      if (req.query.productId) {
          findOptions = { 
-            where: { product: req.query.projectId },
+            where: { product: req.query.productId },
             raw: true 
          };
       } else {
