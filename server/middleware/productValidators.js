@@ -1,4 +1,4 @@
-const { body, param, validationResult } = require('express-validator');
+const { body, param, query, validationResult } = require('express-validator');
 const { Op } = require("sequelize");
 const db = require('../models/index');
 
@@ -12,6 +12,50 @@ function checkValidation(req, res, next) {
       return next();
    }
 }
+
+exports.checkStatusQuery = [
+   query('status').optional({ values: 'falsy' })
+      .isString().withMessage('Invalid value for Status').bail()
+      .trim().custom(value => {
+         const allowedValues = [
+            'for sale',
+            'not for sale',
+            'bestseller',
+            'new'
+         ];
+         return allowedValues.includes(value);
+      }).withMessage('Invalid value for Status'),
+
+   checkValidation
+];
+
+exports.checkCategoryQuery = [
+   query('category').optional({ values: 'falsy' })
+      .isString().withMessage('Invalid value for Category').bail()
+      .trim().custom(value => {
+         const allowedValues = [
+            'earrings',
+            'necklaces'
+         ];
+         return allowedValues.includes(value); 
+      }).withMessage('Invalid value for Category'),
+
+   checkValidation
+];
+
+exports.checkImagesQuery = [
+   query('images').optional({ values: 'null' })
+      .isString().withMessage('Invalid value for Images').bail()
+      .trim().custom(value => {
+         const allowedValues = [
+            'true',
+            'false'
+         ];
+         return allowedValues.includes(value); 
+      }).withMessage('Invalid value for Images'),
+
+   checkValidation
+];
 
 exports.checkIdParam = [
    param('productId').isString().withMessage('Invalid value for productId').bail()
@@ -39,8 +83,14 @@ exports.create = [
       .trim().notEmpty().withMessage('Description cannot be blank')
       .escape(),
    body('category').isString().withMessage('Invalid value for Category').bail()
-      .trim().notEmpty().withMessage('Category cannot be blank')
-      .isLength({ max: 100 }).withMessage('Category cannot be longer than 100 characters'),
+      .trim().custom(value => {
+         const allowedValues = [
+            'earrings',
+            'necklaces'
+         ];
+         return allowedValues.includes(value); 
+      }).withMessage('Invalid value for category'),
+
    body('price')
       .custom((value) => {
          if (!Number.isInteger(value)) {
@@ -64,7 +114,12 @@ exports.create = [
    body('status').optional({ values: 'falsy' })
       .isString().withMessage('Invalid value for Status').bail()
       .trim().custom((value) => {
-         const allowedValues = [ 'sale', 'not for sale' ];
+         const allowedValues = [
+            'for sale',
+            'not for sale',
+            'bestseller',
+            'new'
+         ];
          return allowedValues.includes(value); 
       }).withMessage('Invalid value for Status'),
    
@@ -95,8 +150,13 @@ exports.update = [
       .trim().notEmpty().withMessage('Description cannot be blank')
       .escape(),
    body('category').isString().withMessage('Invalid value for Category').bail()
-      .trim().notEmpty().withMessage('Category cannot be blank')
-      .isLength({ max: 100 }).withMessage('Category cannot be longer than 100 characters'),
+      .trim().custom(value => {
+         const allowedValues = [
+            'earrings',
+            'necklaces'
+         ];
+         return allowedValues.includes(value); 
+      }).withMessage('Invalid value for category'),
    body('price')
       .custom((value) => {
          if (!Number.isInteger(value)) {
@@ -120,7 +180,12 @@ exports.update = [
    body('status').optional({ values: 'falsy' })
       .isString().withMessage('Invalid value for Status').bail()
       .trim().custom((value) => {
-         const allowedValues = [ 'for sale', 'not for sale', 'new', 'bestseller' ];
+         const allowedValues = [
+            'for sale',
+            'not for sale',
+            'bestseller',
+            'new'
+         ];
          return allowedValues.includes(value); 
       }).withMessage('Invalid value for Status'),
    

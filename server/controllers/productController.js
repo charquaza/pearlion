@@ -2,10 +2,35 @@ const db = require('../models/index');
 const productValidators = require('../middleware/productValidators');
 
 exports.getAll = [
+   productValidators.checkStatusQuery,
+   productValidators.checkCategoryQuery,
+   productValidators.checkImagesQuery,
+
    async function (req, res, next) {
       try {
-         let productList = await db.Product.findAll({ raw: true });
-         res.json({ data: productList });
+         const productFindOptions = { 
+            where: { 
+               ...(req.query.status && { status: req.query.status }),
+               ...(req.query.category && { status: req.query.category })
+            }, 
+            raw: true 
+         };
+         const productList = await db.Product.findAll(productFindOptions);
+
+         if (req.query.images === 'false') {
+            return res.json({ data: { productList } });
+         } else {
+            const productImageList = await db.ProductImage.findAll({
+               where: { product: productList.map(product => product.id) },
+               raw: true
+            });
+            const imageList = await db.Image.findAll({
+               where: { id: productImageList.map(productImage => productImage.image) },
+               raw: true
+            });
+   
+            return res.json({ data: { productList, imageList } });   
+         }
       } catch (err) {
          return next(err);
       }
