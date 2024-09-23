@@ -4,58 +4,36 @@ const { imageUpload } = require('../middleware/multerUploads');
 
 exports.getAll = [
    reviewValidators.checkProductIdQuery,
+   reviewValidators.checkImagesQuery,
 
    async function (req, res, next) {
-      var findOptions;
-      if (req.query.productId) {
-         findOptions = { 
-            where: { product: req.query.productId },
-            raw: true 
-         };
-      } else {
-         if (req.user.privilege !== 'admin') {
-            return res.status(404).json({ errors: ['Review not found'] });
-         }
-
-         findOptions = { raw: true };
+      if (!req.query.productId && req.user.privilege !== 'admin') {
+         return res.status(404).json({ errors: ['Review not found'] });
       }
 
       try {
-         let reviewList = await db.Review.findAll(findOptions);
-
-         if (reviewList.length === 0) {
-            return res.status(404).json({ errors: ['Review not found'] });
-         }
-
-         let allReviewImages = await Promise.all(reviewList.map(review => {
-            return db.ReviewImage.findAll({
-               where: { review: review.id },
-               raw: true
-            });
-         }));
-         
-         let allImages = await Promise.all(allReviewImages.map(reviewImageList => {
-            return Promise.all(reviewImageList.map(reviewImage => {
-               return db.Image.findByPk(reviewImage.image, { raw: true });
-            }));
-         })); 
-         
-         allImages.forEach(imageList => {
-            imageList.sort((a, b) => {
-               if (a.name < b.name) {
-                  return -1;
-               } else if (a.name === b.name) {
-                  return 0;
-               } else {
-                  return 1;
+         var reviewFindOptions = { 
+            ...(req.query.productId && 
+               {
+                  where: { product: req.query.productId }
                }
-            });
-         });
+            ),
+            ...(req.query.images && 
+               {
+                  include: [
+                     {
+                        model: Image,
+                        as: 'images',
+                        order: [[ 'name', 'ASC' ]],
+                        raw: true 
+                     }
+                  ]
+               }
+            ),
+            raw: true
+         };
 
-         //append images to each review
-         reviewList.forEach((review, index) => {
-            review.images = allImages[index];
-         });
+         let reviewList = await db.Review.findAll(reviewFindOptions);
 
          return res.json({ data: reviewList });
       } catch (err) {
@@ -66,35 +44,31 @@ exports.getAll = [
 
 exports.getById = [
    reviewValidators.checkIdParam,
+   reviewValidators.checkImagesQuery,
 
    async function (req, res, next) {
       try {
-         let reviewData = await db.Review.findByPk(req.params.reviewId, { raw: true });
+         var reviewFindOptions = { 
+            ...(req.query.images && 
+               {
+                  include: [
+                     {
+                        model: Image,
+                        as: 'images',
+                        order: [[ 'name', 'ASC' ]],
+                        raw: true 
+                     }
+                  ]
+               }
+            ),
+            raw: true
+         };
+
+         let reviewData = await db.Review.findByPk(req.params.reviewId, reviewFindOptions);
 
          if (reviewData === null) {
             return res.status(404).json({ errors: ['Review not found'] });
          } else {
-            //get review images
-            let reviewImages = await db.ReviewImage.findAll({
-               where: { review: req.params.reviewId },
-               raw: true
-            });
-            
-            let images = await Promise.all(reviewImages.map(reviewImage => {
-               return db.Image.findByPk(reviewImage.image, { raw: true });
-            }));
-            images.sort((a, b) => {
-               if (a.name < b.name) {
-                  return -1;
-               } else if (a.name === b.name) {
-                  return 0;
-               } else {
-                  return 1;
-               }
-            });
-
-            reviewData.images = images;
-
             return res.json({ data: reviewData });
          }
       } catch (err) {
@@ -129,16 +103,10 @@ exports.create = [
 
             const images = await Promise.all(req.files.map((file, index) => {
                return db.Image.create({
+                  review: newReview.id,
                   name: req.user.username + '_' + index + '_' + req.body.productId,
                   description: 'Customer image uploaded with product review',
                   data: file.buffer
-               }, { raw: true, transaction: t });
-            }));
-
-            const reviewImages = await Promise.all(images.map(image => {
-               return db.ReviewImage.create({
-                  review: newReview.id,
-                  image: image.id
                }, { raw: true, transaction: t });
             }));
 
@@ -177,12 +145,12 @@ exports.update = [
       return next();
    },
    
-   reviewValidators.update,
    imageUpload.array('newImages'),
+   reviewValidators.update,
 
    async function (req, res, next) {
       try {
-         let reviewToUpdate = await db.Review.findByPk(req.params.reviewId, { raw: true });
+         let reviewToUpdate = await db.Review.findByPk(req.params.reviewId);
 
          if (reviewToUpdate === null) {
             return res.status(404).json({ errors: ['Review not found'] });
@@ -198,9 +166,14 @@ exports.update = [
                { raw: true, transaction: t}
             );
 
-            let createImagesPromise = Promise.all(req.files.map(file => {
+            //reconsider method for updating images
+            // e.g. how to deal with naming conflicts, 
+            // since names are based on index
+            // and deleting and adding images can jeopardize order
+            let createImagesPromise = Promise.all(req.files.map((file, index) => {
                return db.Image.create({
-                  name: req.user.username + '_' + reviewToUpdate.product,
+                  review: reviewToUpdate.id,
+                  name: req.user.username + '_' + index + '_' + req.body.productId,
                   description: 'Customer image uploaded with product review',
                   data: file.buffer
                }, { raw: true, transaction: t });
@@ -261,19 +234,7 @@ exports.delete = [
             return res.status(404).json({ errors: ['Review not found'] });
          } 
 
-         await db.sequelize.transaction(async t => {
-            let reviewImages = await db.ReviewImage.findAll({ 
-               where: { review: reviewToDelete.id },
-               raw: true,
-               transaction: t 
-            });
-
-            let imagesToDelete = Promise.all(reviewImages.map(reviewImage => {
-               db.Image.destroy({ where: { id: reviewImage.image }, transaction: t });
-            }));
-
-            await Promise.all([ reviewToDelete.destroy({ transaction: t }), imagesToDelete ]);
-         });
+         await reviewToDelete.destroy();
 
          res.json({ data: { msg: 'Review delete successful' } });   
       } catch (err) {

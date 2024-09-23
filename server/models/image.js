@@ -20,6 +20,26 @@ module.exports = (sequelize, DataTypes) => {
          defaultValue: DataTypes.UUIDV4,
          primaryKey: true
       },
+      product: {
+         type: DataTypes.UUID,
+         references: {
+            model: 'products',
+            key: 'id'
+         },
+         allowNull: true,
+         onUpdate: 'CASCADE',
+         onDelete: 'CASCADE'
+      },
+      review: {
+         type: DataTypes.UUID,
+         references: {
+            model: 'reviews',
+            key: 'id'
+         },
+         allowNull: true,
+         onUpdate: 'CASCADE',
+         onDelete: 'CASCADE'
+      },
       name: {
          type: DataTypes.STRING(200),
          allowNull: false,

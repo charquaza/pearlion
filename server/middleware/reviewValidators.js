@@ -27,6 +27,20 @@ exports.checkProductIdQuery = [
    checkValidation
 ];
 
+exports.checkImagesQuery = [
+   query('images').optional({ values: 'null' })
+      .isString().withMessage('Invalid value for Images').bail()
+      .trim().custom(value => {
+         const allowedValues = [
+            'true',
+            'false'
+         ];
+         return allowedValues.includes(value); 
+      }).withMessage('Invalid value for Images'),
+
+   checkValidation
+];
+
 exports.create = [
    body('productId')
       .custom(async (productId) => {

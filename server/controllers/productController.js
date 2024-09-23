@@ -1,5 +1,6 @@
 const db = require('../models/index');
 const productValidators = require('../middleware/productValidators');
+const { imageUpload } = require('../middleware/multerUploads');
 
 exports.getAll = [
    productValidators.checkStatusQuery,
@@ -8,29 +9,29 @@ exports.getAll = [
 
    async function (req, res, next) {
       try {
-         const productFindOptions = { 
+         var productFindOptions = { 
             where: { 
                ...(req.query.status && { status: req.query.status }),
                ...(req.query.category && { status: req.query.category })
             }, 
-            raw: true 
+            ...(req.query.images && 
+               {
+                  include: [
+                     {
+                        model: Image,
+                        as: 'images',
+                        order: [[ 'name', 'ASC' ]],
+                        raw: true 
+                     }
+                  ]
+               }
+            ),
+            raw: true
          };
+
          const productList = await db.Product.findAll(productFindOptions);
 
-         if (req.query.images === 'false') {
-            return res.json({ data: { productList } });
-         } else {
-            const productImageList = await db.ProductImage.findAll({
-               where: { product: productList.map(product => product.id) },
-               raw: true
-            });
-            const imageList = await db.Image.findAll({
-               where: { id: productImageList.map(productImage => productImage.image) },
-               raw: true
-            });
-   
-            return res.json({ data: { productList, imageList } });   
-         }
+         return res.json({ data: { productList } });   
       } catch (err) {
          return next(err);
       }
@@ -39,15 +40,34 @@ exports.getAll = [
 
 exports.getById = [
    productValidators.checkIdParam,
+   productValidators.checkImagesQuery,
 
    async function (req, res, next) {
       try {
-         let productData = await db.Product.findByPk(req.params.productId);
+         var productFindOptions = { 
+            ...(req.query.images && 
+               {
+                  include: [
+                     {
+                        model: Image,
+                        as: 'images',
+                        order: [[ 'name', 'ASC' ]],
+                        raw: true 
+                     }
+                  ]
+               }
+            ),
+            raw: true
+         };
+
+         let productData = await db.Product.findByPk(
+            req.params.productId, productFindOptions
+         );
 
          if (productData === null) {
             res.status(404).json({ errors: ['Product not found'] });
          } else {
-            res.json({ data: productData.get({ plain: true }) });
+            res.json({ data: productData });
          }
       } catch (err) {
          return next(err);
@@ -68,20 +88,34 @@ exports.create = [
       return next();
    },
 
+   imageUpload.array('images'),
    productValidators.create,
 
    async function (req, res, next) {
       try {
-         let newProduct = await db.Product.create({
-            name: req.body.name,
-            description: req.body.description,
-            category: req.body.category,
-            price: req.body.price,
-            quantityInStock: req.body.quantityInStock,
-            status: req.body.status
+         const result = await db.sequelize.transaction(async t => {
+            const newProduct = await db.Product.create({
+               name: req.body.name,
+               description: req.body.description,
+               category: req.body.category,
+               price: req.body.price,
+               quantityInStock: req.body.quantityInStock,
+               status: req.body.status
+            }, { raw: true, transaction: t });
+   
+            const images = await Promise.all(req.files.map((file, index) => {
+               return db.Image.create({
+                  product: newProduct.id,
+                  name: newProduct.name + index,
+                  description: newProduct.name + index,
+                  data: file.buffer
+               }, { raw: true, transaction: t });
+            }));
+
+            return newProduct;
          });
 
-         res.json({ data: newProduct.get({ plain: true }) });
+         res.json({ data: result });
       } catch (err) {
          return next(err);
       }
@@ -103,27 +137,60 @@ exports.update = [
       return next();
    },
    
+   imageUpload.array('images'),
    productValidators.update,
 
    async function (req, res, next) {
       try {
-         let fieldsToUpdate = {
-            name: req.body.name,
-            description: req.body.description,
-            category: req.body.category,
-            price: req.body.price,
-            quantityInStock: req.body.quantityInStock,
-            status: req.body.status
-         };
-
          let productToUpdate = await db.Product.findByPk(req.params.productId);
 
          if (productToUpdate === null) {
-            res.status(404).json({ errors: ['Product not found'] });
-         } else {
-            let updatedProduct = await productToUpdate.update(fieldsToUpdate);
-            res.json({ data: updatedProduct.get({ plain: true }) });
+            return res.status(404).json({ errors: ['Product not found'] });
          }
+
+         const updateResult = await db.sequelize.transaction(async t => {
+            let productFieldsToUpdate = {
+               name: req.body.name,
+               description: req.body.description,
+               category: req.body.category,
+               price: req.body.price,
+               quantityInStock: req.body.quantityInStock,
+               status: req.body.status
+            };
+   
+            let updateProductPromise = productToUpdate.update(productFieldsToUpdate, 
+               { raw: true, transaction: t}
+            );
+
+            //reconsider method for updating images
+            // e.g. how to deal with naming conflicts, 
+            // since names are based on index
+            // and deleting and adding images can jeopardize order
+            let createImagesPromise = Promise.all(req.files.map((file, index) => {
+               return db.Image.create({
+                  product: productToUpdate.id,
+                  name: productToUpdate.name + index,
+                  description: productToUpdate.name + index,
+                  data: file.buffer
+               }, { raw: true, transaction: t });
+            }));
+
+            let deleteImagesPromise = req.body.deletedImages 
+               ?
+                  db.Image.destroy({
+                     where: { id: req.body.deletedImages },
+                     transaction: t
+                  })
+               : null;
+            
+            let [ updatedProduct ] = await Promise.all([ 
+               updateProductPromise, createImagesPromise, deleteImagesPromise
+            ]);
+
+            return updatedProduct;
+         });
+
+         res.json({ data: updateResult });
       } catch (err) {
          return next(err);
       }

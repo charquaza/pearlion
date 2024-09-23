@@ -170,67 +170,61 @@ module.exports = {
         const earImagesDir = path.join(__dirname, '..', 'public/images/earrings');
         const neckImagesDir = path.join(__dirname, '..', 'public/images/necklaces');
 
-        let imageFiles = await Promise.all([ 
+        let imageFilesPromise = Promise.all([ 
           fs.promises.readdir(earImagesDir),
           fs.promises.readdir(neckImagesDir)
         ]);
+
+        let [ productList, imageFiles ] = await Promise.all([ 
+          productListPromise, imageFilesPromise 
+        ]);
         imageFiles = imageFiles.flat();
 
-        const imageListPromise = Image.bulkCreate(await Promise.all(imageFiles.map(async file => {
-          let productType = file.match(/([a-z]+)(?=-[0-9]+.)/i)[0];
-          if (!productType.endsWith('s')) {
-            productType += 's';
-          }
-
-          const filePath = path.join(__dirname, '..', 'public/images', productType, file);
-          return {
-            name: file,
-            description: file,
-            data: await fs.promises.readFile(filePath)
-          };
-        })), { returning: true, transaction: t });
-        
-        const [ productList, imageList ] = await Promise.all([ 
-          productListPromise, imageListPromise 
-        ]);
-        
-        const productImageList = [];
-        for ( //iterate over productList and imageList to get their id's
-          let prodIndex = 0, imageIndex = 0; 
-          prodIndex < productList.length && imageIndex < imageList.length; 
+        const imageList = [];
+        for (
+          let prodIndex = 0, fileIndex = 0; 
+          prodIndex < productList.length && fileIndex < imageFiles.length; 
         ) {
-          let product = productList[prodIndex];
-          let image = imageList[imageIndex];
+          const product = productList[prodIndex];
+          const file = imageFiles[fileIndex];
 
-          let productImageMatch = true;
-          for ( //compare product and image names
+          let productFileMatch = true;
+          for ( //compare product and image file names
             let i = 0, j = 0; 
-            i < product.name.length && j < image.name.length; 
+            i < product.name.length && j < file.length; 
             i++, j++
           ) {
-            if (product.name[i] === ' ' && image.name[j] === '-') {
+            if (product.name[i] === ' ' && file[j] === '-') {
               continue;
             }
-            if (product.name[i].toLowerCase() !== image.name[j]) {
-              productImageMatch = false;
+            if (product.name[i].toLowerCase() !== file[j]) {
+              productFileMatch = false;
               break;
             }
           }
 
-          if (productImageMatch) {
-            let productImageData = {
+          if (productFileMatch) {
+            let productType = file.match(/([a-z]+)(?=-[0-9]+.)/i)[0];
+            if (!productType.endsWith('s')) {
+              productType += 's';
+            }
+            const filePath = path.join(__dirname, '..', 'public/images', productType, file);
+  
+            const imageData = {
               product: product.id,
-              image: image.id
+              name: file,
+              description: file,
+              data: await fs.promises.readFile(filePath)
             };
-            productImageList.push(productImageData);
+            imageList.push(imageData);
 
-            imageIndex++;
+            fileIndex++;
           } else {
             prodIndex++;
           }
         }
 
-        await ProductImage.bulkCreate(productImageList, { transaction: t });
+        await Image.bulkCreate(imageList, { transaction: t });
       } catch (err) {
         console.error('Transaction rolled back: ', err);
       }
