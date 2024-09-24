@@ -19,7 +19,8 @@ exports.getAll = [
                   include: [
                      {
                         model: db.Image,
-                        order: [[ 'name', 'ASC' ]]
+                        order: [[ 'name', 'ASC' ]],
+                        ...(req.query.images === 'main' && { limit: 1 })
                      }
                   ]
                }
@@ -47,7 +48,8 @@ exports.getById = [
                   include: [
                      {
                         model: db.Image,
-                        order: [[ 'name', 'ASC' ]]
+                        order: [[ 'name', 'ASC' ]],
+                        ...(req.query.images === 'main' && { limit: 1 })
                      }
                   ]
                }

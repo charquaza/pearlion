@@ -44,12 +44,12 @@ exports.checkCategoryQuery = [
 ];
 
 exports.checkImagesQuery = [
-   query('images').optional({ values: 'null' })
+   query('images').optional({ values: 'falsy' })
       .isString().withMessage('Invalid value for Images').bail()
       .trim().custom(value => {
          const allowedValues = [
-            'true',
-            'false'
+            'main',
+            'all'
          ];
          return allowedValues.includes(value); 
       }).withMessage('Invalid value for Images'),
