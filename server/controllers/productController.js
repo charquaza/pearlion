@@ -12,26 +12,23 @@ exports.getAll = [
          var productFindOptions = { 
             where: { 
                ...(req.query.status && { status: req.query.status }),
-               ...(req.query.category && { status: req.query.category })
+               ...(req.query.category && { category: req.query.category })
             }, 
             ...(req.query.images && 
                {
                   include: [
                      {
-                        model: Image,
-                        as: 'images',
-                        order: [[ 'name', 'ASC' ]],
-                        raw: true 
+                        model: db.Image,
+                        order: [[ 'name', 'ASC' ]]
                      }
                   ]
                }
-            ),
-            raw: true
+            )
          };
 
          const productList = await db.Product.findAll(productFindOptions);
 
-         return res.json({ data: { productList } });   
+         return res.json({ data: productList });   
       } catch (err) {
          return next(err);
       }
@@ -49,15 +46,12 @@ exports.getById = [
                {
                   include: [
                      {
-                        model: Image,
-                        as: 'images',
-                        order: [[ 'name', 'ASC' ]],
-                        raw: true 
+                        model: db.Image,
+                        order: [[ 'name', 'ASC' ]]
                      }
                   ]
                }
-            ),
-            raw: true
+            )
          };
 
          let productData = await db.Product.findByPk(

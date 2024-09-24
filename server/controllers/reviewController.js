@@ -22,15 +22,12 @@ exports.getAll = [
                {
                   include: [
                      {
-                        model: Image,
-                        as: 'images',
-                        order: [[ 'name', 'ASC' ]],
-                        raw: true 
+                        model: db.Image,
+                        order: [[ 'name', 'ASC' ]]
                      }
                   ]
                }
-            ),
-            raw: true
+            )
          };
 
          let reviewList = await db.Review.findAll(reviewFindOptions);
@@ -53,15 +50,12 @@ exports.getById = [
                {
                   include: [
                      {
-                        model: Image,
-                        as: 'images',
-                        order: [[ 'name', 'ASC' ]],
-                        raw: true 
+                        model: db.Image,
+                        order: [[ 'name', 'ASC' ]]
                      }
                   ]
                }
-            ),
-            raw: true
+            )
          };
 
          let reviewData = await db.Review.findByPk(req.params.reviewId, reviewFindOptions);
