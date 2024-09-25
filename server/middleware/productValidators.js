@@ -20,6 +20,7 @@ exports.checkStatusQuery = [
          const allowedValues = [
             'for sale',
             'not for sale',
+            'on sale',
             'bestseller',
             'new'
          ];
@@ -117,6 +118,7 @@ exports.create = [
          const allowedValues = [
             'for sale',
             'not for sale',
+            'on sale',
             'bestseller',
             'new'
          ];
@@ -183,6 +185,7 @@ exports.update = [
          const allowedValues = [
             'for sale',
             'not for sale',
+            'on sale',
             'bestseller',
             'new'
          ];

@@ -17,7 +17,7 @@ module.exports = {
             category: 'earrings', 
             price: 30, 
             quantityInStock: 10, 
-            status: 'for sale'
+            status: 'on sale'
           }, 
           { 
             name: 'Diamond Cluster Earrings', 
@@ -33,7 +33,7 @@ module.exports = {
             category: 'earrings', 
             price: 500, 
             quantityInStock: 1, 
-            status: 'not for sale'
+            status: 'for sale'
           }, 
           { 
             name: 'Emerald Flower Earrings', 
@@ -41,7 +41,7 @@ module.exports = {
             category: 'earrings', 
             price: 85, 
             quantityInStock: 2, 
-            status: 'for sale'
+            status: 'on sale'
           }, 
           { 
             name: 'Gold Earrings', 
@@ -131,7 +131,7 @@ module.exports = {
             category: 'necklaces', 
             price: 50, 
             quantityInStock: 10, 
-            status: 'not for sale'
+            status: 'for sale'
           }, 
           { 
             name: 'Rain Drop Necklace',
@@ -139,7 +139,7 @@ module.exports = {
             category: 'necklaces', 
             price: 30, 
             quantityInStock: 7, 
-            status: 'for sale'
+            status: 'on sale'
           }, 
           { 
             name: 'Sapphire Necklace', 
