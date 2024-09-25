@@ -1,21 +1,51 @@
+'use client';
+
+import Link from 'next/link';
+import useProductList from '../_hooks/useProductList';
 import ProductListCard from '@/app/_components/ProductListCard';
-import necklaceImageList from '@/app/_images/necklaceImageList';
 import styles from '@/app/_styles/necklacesPage.module.css';
 
 export default function NecklacesPage() {
+   const { productList, error } = useProductList('necklaces', null, 'main');
+
+   if (error) {
+      console.error(error);
+
+      return (
+         <main className={styles['necklaces-page']}>
+            <h1>Necklaces</h1>
+            <p>Sorry, we're having trouble loading this page.</p>
+            <p>Please try again later.</p>
+         </main>
+      );
+   }
+
    return (
       <main className={styles['necklaces-page']}>
          <h1>Necklaces</h1>
 
-         <ul>
-            {necklaceImageList.map(necklace => {
-               return (
-                  <li key={necklace.id}>
-                     <ProductListCard product={necklace} />
-                  </li>
-               );
-            })}
-         </ul>
+         {
+            (productList)
+               ?
+                  (productList.data.length > 0) 
+                     ?
+                        <ul>
+                           {productList.data.map(product => {
+                              return (
+                                 <li key={product.id}>
+                                    <ProductListCard product={product} />
+                                 </li>
+                              );
+                           })}
+                        </ul>
+                     :
+                        <>
+                           <p>No products in this category</p>
+                           <Link href='/'>Continue Shopping</Link>
+                        </> 
+               :
+                  <ProductListCard />
+         }
       </main>
    );
 };
