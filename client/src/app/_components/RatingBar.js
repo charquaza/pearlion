@@ -1,13 +1,9 @@
 import styles from '@/app/_styles/RatingBar.module.css';
 
-export default function RatingBar({ reviews, context }) {
-   var rating = reviews.length > 0 
-      ?
-         (
-            reviews.reduce((prev, curr) => prev + curr.rating, 0) / 
-            reviews.length
-         ).toFixed(1)
-      : '0.0';
+export default function RatingBar({ reviewCount, ratingSum, context }) {
+   var rating = reviewCount !== 0 
+      ? (ratingSum / reviewCount).toFixed(1)
+      : null;
 
    return (
       <div 
@@ -16,7 +12,7 @@ export default function RatingBar({ reviews, context }) {
          }
       >
          {
-            rating !== '0.0' 
+            rating !== null
                ?
                   <>
                      <div 

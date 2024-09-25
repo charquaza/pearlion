@@ -38,7 +38,9 @@ export default function ProductListCard({ product }) {
                </h2>
 
                <div className={styles['rating-and-reviews-link']}>
-                  {/* <RatingBar reviews={product.reviews} context={'product-list-card'} /> */}
+                  <RatingBar reviewCount={product.reviewCount} ratingSum={product.ratingSum}
+                     context={'product-list-card'} 
+                  />
                   <Link 
                      href={`/${product.category}/${product.id}#reviews`}
                      className={styles['reviews-link']}
