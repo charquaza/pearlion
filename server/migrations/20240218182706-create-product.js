@@ -36,6 +36,16 @@ module.exports = {
             defaultValue: 'for sale',
             allowNull: false
          },
+         reviewCount: {
+            type: Sequelize.INTEGER,
+            defaultValue: 0,
+            allowNull: false
+         },
+         ratingSum: {
+            type: Sequelize.INTEGER,
+            defaultValue: 0,
+            allowNull: false
+         },
          createdAt: {
             allowNull: false,
             type: Sequelize.DATE

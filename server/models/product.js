@@ -54,6 +54,16 @@ module.exports = (sequelize, DataTypes) => {
          type: DataTypes.STRING(100),
          defaultValue: 'for sale',
          allowNull: false
+      },
+      reviewCount: {
+         type: DataTypes.INTEGER,
+         defaultValue: 0,
+         allowNull: false
+      },
+      ratingSum: {
+         type: DataTypes.INTEGER,
+         defaultValue: 0,
+         allowNull: false
       }
    }, {
       sequelize,

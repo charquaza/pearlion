@@ -47,9 +47,58 @@ module.exports = {
             type: Sequelize.DATE
          }
       });
+
+      //Create function to update products count
+      await queryInterface.sequelize.query(`
+         CREATE FUNCTION update_reviews_count_rating() RETURNS TRIGGER AS $$
+         BEGIN
+            IF TG_OP = 'INSERT' THEN
+               UPDATE "products"
+               SET "reviewCount" = "reviewCount" + 1, "ratingSum" = "ratingSum" + NEW."rating"
+               WHERE id = NEW."product";
+            ELSIF TG_OP = 'DELETE' THEN
+               UPDATE "products"
+               SET "reviewCount" = "reviewCount" - 1, "ratingSum" = "ratingSum" - OLD."rating"
+               WHERE id = OLD."product";
+            ELSIF TG_OP = 'UPDATE' THEN
+               IF NEW."product" != OLD."product" THEN
+                  UPDATE "products"
+                  SET "reviewCount" = "reviewCount" - 1, "ratingSum" = "ratingSum" - OLD."rating"
+                  WHERE id = OLD."product";
+                  
+                  UPDATE "products"
+                  SET "reviewCount" = "reviewCount" + 1, "ratingSum" = "ratingSum" + NEW."rating"
+                  WHERE id = NEW."product";
+               ELSE 
+                  IF NEW."rating" != OLD."rating" THEN
+                     UPDATE "products"
+                     SET "ratingSum" = "ratingSum" - OLD."rating" + NEW."rating"
+                     WHERE id = NEW."product";
+                  END IF;
+               END IF;
+            END IF;
+            RETURN NEW;
+         END;
+         $$ LANGUAGE plpgsql;
+      `);
+
+      //Create trigger to call the function on insert, update, or delete
+      await queryInterface.sequelize.query(`
+         CREATE TRIGGER update_reviews_count_rating_trigger
+         AFTER INSERT OR DELETE OR UPDATE ON "reviews"
+         FOR EACH ROW EXECUTE FUNCTION update_reviews_count_rating();
+      `);
    },
    
    async down(queryInterface, Sequelize) {
+      await queryInterface.sequelize.query(`
+         DROP TRIGGER IF EXISTS update_reviews_count_rating_trigger ON "reviews";
+      `);
+
+      await queryInterface.sequelize.query(`
+         DROP FUNCTION IF EXISTS update_reviews_count_rating;
+      `);
+
       await queryInterface.dropTable('reviews');
    }
 };
