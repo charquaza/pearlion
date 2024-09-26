@@ -1,11 +1,23 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import Image from 'next/image';
+import prodImgPlaceholder from '../_images/prodImgPlaceholder';
 import styles from '@/app/_styles/ProductImageList.module.css';
 
 export default function ProductImageList({ product, review, imageIndex }) {
-   const imageList = review ? review.images : product.images;
+   const imageList = useMemo(() => {
+      let images = review ? review.Images : product.Images;
+
+      return images.map(imgData => {
+         let imgBuffer = imgData.data.data;
+         let uint8Array = new Uint8Array(imgBuffer);
+         let imgBlob = new Blob([ uint8Array ], { type: 'image/jpeg' });
+         let imgURL = URL.createObjectURL(imgBlob);
+         
+         return imgURL;
+      });
+   }, [ product, review ]);
 
    const [ currImageIndex, setCurrImageIndex ] = useState(imageIndex || 0);
    const [ slideshowLength, setSlideshowLength ] = useState(4);
@@ -61,7 +73,9 @@ export default function ProductImageList({ product, review, imageIndex }) {
             <div className={styles['curr-image-container']}>
                <Image
                   src={imageList[currImageIndex]}
+                  placeholder={prodImgPlaceholder}
                   alt={product.name}
+                  fill={true}
                   quality={100}
                   sizes='50vw'
                   priority={true}
@@ -100,7 +114,9 @@ export default function ProductImageList({ product, review, imageIndex }) {
                            >
                               <Image
                                  src={image}
+                                 placeholder={prodImgPlaceholder}
                                  alt={product.name}
+                                 fill={true}
                                  quality={100}
                                  sizes='50vw'
                               />
@@ -113,7 +129,8 @@ export default function ProductImageList({ product, review, imageIndex }) {
 
             {
                imageList.length > slideshowLength &&
-                  <button id='next-slide' disabled={slideshowStartIndex + slideshowLength >= imageList.length}
+                  <button id='next-slide' 
+                     disabled={slideshowStartIndex + slideshowLength >= imageList.length}
                      onClick={handleSlideshowToggle}
                   > &gt; </button>
             }
