@@ -24,7 +24,8 @@ exports.checkStatusQuery = [
             'bestseller',
             'new'
          ];
-         return allowedValues.includes(value);
+         value = value.split(',');
+         return value.every(status => allowedValues.includes(status));
       }).withMessage('Invalid value for Status'),
 
    checkValidation

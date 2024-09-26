@@ -11,7 +11,7 @@ exports.getAll = [
       try {
          var productFindOptions = { 
             where: { 
-               ...(req.query.status && { status: req.query.status }),
+               ...(req.query.status && { status: req.query.status.split(',') }),
                ...(req.query.category && { category: req.query.category })
             }, 
             ...(req.query.images && 
@@ -24,10 +24,29 @@ exports.getAll = [
                      }
                   ]
                }
-            )
+            ),
+            order: [ ['status', 'ASC'], ['createdAt', 'DESC'] ]
          };
 
-         const productList = await db.Product.findAll(productFindOptions);
+         let productList = await db.Product.findAll(productFindOptions);
+
+         //split results into multiple arrays by Product.status
+         if (req.query.status && req.query.status.includes(',') && productList.length > 0) {
+            let splitList = [];
+            let currStatus = productList[0].status;
+            let currStartIndex = 0;
+
+            for (var i = 0; i < productList.length; i++) {
+               if (productList[i].status !== currStatus) {
+                  splitList.push(productList.slice(currStartIndex, i));
+                  currStatus = productList[i].status;
+                  currStartIndex = i;
+               }
+            }
+            splitList.push(productList.slice(currStartIndex, i));
+
+            productList = splitList;
+         }
 
          return res.json({ data: productList });   
       } catch (err) {
