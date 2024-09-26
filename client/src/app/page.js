@@ -1,49 +1,48 @@
 'use client';
 
 import { useState } from 'react';
+import useProductList from './_hooks/useProductList';
 import SlideshowCard from './_components/SlideshowCard';
 import ProductListCard from './_components/ProductListCard';
-import earringImageList from './_images/earringImageList'
-import necklaceImageList from './_images/necklaceImageList';
 import styles from './_styles/homePage.module.css';
 
 export default function HomePage() {
-   const [ newArrivals, setNewArrivals ] = useState(
-      earringImageList.filter(
-         earring => earring.status === 'new'
-      ).concat(
-         necklaceImageList.filter(
-            necklace => necklace.status === 'new'
-         )
-      )
-   );
-   const [ bestSellers, setBestSellers ] = useState(
-      earringImageList.filter(
-         earring => earring.status === 'bestseller'
-      ).concat(
-         necklaceImageList.filter(
-            necklace => necklace.status === 'bestseller'
-         )
-      )
-   );
    const [ slideshow, setSlideshow ] = useState(
       new Map([ ['startIndex', 0], ['count', 3] ])
    );
 
-   var currSlideshowList = newArrivals; 
-   if (newArrivals.length > slideshow.get('count')) {
-      currSlideshowList = []; 
-      for (
-         let i = slideshow.get('startIndex'); 
-         i < slideshow.get('startIndex') + slideshow.get('count'); 
-         i++
-      ) {
-         if (i >= newArrivals.length) {
-            currSlideshowList.push(newArrivals[ i - newArrivals.length ]);
-         } else {
-            currSlideshowList.push(newArrivals[i]);
+   const { productList, error } = useProductList(null, ['new', 'bestseller'], 'main');
+
+   if (error) {
+      console.error(error);
+
+      return (
+         <main>
+            <p>Sorry, we're having trouble loading this page.</p>
+            <p>Please try again later.</p>
+         </main>
+      );
+   }
+
+   if (productList) {
+      var newArrivals = productList.data[1];
+      var bestsellers = productList.data[0];
+   
+      var currSlideshowList = newArrivals; 
+      if (currSlideshowList.length > slideshow.get('count')) {
+         currSlideshowList = []; 
+         for (
+            let i = slideshow.get('startIndex'); 
+            i < slideshow.get('startIndex') + slideshow.get('count'); 
+            i++
+         ) {
+            if (i >= newArrivals.length) {
+               currSlideshowList.push(newArrivals[ i - newArrivals.length ]);
+            } else {
+               currSlideshowList.push(newArrivals[i]);
+            }
          }
-      }
+      }   
    }
 
    function handleSlideshowNavigation(e) {
@@ -65,45 +64,51 @@ export default function HomePage() {
    }
 
    return (
-      <main>
-         <article className={styles['new-arrivals']}>
-            <h2>New Arrivals</h2>
+      (productList) 
+         ?
+            <main>
+               <article className={styles['new-arrivals']}>
+                  <h2>New Arrivals</h2>
 
-            <div className={styles['slideshow-container']}>
-               <ul>
-                  {
-                     currSlideshowList.map(product => {
-                        return (
-                           <li key={product.id}>
-                              <SlideshowCard product={product} />
-                           </li>
-                        );
-                     })
-                  }
-               </ul>
-   
-               <div onClick={handleSlideshowNavigation}>
-                  <button id='previous'> ← </button>
-                  <button id='next'> → </button>
-               </div>
-            </div>
-         </article>
+                  <div className={styles['slideshow-container']}>
+                     <ul>
+                        {
+                           currSlideshowList.map(product => {
+                              return (
+                                 <li key={product.id}>
+                                    <SlideshowCard product={product} />
+                                 </li>
+                              );
+                           })
+                        }
+                     </ul>
+         
+                     <div onClick={handleSlideshowNavigation}>
+                        <button id='previous'> ← </button>
+                        <button id='next'> → </button>
+                     </div>
+                  </div>
+               </article>
 
-         <article className={styles['best-sellers']}>
-            <h2>Best Sellers</h2>
+               <article className={styles['best-sellers']}>
+                  <h2>Best Sellers</h2>
 
-            <ul>
-               {
-                  bestSellers.map(product => {
-                     return (
-                        <li key={product.id}>
-                           <ProductListCard product={product} />
-                        </li>
-                     );
-                  })
-               }
-            </ul>
-         </article>
-      </main>
+                  <ul>
+                     {
+                        bestsellers.map(product => {
+                           return (
+                              <li key={product.id}>
+                                 <ProductListCard product={product} />
+                              </li>
+                           );
+                        })
+                     }
+                  </ul>
+               </article>
+            </main>
+         :
+            <main>
+               <p>Loading...</p>
+            </main>
    );
 };

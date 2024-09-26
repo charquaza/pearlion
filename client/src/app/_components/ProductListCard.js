@@ -1,10 +1,13 @@
+'use client';
+
+import { memo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import RatingBar from './RatingBar';
 import prodImgPlaceholder from '../_images/prodImgPlaceholder';
 import styles from '@/app/_styles/ProductListCard.module.css';
 
-export default function ProductListCard({ product }) {
+export default memo(function ProductListCard({ product }) {
    if (product) {
       var mainProdImgData = product.Images[0];
       var imgBuffer = mainProdImgData.data.data;
@@ -69,4 +72,4 @@ export default function ProductListCard({ product }) {
                </div>
             </article>
    );
-};
+});

@@ -4,7 +4,11 @@ import { apiURL } from '@/root/config';
 export default function useProductList(category, status, images) {
    let urlParams = new URLSearchParams({
       ...(category && { category }),
-      ...(status && { status }),
+      ...(status &&
+         (Array.isArray(status)
+            ? { status: status.join(',') }
+            : { status })
+      ),
       ...(images && { images })
    });
 

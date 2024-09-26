@@ -6,6 +6,7 @@
 }
 
 .image-container {
+   position: relative;
    width: 20vw;
    height: 20vw;
 }

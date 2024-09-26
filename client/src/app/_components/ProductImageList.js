@@ -1,11 +1,11 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, memo } from 'react';
 import Image from 'next/image';
 import prodImgPlaceholder from '../_images/prodImgPlaceholder';
 import styles from '@/app/_styles/ProductImageList.module.css';
 
-export default function ProductImageList({ product, review, imageIndex }) {
+export default memo(function ProductImageList({ product, review, imageIndex }) {
    const imageList = useMemo(() => {
       let images = review ? review.Images : product.Images;
 
@@ -137,4 +137,4 @@ export default function ProductImageList({ product, review, imageIndex }) {
          </div>
       </div>
    );
-};
+});
