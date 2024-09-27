@@ -1,14 +1,14 @@
 'use client';
 
 import Link from 'next/link';
-import useProductData from '../_hooks/useProductData';
+import useProduct from '../_hooks/useProduct';
 import ProductImageList from './ProductImageList';
 import RatingBar from './RatingBar';
 import PurchaseControls from './PurchaseControls';
 import styles from '@/app/_styles/ProductDetails.module.css';
 
 export default function ProductDetails({ productId }) {
-   const { product, error } = useProductData(productId, 'all');
+   const { product, error } = useProduct(productId, 'all');
 
    if (error) {
       console.error(error);
