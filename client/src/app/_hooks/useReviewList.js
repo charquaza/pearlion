@@ -1,12 +1,13 @@
 import useSWR from 'swr';
 import { apiURL } from '@/root/config'; 
 
-export default function useProductData(id, images) {
+export default function useReviewList(productId, images) {
    let urlParams = new URLSearchParams({
+      ...(productId && { productId }),
       ...(images && { images })
    });
 
-   let requestURL = new URL('products/' + id, apiURL);
+   let requestURL = new URL('reviews', apiURL);
    requestURL.search = urlParams.toString();
    requestURL = requestURL.toString();
 
@@ -24,7 +25,7 @@ export default function useProductData(id, images) {
          const data = await res.json();
 
          if (data.errors) {
-            let error = new Error('Error occurred while fetching product data');
+            let error = new Error('Error occurred while fetching review data');
             error.info = data.errors;
             error.status = res.status;
             throw error;
@@ -36,7 +37,7 @@ export default function useProductData(id, images) {
    );
 
    return { 
-      product: data, 
+      reviewList: data, 
       error, 
       isLoading, 
       mutate 

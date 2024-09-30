@@ -1,37 +1,40 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import Image from 'next/image';
+import prodImgPlaceholder from '../_images/prodImgPlaceholder';
 import styles from '@/app/_styles/ReviewImageList.module.css';
 
-export default function ReviewImageList({ product, review, reviewIndex, toggleReviewPopover }) {
-   //remove check after normalizing database: review.images should be
-   // set to empty array if no images
-   if (review && !review.images) {
-      return null;
-   }
-
+export default function ReviewImageList({ reviewList, review, reviewIndex, toggleReviewPopover }) {
    const [ slideshow, setSlideshow ] = useState(
       new Map([ ['startIndex', 0], ['count', 6] ])
    );
 
    //remove ternary expression and simply return review.images
    // once database is normalized
-   // also - imageList should be a state variable
-   var imageList = product 
-      ? 
-         product.reviews.flatMap((review, reviewIndex) => {
-            return !review.images 
-               ? []
-               : 
-                  review.images.map((image, imageIndex) => {
-                     return { image, reviewIndex, imageIndex };
-                  });
-         })
-      : 
-         review.images.map((image, imageIndex) => {
-            return { image, reviewIndex, imageIndex };
-         });
+   var imageList = useMemo(() => {
+      return reviewList
+         ? 
+            reviewList.data.flatMap((review, reviewIndex) => {
+               return review.Images.map((imgData, imageIndex) => {
+                  let imgBuffer = imgData.data.data;
+                  let uint8Array = new Uint8Array(imgBuffer);
+                  let imgBlob = new Blob([ uint8Array ], { type: 'image/jpeg' });
+                  let imgURL = URL.createObjectURL(imgBlob); 
+
+                  return { imgURL, reviewIndex, imageIndex };
+               });     
+            })
+         :
+            review.Images.map((imgData, imageIndex) => {
+               let imgBuffer = imgData.data.data;
+               let uint8Array = new Uint8Array(imgBuffer);
+               let imgBlob = new Blob([ uint8Array ], { type: 'image/jpeg' });
+               let imgURL = URL.createObjectURL(imgBlob);
+
+               return { imgURL, reviewIndex, imageIndex };
+            });     
+   }, [reviewList]);
    
    function handleSlideshowToggle(e) {
       if (e.target.id === 'previous-slide') {
@@ -55,7 +58,7 @@ export default function ReviewImageList({ product, review, reviewIndex, toggleRe
    return (
       imageList.length > 0 &&
          <div className={styles['review-image-list-container'] 
-            + (product ? ' ' + styles['all-reviews'] : '')}
+            + (reviewList ? ' ' + styles['all-reviews'] : '')}
          >
             {
                imageList.length > slideshow.get('count') &&
@@ -81,8 +84,10 @@ export default function ReviewImageList({ product, review, reviewIndex, toggleRe
                            onClick={handleImageClick}
                         >
                            <Image
-                              src={imageDetails.image}
+                              src={imageDetails.imgURL}
+                              placeholder={prodImgPlaceholder}
                               alt='image from customer review'
+                              fill={true}
                               quality={100}
                               sizes='50vw'
                            />

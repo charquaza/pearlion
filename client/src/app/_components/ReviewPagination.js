@@ -1,10 +1,10 @@
 import styles from '@/app/_styles/ReviewPagination.module.css';
 
 export default function ReviewPagination({ 
-   product, reviewsPerPage, setReviewsPerPage, 
+   reviewList, reviewsPerPage, setReviewsPerPage, 
    currPage, setCurrPage  
 }) {
-   var totalPages = Math.ceil(product.reviews.length / reviewsPerPage);
+   var totalPages = Math.ceil(reviewList.data.length / reviewsPerPage);
    var pageNumbers = [];
    
    if (totalPages <= 5) {
@@ -53,8 +53,8 @@ export default function ReviewPagination({
       //debugger;
       var updatedReviewsPerPage = Number(e.target.value);
 
-      if (updatedReviewsPerPage * (currPage - 1) >= product.reviews.length) {
-         let totalPages = Math.ceil(product.reviews.length / updatedReviewsPerPage);
+      if (updatedReviewsPerPage * (currPage - 1) >= reviewList.data.length) {
+         let totalPages = Math.ceil(reviewList.data.length / updatedReviewsPerPage);
          setCurrPage(totalPages);
       }   
 
@@ -64,7 +64,7 @@ export default function ReviewPagination({
    return (
       <div className={styles['review-pagination']}>
          {
-            product.reviews.length > 0 &&
+            reviewList.data.length > 0 &&
                <>
                   <div className={styles['reviews-per-page']}>
                      <label>
@@ -76,15 +76,15 @@ export default function ReviewPagination({
                               <option value='5'>5</option>
                            }
                            {
-                              product.reviews.length > 5 &&
+                              reviewList.data.length > 5 &&
                                  <option value='10'>10</option>
                            }
                            {
-                              product.reviews.length > 10 &&
+                              reviewList.data.length > 10 &&
                                  <option value='15'>15</option>
                            }
                            {
-                              product.reviews.length > 15 &&
+                              reviewList.data.length > 15 &&
                                  <option value='20'>20</option>
                            }
                         </select>

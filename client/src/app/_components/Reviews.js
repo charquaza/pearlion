@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import useUser from '../_hooks/useUser';
+import useProduct from '../_hooks/useProduct';
+import useReviewList from '../_hooks/useReviewList';
 import RatingBar from './RatingBar';
 import ReviewImageList from './ReviewImageList';
 import NewReviewForm from './NewReviewForm';
@@ -10,7 +12,7 @@ import ReviewPagination from './ReviewPagination';
 import ReviewPopover from './ReviewPopover';
 import styles from '@/app/_styles/Reviews.module.css';
 
-export default function Reviews({ product }) {
+export default function Reviews({ productId }) {
    const [ reviewsPerPage, setReviewsPerPage ] = useState(5);
    const [ currPage, setCurrPage ] = useState(1);
    const [ reviewPopoverInfo, setReviewPopoverInfo ] = useState({
@@ -18,10 +20,22 @@ export default function Reviews({ product }) {
    });
 
    const { user } = useUser();
+   const { product, error: productError, mutate: productMutate } = useProduct(productId, 'all');
+   const { reviewList, error: reviewListError, mutate: reviewListMutate } = 
+      useReviewList(productId, 'true');
 
-   const currReviewList = product.reviews.slice(
-      reviewsPerPage * (currPage - 1), reviewsPerPage * currPage
-   );
+   if (productError || reviewListError) {
+      console.error(productError);
+      console.error(reviewListError);
+
+      return null;
+   }
+
+   if (reviewList) {
+      var currReviewList = reviewList.data.slice(
+         reviewsPerPage * (currPage - 1), reviewsPerPage * currPage
+      );
+   }
 
    function toggleReviewPopover(reviewIndex, imageIndex) {
       setReviewPopoverInfo(prev => { 
@@ -37,60 +51,70 @@ export default function Reviews({ product }) {
    }
 
    return (
-      <article className={styles['reviews']}>
-         <h2 id='reviews'>Reviews</h2>
-         <RatingBar reviews={product.reviews} context={'reviews'} />
-         
-         <ReviewImageList product={product} toggleReviewPopover={toggleReviewPopover} />
-
-         {
-            (user && user.data) &&
-               <NewReviewForm product={product} />
-         }
-
-         <ReviewPagination product={product} 
-            reviewsPerPage={reviewsPerPage} setReviewsPerPage={setReviewsPerPage}
-            currPage={currPage} setCurrPage={setCurrPage}
-         />
-
-         {
-            currReviewList.length > 0
-               ? 
-                  <ul className={styles['reviews-list']}>
-                     {
-                        currReviewList.map((review, index) => {
-                           return (
-                              //after linking database, replace key with review.id
-                              <li key={index}>
-                                 <ReviewCard product={product} review={review} 
-                                    reviewIndex={index}
-                                    toggleReviewPopover={toggleReviewPopover}
-                                 />
-                              </li>
-                           );
-                        })
-                     }
-                  </ul>
-               : 
-                  <p className={styles['no-reviews-msg']}>No reviews yet - be the first to leave a review!</p>
-         }
-
-         <ReviewPagination product={product} 
-            reviewsPerPage={reviewsPerPage} setReviewsPerPage={setReviewsPerPage}
-            currPage={currPage} setCurrPage={setCurrPage}
-         />
-
-         {
-            reviewPopoverInfo.show &&
-               <ReviewPopover 
-                  product={product} 
-                  review={product.reviews[reviewPopoverInfo.reviewIndex]} 
-                  reviewIndex={reviewPopoverInfo.reviewIndex}
-                  imageIndex={reviewPopoverInfo.imageIndex}
-                  toggleReviewPopover={toggleReviewPopover}
-                  updateReviewPopover={updateReviewPopover}
+      (product && reviewList) 
+         ?
+            <article className={styles['reviews']}>
+               <h2 id='reviews'>Reviews</h2>
+               <RatingBar reviewCount={product.data.reviewCount} ratingSum={product.data.ratingSum} 
+                  context={'reviews'} 
                />
-         }
-      </article>
+               
+               <ReviewImageList reviewList={reviewList} toggleReviewPopover={toggleReviewPopover} />
+
+               {
+                  (user && user.data) &&
+                     <NewReviewForm product={product} revalidateProduct={productMutate}
+                        revalidateReviewList={reviewListMutate} 
+                     />
+               }
+
+               <ReviewPagination reviewList={reviewList} 
+                  reviewsPerPage={reviewsPerPage} setReviewsPerPage={setReviewsPerPage}
+                  currPage={currPage} setCurrPage={setCurrPage}
+               />
+
+               {
+                  currReviewList.length > 0
+                     ? 
+                        <ul className={styles['reviews-list']}>
+                           {
+                              currReviewList.map((review, index) => {
+                                 return (
+                                    <li key={review.id}>
+                                       <ReviewCard productName={product.data.name} review={review} 
+                                          reviewIndex={index}
+                                          toggleReviewPopover={toggleReviewPopover}
+                                       />
+                                    </li>
+                                 );
+                              })
+                           }
+                        </ul>
+                     : 
+                        <p className={styles['no-reviews-msg']}>No reviews yet - be the first to leave a review!</p>
+               }
+
+               <ReviewPagination reviewList={reviewList}
+                  reviewsPerPage={reviewsPerPage} setReviewsPerPage={setReviewsPerPage}
+                  currPage={currPage} setCurrPage={setCurrPage}
+               />
+
+               {
+                  reviewPopoverInfo.show &&
+                     <ReviewPopover 
+                        productName={product.name} 
+                        reviewList={reviewList} 
+                        reviewIndex={reviewPopoverInfo.reviewIndex}
+                        imageIndex={reviewPopoverInfo.imageIndex}
+                        toggleReviewPopover={toggleReviewPopover}
+                        updateReviewPopover={updateReviewPopover}
+                     />
+               }
+            </article>
+         :
+            <article className={styles['reviews']}>
+               <h2 id='reviews'>Reviews</h2>
+               <p>Loading...</p>
+            </article>
    );
 };

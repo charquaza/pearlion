@@ -5,9 +5,11 @@ import ProductImageList from './ProductImageList';
 import styles from '@/app/_styles/ReviewPopover.module.css';
 
 export default function ReviewPopover({ 
-   product, review, reviewIndex, imageIndex, 
+   productName, reviewList, reviewIndex, imageIndex, 
    toggleReviewPopover, updateReviewPopover
 }) {
+   let currReview = reviewList.data[reviewIndex];
+
    useEffect(() => {
       //in the future - revise tab/focus behavior
       // 1. correct tab/shift+tab behavior
@@ -37,10 +39,8 @@ export default function ReviewPopover({
       if (action === 'next') {
          var newReviewIndex = reviewIndex + 1;
 
-         while (newReviewIndex < product.reviews.length) {
-            //after normalizing database: check array size, not existence 
-            // review.images will be set to empty array if no images
-            if (product.reviews[newReviewIndex].images) {
+         while (newReviewIndex < reviewList.data.length) {
+            if (reviewList.data[newReviewIndex].Images.length > 0) {
                updateReviewPopover(newReviewIndex);
                break;
             }
@@ -50,9 +50,7 @@ export default function ReviewPopover({
          var newReviewIndex = reviewIndex - 1;
 
          while (newReviewIndex >= 0) {
-            //after normalizing database: check array size, not existence 
-            // review.images will be set to empty array if no images
-            if (product.reviews[newReviewIndex].images) {
+            if (reviewList.data[newReviewIndex].Images.length > 0) {
                updateReviewPopover(newReviewIndex);
                break;
             }
@@ -64,21 +62,24 @@ export default function ReviewPopover({
    return (
       <div className={styles['review-popover']}>
          <button className={styles['prev-review-btn']} data-id='prev' 
-            onClick={handleReviewToggle} disabled={reviewIndex <= 0}
+            onClick={handleReviewToggle} disabled={
+               (reviewIndex <= 0) ||
+               (reviewList.data[reviewIndex - 1].Images.length === 0)
+            }
          >
             &lt;
          </button>
 
          <div className={styles['main-popover']}>
-            <ProductImageList product={product} review={review} imageIndex={imageIndex} 
-               key={Math.random()} //replace key with review.id after setting up database
+            <ProductImageList review={currReview} imageIndex={imageIndex} 
+               key={currReview.id}
             />
 
             <article className={styles['review']}>
-               <h3>{review.client}</h3>
-               <p>{review.date}</p>
-               <p>Product Reviewed: {product.name}</p>
-               <p>{review.review}</p>
+               <h3>{currReview.client}</h3>
+               <p>{currReview.date}</p>
+               <p>Product Reviewed: {productName}</p>
+               <p>{currReview.review}</p>
             </article>
 
             <button
@@ -90,7 +91,10 @@ export default function ReviewPopover({
          </div>
 
          <button className={styles['next-review-btn']} data-id='next' 
-            onClick={handleReviewToggle} disabled={reviewIndex >= product.reviews.length - 1}
+            onClick={handleReviewToggle} disabled={
+               (reviewIndex >= reviewList.data.length - 1) ||
+               (reviewList.data[reviewIndex + 1].Images.length === 0)
+            }
          >
             &gt;
          </button>

@@ -15,7 +15,7 @@ export default memo(function ProductImageList({ product, review, imageIndex }) {
          let imgBlob = new Blob([ uint8Array ], { type: 'image/jpeg' });
          let imgURL = URL.createObjectURL(imgBlob);
          
-         return imgURL;
+         return { name: imgData.name, url: imgURL };
       });
    }, [ product, review ]);
 
@@ -72,9 +72,9 @@ export default memo(function ProductImageList({ product, review, imageIndex }) {
             > &lt; </button>
             <div className={styles['curr-image-container']}>
                <Image
-                  src={imageList[currImageIndex]}
+                  src={imageList[currImageIndex].url}
                   placeholder={prodImgPlaceholder}
-                  alt={product.name}
+                  alt={imageList[currImageIndex].name}
                   fill={true}
                   quality={100}
                   sizes='50vw'
@@ -113,9 +113,9 @@ export default memo(function ProductImageList({ product, review, imageIndex }) {
                               onClick={handleSlideClick}
                            >
                               <Image
-                                 src={image}
+                                 src={image.url}
                                  placeholder={prodImgPlaceholder}
-                                 alt={product.name}
+                                 alt={image.name}
                                  fill={true}
                                  quality={100}
                                  sizes='50vw'

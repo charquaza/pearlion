@@ -1,14 +1,24 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import Image from 'next/image';
 import { isValidImageType, formatFileSize } from '../_utils/utils';
 import { apiURL } from '@/root/config';
+import prodImgPlaceholder from '../_images/prodImgPlaceholder';
 import styles from '@/app/_styles/NewReviewForm.module.css';
 
-export default function NewReviewForm({ product }) {
+export default function NewReviewForm({ product, revalidateProduct, revalidateReviewList }) {
    const [ showReviewForm, setShowReviewForm ] = useState(false);
    const [ inputValues, setInputValues ] = useState({ rating: '0', review: '' });
    const [ uploadPreview, setUploadPreview ] = useState([]);
    const [ formErrors, setFormErrors ] = useState([]);
+
+   const productImageURL = useMemo(() => {
+         let imgBuffer = product.data.Images[0].data.data;
+         let uint8Array = new Uint8Array(imgBuffer);
+         let imgBlob = new Blob([ uint8Array ], { type: 'image/jpeg' });
+         let imgURL = URL.createObjectURL(imgBlob);
+         
+         return imgURL;
+   }, [ product ]);
 
    function toggleReviewForm(e) {
       setInputValues({ rating: '0', review: '' });
@@ -52,9 +62,7 @@ export default function NewReviewForm({ product }) {
       e.preventDefault();
 
       const formData = new FormData(e.target);
-      // remove hard-coded productID after testing
-      formData.append('productId', '3a1f6246-4230-4023-9ea6-1fc72731733e');
-      //formData.append('productId', product.id);
+      formData.append('productId', product.data.id);
       
       const fetchOptions = {
          method: 'POST',
@@ -73,6 +81,11 @@ export default function NewReviewForm({ product }) {
             setUploadPreview([]); 
             setFormErrors([]);     
             setShowReviewForm(false);
+
+            //update Product (avg ratings + review count), Review list 
+            // to account for new review
+            revalidateProduct();
+            revalidateReviewList();
          } else {
             let data = await res.json();
             setFormErrors(data.errors);
@@ -93,8 +106,10 @@ export default function NewReviewForm({ product }) {
                <div className={styles['product-info']}>
                   <div className={styles['product-image-container']}>
                      <Image
-                        src={product.images[0]}
-                        alt={product.name}
+                        src={productImageURL}
+                        placeholder={prodImgPlaceholder}
+                        alt={product.data.name}
+                        fill={true}
                         quality={100}
                         sizes='10vw'
                         priority={true}
@@ -102,7 +117,7 @@ export default function NewReviewForm({ product }) {
                   </div>
 
                   <p className={styles['product-name']}>
-                     {product.name}
+                     {product.data.name}
                   </p>
                </div>
 
