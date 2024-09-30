@@ -32,8 +32,7 @@ module.exports = {
          },
          name: {
             type: Sequelize.STRING(200),
-            allowNull: false,
-            unique: true
+            allowNull: false
          },
          description: {
             type: Sequelize.TEXT,

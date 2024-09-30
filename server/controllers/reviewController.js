@@ -7,7 +7,7 @@ exports.getAll = [
    reviewValidators.checkImagesQuery,
 
    async function (req, res, next) {
-      if (!req.query.productId && req.user.privilege !== 'admin') {
+      if (!req.query.productId && (req.user && req.user.privilege !== 'admin')) {
          return res.status(404).json({ errors: ['Review not found'] });
       }
 
@@ -23,11 +23,12 @@ exports.getAll = [
                   include: [
                      {
                         model: db.Image,
-                        order: [[ 'name', 'ASC' ]]
+                        order: [[ 'createdAt', 'ASC' ]]
                      }
                   ]
                }
-            )
+            ),
+            order: [ ['createdAt', 'DESC'] ]
          };
 
          let reviewList = await db.Review.findAll(reviewFindOptions);
@@ -51,7 +52,7 @@ exports.getById = [
                   include: [
                      {
                         model: db.Image,
-                        order: [[ 'name', 'ASC' ]]
+                        order: [[ 'createdAt', 'ASC' ]]
                      }
                   ]
                }
@@ -87,6 +88,11 @@ exports.create = [
 
    async function (req, res, next) {
       try {
+         const product = await db.Product.findByPk(req.body.productId, { raw: true });
+         if (!product) {
+            return res.status(404).json({ errors: ['Associated product not found'] });
+         }
+
          const result = await db.sequelize.transaction(async t => {
             const newReview = await db.Review.create({
                client: req.user.id,
@@ -95,11 +101,12 @@ exports.create = [
                review: req.body.review
             }, { raw: true, transaction: t });
 
-            const images = await Promise.all(req.files.map((file, index) => {
+            const images = await Promise.all(req.files.map(file => {
                return db.Image.create({
                   review: newReview.id,
-                  name: req.user.username + '_' + index + '_' + req.body.productId,
-                  description: 'Customer image uploaded with product review',
+                  name: req.user.username + '_' + product.name,
+                  description: 'Image uploaded with review of ' + product.name + 
+                     ', by ' + req.user.username,
                   data: file.buffer
                }, { raw: true, transaction: t });
             }));
@@ -145,9 +152,13 @@ exports.update = [
    async function (req, res, next) {
       try {
          let reviewToUpdate = await db.Review.findByPk(req.params.reviewId);
-
          if (reviewToUpdate === null) {
             return res.status(404).json({ errors: ['Review not found'] });
+         }
+
+         const product = await db.Product.findByPk(req.body.productId, { raw: true });
+         if (!product) {
+            return res.status(404).json({ errors: ['Associated product not found'] });
          }
 
          const updateResult = await db.sequelize.transaction(async t => {
@@ -160,15 +171,12 @@ exports.update = [
                { raw: true, transaction: t}
             );
 
-            //reconsider method for updating images
-            // e.g. how to deal with naming conflicts, 
-            // since names are based on index
-            // and deleting and adding images can jeopardize order
-            let createImagesPromise = Promise.all(req.files.map((file, index) => {
+            let createImagesPromise = Promise.all(req.files.map(file => {
                return db.Image.create({
                   review: reviewToUpdate.id,
-                  name: req.user.username + '_' + index + '_' + req.body.productId,
-                  description: 'Customer image uploaded with product review',
+                  name: req.user.username + '_' + product.name,
+                  description: 'Image uploaded with review of ' + product.name + 
+                     ', by ' + req.user.username,
                   data: file.buffer
                }, { raw: true, transaction: t });
             }));
