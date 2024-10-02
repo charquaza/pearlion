@@ -18,16 +18,17 @@ exports.getAll = [
                   where: { product: req.query.productId }
                }
             ),
-            ...(req.query.images && 
+            include: [
                {
-                  include: [
-                     {
-                        model: db.Image,
-                        order: [[ 'createdAt', 'ASC' ]]
-                     }
-                  ]
-               }
-            ),
+                  model: db.User
+               },
+               (req.query.images && 
+                  {
+                     model: db.Image,
+                     order: [[ 'createdAt', 'ASC' ]]
+                  }
+               )
+            ],
             order: [ ['createdAt', 'DESC'] ]
          };
 
@@ -47,16 +48,17 @@ exports.getById = [
    async function (req, res, next) {
       try {
          var reviewFindOptions = { 
-            ...(req.query.images && 
+            include: [
                {
-                  include: [
-                     {
-                        model: db.Image,
-                        order: [[ 'createdAt', 'ASC' ]]
-                     }
-                  ]
-               }
-            )
+                  model: db.User
+               },
+               (req.query.images && 
+                  {
+                     model: db.Image,
+                     order: [[ 'createdAt', 'ASC' ]]
+                  }
+               )
+            ]
          };
 
          let reviewData = await db.Review.findByPk(req.params.reviewId, reviewFindOptions);
