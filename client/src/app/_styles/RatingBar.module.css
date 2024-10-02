@@ -60,5 +60,5 @@
 
 /* overrides for ReviewCard component */
 .review-card {
-   --bar-width: calc( var(--size) * 0.15 );  
+   --bar-width: calc( var(--size) * 0.19 );  
 }
