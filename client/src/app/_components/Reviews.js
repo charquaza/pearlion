@@ -51,70 +51,64 @@ export default function Reviews({ productId }) {
    }
 
    return (
-      (product && reviewList) 
-         ?
-            <article className={styles['reviews']}>
-               <h2 id='reviews'>Reviews</h2>
-               <RatingBar reviewCount={product.data.reviewCount} ratingSum={product.data.ratingSum} 
-                  context={'reviews'} 
-               />
-               
-               <ReviewImageList reviewList={reviewList} toggleReviewPopover={toggleReviewPopover} />
+      (product && reviewList) &&
+         <article className={styles['reviews']}>
+            <h2 id='reviews'>Reviews</h2>
+            <RatingBar reviewCount={product.data.reviewCount} ratingSum={product.data.ratingSum} 
+               context={'reviews'} 
+            />
+            
+            <ReviewImageList reviewList={reviewList} toggleReviewPopover={toggleReviewPopover} />
 
-               {
-                  (user && user.data) &&
-                     <NewReviewForm product={product} revalidateProduct={productMutate}
-                        revalidateReviewList={reviewListMutate} 
-                     />
-               }
+            {
+               (user && user.data) &&
+                  <NewReviewForm product={product} revalidateProduct={productMutate}
+                     revalidateReviewList={reviewListMutate} 
+                  />
+            }
 
-               <ReviewPagination reviewList={reviewList} 
-                  reviewsPerPage={reviewsPerPage} setReviewsPerPage={setReviewsPerPage}
-                  currPage={currPage} setCurrPage={setCurrPage}
-               />
+            <ReviewPagination reviewList={reviewList} 
+               reviewsPerPage={reviewsPerPage} setReviewsPerPage={setReviewsPerPage}
+               currPage={currPage} setCurrPage={setCurrPage}
+            />
 
-               {
-                  currReviewList.length > 0
-                     ? 
-                        <ul className={styles['reviews-list']}>
-                           {
-                              currReviewList.map((review, index) => {
-                                 return (
-                                    <li key={review.id}>
-                                       <ReviewCard productName={product.data.name} review={review} 
-                                          reviewIndex={index}
-                                          toggleReviewPopover={toggleReviewPopover}
-                                       />
-                                    </li>
-                                 );
-                              })
-                           }
-                        </ul>
-                     : 
-                        <p className={styles['no-reviews-msg']}>No reviews yet - be the first to leave a review!</p>
-               }
+            {
+               currReviewList.length > 0
+                  ? 
+                     <ul className={styles['reviews-list']}>
+                        {
+                           currReviewList.map((review, index) => {
+                              return (
+                                 <li key={review.id}>
+                                    <ReviewCard productName={product.data.name} review={review} 
+                                       reviewIndex={index}
+                                       toggleReviewPopover={toggleReviewPopover}
+                                    />
+                                 </li>
+                              );
+                           })
+                        }
+                     </ul>
+                  : 
+                     <p className={styles['no-reviews-msg']}>No reviews yet - be the first to leave a review!</p>
+            }
 
-               <ReviewPagination reviewList={reviewList}
-                  reviewsPerPage={reviewsPerPage} setReviewsPerPage={setReviewsPerPage}
-                  currPage={currPage} setCurrPage={setCurrPage}
-               />
+            <ReviewPagination reviewList={reviewList}
+               reviewsPerPage={reviewsPerPage} setReviewsPerPage={setReviewsPerPage}
+               currPage={currPage} setCurrPage={setCurrPage}
+            />
 
-               {
-                  reviewPopoverInfo.show &&
-                     <ReviewPopover 
-                        productName={product.name} 
-                        reviewList={reviewList} 
-                        reviewIndex={reviewPopoverInfo.reviewIndex}
-                        imageIndex={reviewPopoverInfo.imageIndex}
-                        toggleReviewPopover={toggleReviewPopover}
-                        updateReviewPopover={updateReviewPopover}
-                     />
-               }
-            </article>
-         :
-            <article className={styles['reviews']}>
-               <h2 id='reviews'>Reviews</h2>
-               <p>Loading...</p>
-            </article>
+            {
+               reviewPopoverInfo.show &&
+                  <ReviewPopover 
+                     productName={product.name} 
+                     reviewList={reviewList} 
+                     reviewIndex={reviewPopoverInfo.reviewIndex}
+                     imageIndex={reviewPopoverInfo.imageIndex}
+                     toggleReviewPopover={toggleReviewPopover}
+                     updateReviewPopover={updateReviewPopover}
+                  />
+            }
+         </article>
    );
 };
