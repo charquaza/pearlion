@@ -1,7 +1,7 @@
 import styles from '@/app/_styles/RatingBar.module.css';
 
 export default function RatingBar({ reviewCount, ratingSum, context }) {
-   var rating = reviewCount !== 0 
+   var rating = (reviewCount && reviewCount !== 0)
       ? (ratingSum / reviewCount).toFixed(1)
       : null;
 
@@ -12,7 +12,7 @@ export default function RatingBar({ reviewCount, ratingSum, context }) {
          }
       >
          {
-            rating !== null
+            (rating !== null && rating !== 0)
                ?
                   <>
                      <div 
@@ -25,9 +25,12 @@ export default function RatingBar({ reviewCount, ratingSum, context }) {
                         <div className={styles['filled']}></div>
                      </div>
 
-                     <p className={styles['rating']}>
-                        {rating}
-                     </p>
+                     {
+                        context !== 'review-card' &&
+                           <p className={styles['rating']}>
+                              {rating}
+                           </p>
+                     }
                   </>
                :
                   <p className={styles['no-rating']}>

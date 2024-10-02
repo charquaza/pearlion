@@ -9,7 +9,8 @@
    margin: 0;
 }
 .reviews-list > li {
-   width: 50vw;
+   --size: 50vw;
+   width: var(--size);
    padding-bottom: 2vw;
 }
 
