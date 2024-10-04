@@ -1,23 +1,32 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import prodImgPlaceholder from '../_images/prodImgPlaceholder';
 import styles from '@/app/_styles/CartItem.module.css';
 
 export default function CartItem({ 
    item, handleQuantityChange, validateQuantity, handleItemRemove 
 }) {
+   var mainProdImgData = item.product.Images[0];
+   var imgBuffer = mainProdImgData.data.data;
+   var uint8Array = new Uint8Array(imgBuffer);
+   var imgBlob = new Blob([ uint8Array ], { type: 'image/jpeg' });
+   var imgURL = URL.createObjectURL(imgBlob);   
+
    return (
       <article className={styles['cart-item']}>
          <div className={styles['image-and-details']}>
-            <div className={styles['image-container']}>
-               <Link href={`/${item.product.category}/${item.product.id}`}>
+            <Link href={`/${item.product.category}/${item.product.id}`}>
+               <div className={styles['image-container']}>
                   <Image
-                     src={item.product.images[0]}
+                     src={imgURL}
+                     placeholder={prodImgPlaceholder}
                      alt={item.product.name}
+                     fill={true}
                      sizes='50vw'
                      priority={true}
                   />
-               </Link>
-            </div>
+               </div>
+            </Link>
             <div className={styles['item-details']}>
                <h2>
                   <Link href={`/${item.product.category}/${item.product.id}`}>
@@ -44,4 +53,4 @@ export default function CartItem({
          </p>
       </article>
    );
-}
+};

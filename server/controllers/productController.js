@@ -6,13 +6,15 @@ exports.getAll = [
    productValidators.checkStatusQuery,
    productValidators.checkCategoryQuery,
    productValidators.checkImagesQuery,
+   productValidators.checkProductIdsQuery,
 
    async function (req, res, next) {
       try {
          var productFindOptions = { 
             where: { 
                ...(req.query.status && { status: req.query.status.split(',') }),
-               ...(req.query.category && { category: req.query.category })
+               ...(req.query.category && { category: req.query.category }),
+               ...(req.query.productIds && { id: req.query.productIds.split(',') })
             }, 
             ...(req.query.images && 
                {

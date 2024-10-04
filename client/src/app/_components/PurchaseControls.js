@@ -30,8 +30,9 @@ export default function PurchaseControls({ productId }) {
    }
 
    function handleAddToCart(e) {
-      var cart = localStorage.getItem('cart')
-         ? JSON.parse(localStorage.getItem('cart'))
+      var cart = JSON.parse(localStorage.getItem('cart'));
+      cart = Object.prototype.toString.call(cart) === '[object Object]'
+         ? cart
          : {};
 
       var prevQuantityInCart = Number.isInteger(cart[productId])

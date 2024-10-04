@@ -1,7 +1,7 @@
 import useSWR from 'swr';
 import { apiURL } from '@/root/config'; 
 
-export default function useProductList(category, status, images) {
+export default function useProductList(category, status, images, cartProductIds) {
    let urlParams = new URLSearchParams({
       ...(category && { category }),
       ...(status &&
@@ -9,7 +9,12 @@ export default function useProductList(category, status, images) {
             ? { status: status.join(',') }
             : { status })
       ),
-      ...(images && { images })
+      ...(images && { images }),
+      ...(cartProductIds && 
+         { 
+            productIds: Array.from(cartProductIds.keys()).join(',')
+         }
+      )
    });
 
    let requestURL = new URL('products', apiURL);

@@ -2,38 +2,85 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import useProductList from '../_hooks/useProductList';
 import CartItem from '@/app/_components/CartItem';
-import earringsList from '@/app/_images/earringImageList';
-import necklaceList from '@/app/_images/necklaceImageList';
 import styles from '@/app/_styles/cartPage.module.css';
 
 export default function CartPage() {
    const [ cart, setCart ] = useState(null);
-   
-   useEffect(function getCartFromLocalStorage() {
-      var storedCart = JSON.parse(localStorage.getItem('cart'));
 
-      var cartItems = new Map();
-      for (const id in storedCart) {
-         let validatedQuantity = 
-            (
-               !Number.isInteger(storedCart[id]) || 
-               !(0 < storedCart[id] && storedCart[id] < 100)
-            ) 
-               ? 1 : storedCart[id];
+   if (typeof window === 'undefined') {
+      return (
+         <main className={styles['cart']}>
+            <h1>Shopping Cart</h1>
+            
+            <p>Loading...</p>
+         </main>
+      );
+   }
+
+   const { productList, error } = useProductList(null, null, 'main', 
+      new Map(Object.entries(JSON.parse(localStorage.getItem('cart'))))
+   );
    
-         cartItems.set(
-            id,
-            {
-               product: (earringsList.find(earrings => earrings.id === id) ||
-                  necklaceList.find(necklace => necklace.id === id)),
-               quantity: validatedQuantity
-            }
-         );
+   if (error) {
+      console.error(error);
+
+      return (
+         <main className={styles['cart']}>
+            <h1>Shopping Cart</h1>
+
+            <p>Sorry, we're having trouble loading your cart.</p>
+            <p>Please try again later.</p>
+         </main>
+      );
+   }
+
+   useEffect(function populateCartFromLocalStorage() {
+      if (productList) {
+         var storedCart = JSON.parse(localStorage.getItem('cart'));
+         storedCart = Object.prototype.toString.call(storedCart) === '[object Object]'
+            ? storedCart
+            : {};   
+
+         let newCart = new Map();
+
+         productList.data.forEach(product => {
+            var storedQuantity = storedCart[product.id];
+            var validatedQuantity = 
+               (
+                  !Number.isInteger(storedQuantity) || 
+                  !(0 < storedQuantity && storedQuantity < 100)
+               ) 
+                  ? 1 : storedQuantity;
+   
+               newCart.set(product.id, { product, quantity: validatedQuantity});
+         });  
+
+         setCart(newCart);
       }
+   }, [productList]);
 
-      setCart(cartItems);
-   }, []);
+   if (!cart || (cart.size > 0 && !productList)) {
+      return (
+         <main className={styles['cart']}>
+            <h1>Shopping Cart</h1>
+            
+            <p>Loading...</p>
+         </main>
+      );
+   }
+
+   if ((cart && cart.size === 0) || (productList && productList.data.length === 0)) {
+      return (
+         <main className={styles['cart']}>
+            <h1>Shopping Cart</h1>
+            
+            <p>Your cart is empty</p>
+            <Link href='/' className={styles['shop-link']}>Continue Shopping</Link>
+         </main>
+      );
+   }
 
    function handleQuantityChange(e) {
       //in the future: consider limiting quantity based on quantity in stock
@@ -73,8 +120,9 @@ export default function CartPage() {
          updatedCart.set(e.target.dataset.productId, updatedData);
 
          //update localStorage
-         var cart = localStorage.getItem('cart')
-            ? JSON.parse(localStorage.getItem('cart'))
+         var cart = JSON.parse(localStorage.getItem('cart'));
+         cart = Object.prototype.toString.call(cart) === '[object Object]'
+            ? cart
             : {};
          cart[e.target.dataset.productId] = currQuantity;
          localStorage.setItem('cart', JSON.stringify(cart));
@@ -91,70 +139,56 @@ export default function CartPage() {
       });
 
       //update localStorage
-      var cart = localStorage.getItem('cart')
-         ? JSON.parse(localStorage.getItem('cart'))
-         : {};
-      delete cart[e.target.dataset.productId];
-      localStorage.setItem('cart', JSON.stringify(cart));
+      var cart = JSON.parse(localStorage.getItem('cart'));
+      if (Object.prototype.toString.call(cart) === '[object Object]') {
+         delete cart[e.target.dataset.productId];
+         localStorage.setItem('cart', JSON.stringify(cart));
+      } else {
+         localStorage.setItem('cart', JSON.stringify({}));
+      }
    }
 
    return (
       <main className={styles['cart']}>
          <h1>Shopping Cart</h1>
-
-         {
-            cart &&
-               <>
-                  <div className={styles['items-container']}>
-                     {
-                        cart.size > 0
-                           ?
-                              <ul>
-                                 {
-                                    Array.from(cart, ([productId, data]) => {
-                                       return (
-                                          <li key={productId}>
-                                             <CartItem item={data} 
-                                                handleQuantityChange={handleQuantityChange}
-                                                validateQuantity={validateQuantity}
-                                                handleItemRemove={handleItemRemove}
-                                             />
-                                          </li>
-                                       );
-                                    })
-                                 }
-                              </ul>
-                           : 
-                              <>
-                                 <p>Your cart is empty</p>
-                                 <Link href='/' className={styles['shop-link']}>Continue Shopping</Link>
-                              </>
-                     }
-                  </div>
-      
+            <div className={styles['items-container']}>
+               <ul>
                   {
-                     cart.size > 0 &&
-                        <div className={styles['total-and-checkout']}>
-                              <p>
-                                 <span className={styles['subtotal-text']}>Subtotal:&nbsp;&nbsp;</span> 
-                                 <span className={styles['subtotal-number']}>
-                                    $
-                                    {
-                                       Array.from(cart, ([productId, data]) => data)
-                                          .reduce((prevSum, currItem) => {
-                                             let currSum = currItem.product.price * currItem.quantity;
-                                             return prevSum + currSum;
-                                          }, 0)
-                                    }
-                                 </span>
-                              </p>
-                              <p className={styles['taxes-shipping-text']}>(taxes and shipping calculated at checkout)</p>
-               
-                              <button>Checkout</button>
-                        </div>
+                     Array.from(cart, ([productId, data]) => {
+                        return (
+                           <li key={productId}>
+                              <CartItem item={data} 
+                                 handleQuantityChange={handleQuantityChange}
+                                 validateQuantity={validateQuantity}
+                                 handleItemRemove={handleItemRemove}
+                              />
+                           </li>
+                        );
+                     })
                   }
-               </>         
-         }
+               </ul>
+            </div>
+            
+            <div className={styles['total-and-checkout']}>
+               <p>
+                  <span className={styles['subtotal-text']}>Subtotal:&nbsp;&nbsp;</span> 
+                  <span className={styles['subtotal-number']}>
+                     $
+                     {
+                        Array.from(cart, ([productId, data]) => data)
+                           .reduce((prevSum, currItem) => {
+                              let currSum = currItem.product.price * currItem.quantity;
+                              return prevSum + currSum;
+                           }, 0)
+                     }
+                  </span>
+               </p>
+               <p className={styles['taxes-shipping-text']}>
+                  (taxes and shipping calculated at checkout)
+               </p>
+
+               <button>Checkout</button>
+            </div>
       </main>
    );
 };

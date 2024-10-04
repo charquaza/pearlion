@@ -1,5 +1,6 @@
 const { body, param, query, validationResult } = require('express-validator');
 const { Op } = require("sequelize");
+const { validate: isUUID } = require('uuid');
 const db = require('../models/index');
 
 function checkValidation(req, res, next) {
@@ -55,6 +56,18 @@ exports.checkImagesQuery = [
          ];
          return allowedValues.includes(value); 
       }).withMessage('Invalid value for Images'),
+
+   checkValidation
+];
+
+exports.checkProductIdsQuery = [
+   query('productIds').optional({ values: 'falsy' })
+      .isString().withMessage('Invalid value for ProductIds').bail()
+      .trim().customSanitizer(value => {
+         value = value.split(',');
+         var validatedIdList = value.filter(id => isUUID(id));
+         return validatedIdList.join(',');
+      }),
 
    checkValidation
 ];
