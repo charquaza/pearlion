@@ -1,3 +1,4 @@
+const stripe = require("stripe")(process.env.STRIPE_API_KEY);
 const db = require('../models/index');
 const orderValidators = require('../middleware/orderValidators');
 
@@ -45,6 +46,32 @@ exports.getById = [
          } else {
             res.json({ data: orderData.get({ plain: true }) });
          }
+      } catch (err) {
+         return next(err);
+      }
+   }
+];
+
+exports.checkout = [
+   async function (req, res, next) {   
+      try {
+         const totalAmount = req.body.products.reduce((sum, product) => sum + product.amount, 0);
+
+         const paymentIntent = await stripe.paymentIntents.create({
+            amount: totalAmount,
+            currency: 'usd',
+            automatic_payment_methods: {
+               enabled: true,
+            }
+         });
+      
+         res.json({ data: 
+            {
+               clientSecret: paymentIntent.client_secret,
+               // [DEV]: For demo purposes only, you should avoid exposing the PaymentIntent ID in the client-side code.
+               dpmCheckerLink: `https://dashboard.stripe.com/settings/payment_methods/review?transaction_id=${paymentIntent.id}`
+            }
+         });
       } catch (err) {
          return next(err);
       }

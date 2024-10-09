@@ -1,0 +1,128 @@
+.payment-status {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-direction: column;
+   row-gap: 30px;
+   width: 30vw;
+   min-width: 500px;
+   min-height: 380px;
+   align-self: center;
+   box-shadow: 0px 0px 0px 0.5px rgba(50, 50, 93, 0.1),
+     0px 2px 5px 0px rgba(50, 50, 93, 0.1), 0px 1px 1.5px 0px rgba(0, 0, 0, 0.07);
+   border-radius: 7px;
+   padding: 40px;
+   opacity: 0;
+   animation: fadeInAnimation 1s ease forwards;
+   margin-top: auto;
+   margin-bottom: auto;
+}
+
+.payment-status h2 {
+   margin: 0;
+   color: #30313D;
+   text-align: center;
+}
+
+.payment-status button {
+   background: #0055DE;
+   font-family: Arial, sans-serif;
+   color: #ffffff;
+   border-radius: 4px;
+   border: 0;
+   padding: 12px 16px;
+   font-size: 16px;
+   font-weight: 600;
+   cursor: pointer;
+   display: block;
+   transition: all 0.2s ease;
+   box-shadow: 0px 4px 5.5px 0px rgba(0, 0, 0, 0.07);
+   width: 100%;
+}
+.payment-status button:hover {
+   filter: contrast(115%);
+}
+.payment-status button:disabled {
+   opacity: 0.5;
+   cursor: default;
+}
+
+.payment-status a {
+   text-decoration: none;
+   font-size: 16px;
+   font-weight: 600;
+   font-family: Arial, sans-serif;
+   display: block;
+}
+.payment-status a:hover {
+   filter: contrast(120%);
+}
+
+.status-icon {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   height: 40px;
+   width: 40px;
+   border-radius: 50%;
+} 
+
+.details-table {
+   overflow-x: auto;
+   width: 100%;
+}
+ 
+.details-table table {
+   width: 100%;
+   font-size: 14px;
+   border-collapse: collapse;
+}
+.details-table table tbody tr:first-child td {
+   border-top: 1px solid #E6E6E6; /* Top border */
+   padding-top: 10px;
+}
+.details-table table tbody tr:last-child td {
+   border-bottom: 1px solid #E6E6E6; /* Bottom border */
+}
+.details-table td {
+   padding-bottom: 10px;
+}
+
+.TableContent {
+   text-align: right;
+   color: #6D6E78;
+}
+ 
+.TableLabel {
+   font-weight: 600;
+   color: #30313D;
+}
+
+.view-details {
+   color: #0055DE;
+}
+
+.retry-button {
+   text-align: center;
+   background: #0055DE;
+   color: #ffffff;
+   border-radius: 4px;
+   border: 0;
+   padding: 12px 16px;
+   transition: all 0.2s ease;
+   box-shadow: 0px 4px 5.5px 0px rgba(0, 0, 0, 0.07);
+   width: 100%;
+}
+
+@keyframes fadeInAnimation {
+   to {
+      opacity: 1;
+   }
+}
+
+@media only screen and (max-width: 600px) {
+   .payment-status {
+      width: 80vw;
+      min-width: initial;
+   }
+}
