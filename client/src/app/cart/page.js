@@ -2,51 +2,82 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import useProductList from '../_hooks/useProductList';
-import CartItem from '@/app/_components/CartItem';
+import { apiURL } from '@/root/config';
+import Cart from '../_components/Cart';
+import Checkout from '../_components/Checkout';
 import styles from '@/app/_styles/cartPage.module.css';
 
 export default function CartPage() {
    const [ cart, setCart ] = useState(null);
+   const [ error, setError ] = useState(false);
+   const [ inCheckout, setInCheckout ] = useState(false); 
 
-   if (typeof window === 'undefined') {
-      return (
-         <main className={styles['cart']}>
-            <h1>Shopping Cart</h1>
-            
-            <p>Loading...</p>
-         </main>
-      );
-   }
+   useEffect(function getCartFromLocalStorage() {
+      (async () => {
+         var localStorageCart = localStorage.getItem('cart');
 
-   const { productList, error } = useProductList(null, null, 'main', 
-      new Map(Object.entries(JSON.parse(localStorage.getItem('cart'))))
-   );
-   
-   if (error) {
-      console.error(error);
+         //check if localStorageCart is a non-empty, plain object 
+         try {
+            localStorageCart = JSON.parse(localStorageCart);
 
-      return (
-         <main className={styles['cart']}>
-            <h1>Shopping Cart</h1>
+            if (
+               !localStorageCart || 
+               Object.prototype.toString.call(localStorageCart) !== '[object Object]' ||
+               Object.keys(localStorageCart).length === 0
+            ) {
+               //remove invalid/empty cart from localStorage
+               localStorage.removeItem('cart');
+      
+               setCart(new Map());
+               return;
+            }
+         } catch (err) {
+            localStorage.removeItem('cart');
 
-            <p>Sorry, we're having trouble loading your cart.</p>
-            <p>Please try again later.</p>
-         </main>
-      );
-   }
+            setCart(new Map());
+            return;
+         }
 
-   useEffect(function populateCartFromLocalStorage() {
-      if (productList) {
-         var storedCart = JSON.parse(localStorage.getItem('cart'));
-         storedCart = Object.prototype.toString.call(storedCart) === '[object Object]'
-            ? storedCart
-            : {};   
+         //fetch productList from IDs stored in localStorageCart
+         let urlParams = new URLSearchParams({
+            images: 'main',
+            productIds: (Object.keys(localStorageCart)).join(',')
+         });
 
-         let newCart = new Map();
+         let requestURL = new URL('products', apiURL);
+         requestURL.search = urlParams.toString();
+         requestURL = requestURL.toString();
+      
+         const fetchOptions = {
+            method: 'GET',
+            mode: 'cors',
+            credentials: 'include',
+            cache: 'no-store'
+         };
 
-         productList.data.forEach(product => {
-            var storedQuantity = storedCart[product.id];
+         let productList;
+         try {
+            const res = await fetch(requestURL, fetchOptions);
+            const data = await res.json();
+
+            if (data.errors) {
+               console.error(data.errors);
+               setError(true);
+            } else {
+               productList = data.data;
+            }
+         } catch (err) {
+            console.error(err);
+            setError(true);
+            return;
+         }
+         
+         //reconcile localStorageCart with productList
+         let validatedCartMap = new Map();
+         let validatedCartObj = {};
+
+         productList.forEach(product => {
+            var storedQuantity = localStorageCart[product.id];
             var validatedQuantity = 
                (
                   !Number.isInteger(storedQuantity) || 
@@ -54,14 +85,31 @@ export default function CartPage() {
                ) 
                   ? 1 : storedQuantity;
    
-               newCart.set(product.id, { product, quantity: validatedQuantity});
-         });  
+            validatedCartMap.set(product.id, { product, quantity: validatedQuantity});
+            validatedCartObj[product.id] = validatedQuantity;
+         });
 
-         setCart(newCart);
-      }
-   }, [productList]);
+         //update localStorage
+         localStorage.setItem('cart', JSON.stringify(validatedCartObj));
 
-   if (!cart || (cart.size > 0 && !productList)) {
+         setCart(validatedCartMap);
+      })();
+   }, []);
+
+   //error state
+   if (error) {
+      return (
+         <main className={styles['cart']}>
+            <h1>Shopping Cart</h1>
+            
+            <p>Sorry, we're having trouble loading your cart.</p>
+            <p>Please try again later.</p>
+         </main>
+      );
+   }
+
+   //loading state
+   if (!cart) {
       return (
          <main className={styles['cart']}>
             <h1>Shopping Cart</h1>
@@ -71,7 +119,8 @@ export default function CartPage() {
       );
    }
 
-   if ((cart && cart.size === 0) || (productList && productList.data.length === 0)) {
+   //empty state
+   if (cart.size === 0) {
       return (
          <main className={styles['cart']}>
             <h1>Shopping Cart</h1>
@@ -82,113 +131,11 @@ export default function CartPage() {
       );
    }
 
-   function handleQuantityChange(e) {
-      //in the future: consider limiting quantity based on quantity in stock
-
-      var currInput = e.target.value;
-      if (
-         currInput.length <= 2 &&   
-         !(currInput.length === 1 && currInput === '0') &&  //forbid leading zeros
-         !currInput.match(/\D/)
-      ) {
-         setCart(prev => {
-            var updatedCart = new Map(prev);
-   
-            var updatedData = prev.get(e.target.dataset.productId);
-            updatedData.quantity = currInput;
-   
-            updatedCart.set(e.target.dataset.productId, updatedData);
-            return updatedCart;
-         });
-      }
-   }
-
-   function validateQuantity(e) {      
-      setCart(prev => {
-         var updatedCart = new Map(prev);
-
-         var currQuantity = prev.get(e.target.dataset.productId).quantity;
-         
-         //reset quantity to 1 if user leaves input blank
-         if (currQuantity === '') {
-            currQuantity = 1;
-         }
-
-         var updatedData = prev.get(e.target.dataset.productId);
-         updatedData.quantity = Number(currQuantity);
-
-         updatedCart.set(e.target.dataset.productId, updatedData);
-
-         //update localStorage
-         var cart = JSON.parse(localStorage.getItem('cart'));
-         cart = Object.prototype.toString.call(cart) === '[object Object]'
-            ? cart
-            : {};
-         cart[e.target.dataset.productId] = currQuantity;
-         localStorage.setItem('cart', JSON.stringify(cart));
-
-         return updatedCart;
-      });
-   }
-
-   function handleItemRemove(e) {
-      setCart(prev => {
-         var updatedCart = new Map(prev);
-         updatedCart.delete(e.target.dataset.productId);
-         return updatedCart;
-      });
-
-      //update localStorage
-      var cart = JSON.parse(localStorage.getItem('cart'));
-      if (Object.prototype.toString.call(cart) === '[object Object]') {
-         delete cart[e.target.dataset.productId];
-         localStorage.setItem('cart', JSON.stringify(cart));
-      } else {
-         localStorage.setItem('cart', JSON.stringify({}));
-      }
-   }
-
    return (
-      <main className={styles['cart']}>
-         <h1>Shopping Cart</h1>
-            <div className={styles['items-container']}>
-               <ul>
-                  {
-                     Array.from(cart, ([productId, data]) => {
-                        return (
-                           <li key={productId}>
-                              <CartItem item={data} 
-                                 handleQuantityChange={handleQuantityChange}
-                                 validateQuantity={validateQuantity}
-                                 handleItemRemove={handleItemRemove}
-                              />
-                           </li>
-                        );
-                     })
-                  }
-               </ul>
-            </div>
-            
-            <div className={styles['total-and-checkout']}>
-               <p>
-                  <span className={styles['subtotal-text']}>Subtotal:&nbsp;&nbsp;</span> 
-                  <span className={styles['subtotal-number']}>
-                     $
-                     {
-                        Array.from(cart, ([productId, data]) => data)
-                           .reduce((prevSum, currItem) => {
-                              let currSum = currItem.product.price * currItem.quantity;
-                              return prevSum + currSum;
-                           }, 0)
-                     }
-                  </span>
-               </p>
-               <p className={styles['taxes-shipping-text']}>
-                  (taxes and shipping calculated at checkout)
-               </p>
-
-               <button>Checkout</button>
-            </div>
-      </main>
+      inCheckout 
+         ?
+            <Checkout />
+         :
+            <Cart cart={cart} setCart={setCart} setInCheckout={setInCheckout} />
    );
 };

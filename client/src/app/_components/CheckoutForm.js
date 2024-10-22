@@ -1,21 +1,19 @@
 'use client';
 
 import { useState } from 'react';
-import {
-   PaymentElement,
-   useStripe,
-   useElements
+import { 
+   PaymentElement, useStripe, useElements
 } from '@stripe/react-stripe-js';
 import styles from '../_styles/CheckoutForm.module.css';
 
-export default function CheckoutForm({ clientSecret, dpmCheckerLink }) {
-   const [message, setMessage] = useState(null);
-   const [isLoading, setIsLoading] = useState(false);
+export default function CheckoutForm({ dpmCheckerLink }) {
+   const [ message, setMessage ] = useState(null);
+   const [ isLoading, setIsLoading ] = useState(false);
 
    const stripe = useStripe();
    const elements = useElements();
 
-   const handleSubmit = async (e) => {
+   async function handleSubmit(e) {
       e.preventDefault();
 
       if (!stripe || !elements) {
@@ -29,7 +27,7 @@ export default function CheckoutForm({ clientSecret, dpmCheckerLink }) {
       const { error } = await stripe.confirmPayment({
          elements,
          confirmParams: {
-            return_url: 'http://localhost:3003/checkout',
+            return_url: 'http://localhost:3003/payment-status',
          },
       });
 
@@ -45,7 +43,7 @@ export default function CheckoutForm({ clientSecret, dpmCheckerLink }) {
       }
 
       setIsLoading(false);
-   };
+   }
 
    const paymentElementOptions = {
       layout: 'tabs'
@@ -67,9 +65,14 @@ export default function CheckoutForm({ clientSecret, dpmCheckerLink }) {
          <div className={styles['dpm-annotation']}>
             <p>
                Payment methods are dynamically displayed based on customer location, order amount, and currency.&nbsp;
-               <a href={dpmCheckerLink} target='_blank' rel='noopener noreferrer' className={styles['dpm-integration-checker']}>Preview payment methods by transaction</a>
+               <a 
+                  href={dpmCheckerLink} target='_blank' rel='noopener noreferrer' 
+                  className={styles['dpm-integration-checker']}
+               >
+                  Preview payment methods by transaction
+               </a>
             </p>
          </div>
       </>
    );
-}
+};

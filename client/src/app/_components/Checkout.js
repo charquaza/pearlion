@@ -1,26 +1,50 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { loadStripe } from '@stripe/stripe-js';
+import { Elements } from '@stripe/react-stripe-js';
+import { publicStripeAPIKey, apiURL } from '@/root/config';
 import CheckoutForm from './CheckoutForm';
-import PaymentStatus from './PaymentStatus';
+import styles from '../_styles/Checkout.module.css';
 
-export default function Checkout({ clientSecret, dpmCheckerLink }) {
-   const [ paymentProcessed, setPaymentProcessed ] = useState(null);
+const stripePromise = loadStripe(publicStripeAPIKey);
+
+export default function Checkout() {
+   const [ clientSecret, setClientSecret ] = useState('');
+   const [ dpmCheckerLink, setDpmCheckerLink ] = useState('');
 
    useEffect(() => {
-      const paymentIntentSecret = new URLSearchParams(window.location.search).get(
-         "payment_intent_client_secret"
-      );
-
-      setPaymentProcessed(paymentIntentSecret ? true : false);
+      fetch(apiURL + '/orders/checkout', {
+         method: 'POST',
+         headers: { 'Content-Type': 'application/json' },
+         body: JSON.stringify({ products: [{ id: 'xl-tshirt', amount: 1000 }] }),
+         mode: 'cors',
+         credentials: 'include',
+         cache: 'no-store'
+      })
+         .then((res) => res.json())
+         .then((data) => {
+            setClientSecret(data.data.clientSecret);
+            // [DEV] For demo purposes only
+            setDpmCheckerLink(data.data.dpmCheckerLink);
+         });
    }, []);
 
+   const appearance = {
+      theme: 'stripe',
+   };
+   // Enable the skeleton loader UI for optimal loading.
+   const loader = 'auto';
+
    return (
-      <>
-         {paymentProcessed === true && 
-            <PaymentStatus />}
-         {paymentProcessed === false &&
-            <CheckoutForm clientSecret={clientSecret} dpmCheckerLink={dpmCheckerLink} />}
-      </>
+      <main className={styles['checkout']}>
+         {clientSecret && 
+            <Elements options={{clientSecret, appearance, loader}} stripe={stripePromise}>
+               <CheckoutForm clientSecret={clientSecret} 
+                  dpmCheckerLink={dpmCheckerLink} 
+               />
+            </Elements>
+         }
+      </main>
    );
-}
+};

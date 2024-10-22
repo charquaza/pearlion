@@ -1,3 +1,6 @@
+'use client';
+
+import { useMemo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import prodImgPlaceholder from '../_images/prodImgPlaceholder';
@@ -6,11 +9,14 @@ import styles from '@/app/_styles/CartItem.module.css';
 export default function CartItem({ 
    item, handleQuantityChange, validateQuantity, handleItemRemove 
 }) {
-   var mainProdImgData = item.product.Images[0];
-   var imgBuffer = mainProdImgData.data.data;
-   var uint8Array = new Uint8Array(imgBuffer);
-   var imgBlob = new Blob([ uint8Array ], { type: 'image/jpeg' });
-   var imgURL = URL.createObjectURL(imgBlob);   
+   const imgURL = useMemo(() => {
+      var mainProdImgData = item.product.Images[0];
+      var imgBuffer = mainProdImgData.data.data;
+      var uint8Array = new Uint8Array(imgBuffer);
+      var imgBlob = new Blob([ uint8Array ], { type: 'image/jpeg' });
+      var imgURL = URL.createObjectURL(imgBlob);   
+      return imgURL;
+   }, [item]);
 
    return (
       <article className={styles['cart-item']}>

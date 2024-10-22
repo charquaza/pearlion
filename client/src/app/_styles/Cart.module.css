@@ -1,0 +1,51 @@
+.cart {
+   width: 58vw;
+}
+
+.items-container {
+   padding-left: 3vw;
+   padding-bottom: 2vw;
+}
+
+.items-container ul {
+   list-style-type: none;
+   padding: 0;
+   margin-bottom: 0;
+}
+
+.items-container ul li {
+   padding-bottom: 1.8vw;
+}
+
+.shop-link {
+   color: rgb(206, 57, 106);
+}
+.shop-link:active {
+   color: rgb(244, 146, 179);
+}
+
+.total-and-checkout {
+   display: flex;
+   flex-direction: column;
+   align-items: flex-end;
+   border-top: 1px solid black;
+   padding-top: 1.5vw;
+   margin-left: 3vw;
+}
+.total-and-checkout p {
+   margin: 0;
+}
+
+span.subtotal-text {
+   font-size: 1.2rem;
+}
+
+span.subtotal-number {
+   font-size: 1.3rem;
+   font-weight: bold;
+}
+
+p.taxes-shipping-text {
+   font-size: 0.9rem;
+   margin-bottom: 2vw;
+}
