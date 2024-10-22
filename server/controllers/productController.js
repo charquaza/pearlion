@@ -9,6 +9,13 @@ exports.getAll = [
    productValidators.checkProductIdsQuery,
 
    async function (req, res, next) {
+      //if productIds query param did not contain any valid IDs,
+      //validator returns empty string ''
+      //return [] immediately, otherwise database query will return all products
+      if (req.query.productIds === '') {
+         return res.json({ data: [] });
+      }
+
       try {
          var productFindOptions = { 
             where: { 
