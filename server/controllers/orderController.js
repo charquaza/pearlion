@@ -28,7 +28,6 @@ exports.webhook = [
             const paymentIntent = event.data.object;
 
             async function handlePaymentIntentSucceeded(paymentIntent) {
-               //TODO: validate client input
                try {
                   await db.sequelize.transaction(async (t) => {
                      const newOrder = await db.Order.create({
@@ -43,6 +42,13 @@ exports.webhook = [
          
                      //create Purchase entries for Order
                      const orderDetails = JSON.parse(paymentIntent.metadata.orderDetails);
+
+                     if (!orderDetails.every(
+                           product => product.unitPrice >= 0 && product.quantityPurchased > 0 
+                     )) {
+                        throw new Error('Invalid unitPrice or quantityPurchased');
+                     }
+
                      await Promise.all(orderDetails.map(product => {
                         return db.Purchase.create({
                            order: newOrder.id,
