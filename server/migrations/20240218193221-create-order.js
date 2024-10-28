@@ -10,6 +10,10 @@ module.exports = {
             defaultValue: Sequelize.UUIDV4,
             primaryKey: true
          },
+         paymentApiId: {
+            type: Sequelize.STRING(50),
+            unique: true
+         },   
          client: {
             type: Sequelize.UUID,
             references: {

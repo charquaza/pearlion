@@ -20,6 +20,9 @@ exports.checkIdParam = [
 ];
 
 exports.create = [
+   body('paymentApiId').isString().withMessage('Invalid value for Payment API Id').bail()
+      .trim()
+      .isLength({ max: 50 }).withMessage('Payment API Id cannot be longer than 50 characters'),
    body('shippingCost')
       .custom((value) => {
          if (!Number.isInteger(value)) {

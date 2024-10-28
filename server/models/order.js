@@ -28,6 +28,10 @@ module.exports = (sequelize, DataTypes) => {
          defaultValue: DataTypes.UUIDV4,
          primaryKey: true
       },
+      paymentApiId: {
+         type: DataTypes.STRING(50),
+         unique: true
+      },
       client: {
          type: DataTypes.UUID,
          references: {

@@ -23,7 +23,6 @@ exports.webhook = [
          return res.sendStatus(400);
       }
 
-      //TODO: handle duplicate events
       switch (event.type) {
          case 'payment_intent.succeeded':
             const paymentIntent = event.data.object;
@@ -33,6 +32,7 @@ exports.webhook = [
                try {
                   await db.sequelize.transaction(async (t) => {
                      const newOrder = await db.Order.create({
+                        paymentApiId: paymentIntent.id,
                         client: paymentIntent.metadata.customerId,
                         purchaseDate: Date.now(),
                         shippingCost: 0,
@@ -168,6 +168,7 @@ exports.create = [
          //perform order creation and purchase creation in a transaction
          const result = await db.sequelize.transaction(async (t) => {
             let newOrder = await db.Order.create({
+               paymentApiId: req.body.paymentApiId,
                client: req.user.id,
                purchaseDate: Date.now(),
                shippingCost: req.body.shippingCost,
