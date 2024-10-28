@@ -22,11 +22,21 @@ module.exports = {
         username: 'testuser1',
         password: await bcrypt.hash('userPass', 10),
         email: 'testuser1@email.com'
+      },
+      {
+        firstName: 'Guest',
+        lastName: 'User',
+        privilege: 'user',
+        username: 'guestuser1',
+        password: await bcrypt.hash('guest', 10),
+        email: 'guestuser1@email.com'
       }
     ], {});
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.bulkDelete('users', { username: ['admin', 'testuser1'] });
+    await queryInterface.bulkDelete('users', { 
+      username: ['admin', 'testuser1', 'guestuser1'] 
+    });
   }
 };
