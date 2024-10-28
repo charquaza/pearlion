@@ -1,6 +1,106 @@
-const stripe = require("stripe")(process.env.STRIPE_API_KEY);
+const express = require('express');
+const stripe = require('stripe')(process.env.STRIPE_API_KEY);
 const db = require('../models/index');
 const orderValidators = require('../middleware/orderValidators');
+
+exports.webhook = [
+   express.raw({ type: 'application/json' }),
+
+   async function (req, res, next) {
+      let event = req.body;
+      
+      const endpointSecret = process.env.STRIPE_ENDPOINT_SECRET;
+      const signature = req.headers['stripe-signature'];
+
+      try {
+         event = stripe.webhooks.constructEvent(
+            req.body,
+            signature,
+            endpointSecret
+         );
+      } catch (err) {
+         console.log(`⚠️  Webhook signature verification failed.`, err.message);
+         return res.sendStatus(400);
+      }
+
+      //TODO: handle duplicate events
+      switch (event.type) {
+         case 'payment_intent.succeeded':
+            const paymentIntent = event.data.object;
+
+            async function handlePaymentIntentSucceeded(paymentIntent) {
+               //TODO: validate client input
+               try {
+                  await db.sequelize.transaction(async (t) => {
+                     const newOrder = await db.Order.create({
+                        client: paymentIntent.metadata.customerId,
+                        purchaseDate: Date.now(),
+                        shippingCost: 0,
+                        tax: 0,   //TODO: implement tax API
+                        fulfillmentStatus: 'delivered',
+                        deliveryDate: Date.now()
+                     }, { transaction: t });
+         
+                     //create Purchase entries for Order
+                     const orderDetails = JSON.parse(paymentIntent.metadata.orderDetails);
+                     await Promise.all(orderDetails.map(product => {
+                        return db.Purchase.create({
+                           order: newOrder.id,
+                           product: product.product,
+                           unitPrice: product.unitPrice,
+                           quantityPurchased: product.quantityPurchased
+                        }, { transaction: t });
+                     }));
+                  });
+               } catch (err) {
+                  console.log(err);
+               }
+            }
+
+            handlePaymentIntentSucceeded(paymentIntent);
+            break;
+         default:
+            console.log(`Unhandled event type ${event.type}.`);
+      }
+      
+      //Return 200 response to acknowledge receipt of the event
+      res.send();
+   }
+];
+
+exports.checkout = [
+   async function (req, res, next) {   
+      try {
+         const customerId = req.user ? req.user.id : '570f5f82-fd73-4834-a872-88aa63938f47'; //guest user id
+         const totalAmount = 100 * req.body.reduce((sum, item) => {
+            return sum + (item.unitPrice * item.quantityPurchased);
+         }, 0);
+
+         const paymentIntent = await stripe.paymentIntents.create({
+            amount: totalAmount,
+            currency: 'usd',
+            metadata: {
+               customerId,
+               orderDetails: JSON.stringify(req.body)
+            },
+            automatic_payment_methods: {
+               enabled: true,
+            }
+         });
+      
+         res.json({ data: 
+            {
+               clientSecret: paymentIntent.client_secret,
+               // [DEV]: For demo purposes only, you should avoid exposing the PaymentIntent ID in the client-side code.
+               dpmCheckerLink: `https://dashboard.stripe.com/settings/payment_methods/review?transaction_id=${paymentIntent.id}`
+            }
+         });
+      } catch (err) {
+         console.log(err);
+         return next(err);
+      }
+   }
+];
 
 exports.getAll = [
    function checkPermissions(req, res, next) {
@@ -46,32 +146,6 @@ exports.getById = [
          } else {
             res.json({ data: orderData.get({ plain: true }) });
          }
-      } catch (err) {
-         return next(err);
-      }
-   }
-];
-
-exports.checkout = [
-   async function (req, res, next) {   
-      try {
-         const totalAmount = req.body.products.reduce((sum, product) => sum + product.amount, 0);
-
-         const paymentIntent = await stripe.paymentIntents.create({
-            amount: totalAmount,
-            currency: 'usd',
-            automatic_payment_methods: {
-               enabled: true,
-            }
-         });
-      
-         res.json({ data: 
-            {
-               clientSecret: paymentIntent.client_secret,
-               // [DEV]: For demo purposes only, you should avoid exposing the PaymentIntent ID in the client-side code.
-               dpmCheckerLink: `https://dashboard.stripe.com/settings/payment_methods/review?transaction_id=${paymentIntent.id}`
-            }
-         });
       } catch (err) {
          return next(err);
       }

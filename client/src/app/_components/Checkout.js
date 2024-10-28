@@ -9,15 +9,23 @@ import styles from '../_styles/Checkout.module.css';
 
 const stripePromise = loadStripe(publicStripeAPIKey);
 
-export default function Checkout() {
+export default function Checkout({ cart }) {
    const [ clientSecret, setClientSecret ] = useState('');
    const [ dpmCheckerLink, setDpmCheckerLink ] = useState('');
 
    useEffect(() => {
+      const cartArray = Array.from(cart, ([productId, data]) => {
+         return ({
+            product: productId,
+            unitPrice: data.product.price,
+            quantityPurchased: data.quantity
+         });
+      });
+
       fetch(apiURL + '/orders/checkout', {
          method: 'POST',
          headers: { 'Content-Type': 'application/json' },
-         body: JSON.stringify({ products: [{ id: 'xl-tshirt', amount: 1000 }] }),
+         body: JSON.stringify(cartArray),
          mode: 'cors',
          credentials: 'include',
          cache: 'no-store'

@@ -2,6 +2,8 @@ const express = require('express');
 const userRouter = express.Router();
 const userController = require('../controllers/userController');
 
+userRouter.use(express.json());
+
 userRouter.get('/', userController.getAll);
 userRouter.get('/curr-user', userController.getCurrUser);
 
