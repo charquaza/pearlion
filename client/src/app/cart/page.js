@@ -134,7 +134,7 @@ export default function CartPage() {
    return (
       inCheckout 
          ?
-            <Checkout cart={cart} />
+            <Checkout cart={cart} setInCheckout={setInCheckout} />
          :
             <Cart cart={cart} setCart={setCart} setInCheckout={setInCheckout} />
    );

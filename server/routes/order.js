@@ -7,6 +7,7 @@ orderRouter.post('/webhook', orderController.webhook);
 orderRouter.use(express.json());
 
 orderRouter.post('/checkout', orderController.checkout);
+orderRouter.post('/tax', orderController.tax);
 
 orderRouter.get('/', orderController.getAll);
 orderRouter.post('/', orderController.create);

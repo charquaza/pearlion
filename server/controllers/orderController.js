@@ -3,6 +3,107 @@ const stripe = require('stripe')(process.env.STRIPE_API_KEY);
 const db = require('../models/index');
 const orderValidators = require('../middleware/orderValidators');
 
+exports.checkout = [
+   async function (req, res, next) {   
+      try {
+         const customerId = req.user ? req.user.id : '570f5f82-fd73-4834-a872-88aa63938f47'; //guest user id
+         const totalBeforeTax = 100 * req.body.reduce((sum, item) => {
+            return sum + (item.unitPrice * item.quantityPurchased);
+         }, 0);
+         const ipAddress = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+
+         let taxCalculation;
+         try {
+            taxCalculation = await stripe.tax.calculations.create({
+               currency: 'usd',
+               line_items: req.body.map(item => { 
+                  return { 
+                     amount: 100 * item.unitPrice * item.quantityPurchased, reference: item.product 
+                  };
+               }),
+               customer_details: {
+                  ip_address: ipAddress
+               }
+            });
+         } catch (e) {
+            console.log('Tax could not be calculated based on customer IP address');
+         }
+
+         const paymentIntent = await stripe.paymentIntents.create({
+            amount: (taxCalculation && taxCalculation.amount_total) || totalBeforeTax,
+            currency: 'usd',
+            metadata: {
+               customerId,
+               ...(taxCalculation && {
+                  taxAmount: taxCalculation.tax_amount_exclusive,
+                  taxCalcId: taxCalculation.id
+               }),
+               orderDetails: JSON.stringify(req.body)
+            },
+            automatic_payment_methods: {
+               enabled: true,
+            }
+         });
+   
+         res.json({ data: 
+            {
+               clientSecret: paymentIntent.client_secret,
+               paymentIntentId: paymentIntent.id,
+               taxEstimate: paymentIntent.metadata.taxAmount,
+               // [DEV]: For demo purposes only, you should avoid exposing the PaymentIntent ID in the client-side code.
+               dpmCheckerLink: `https://dashboard.stripe.com/settings/payment_methods/review?transaction_id=${paymentIntent.id}`
+            }
+         });
+      } catch (err) {
+         console.log(err);
+         return next(err);
+      }
+   }
+];
+
+exports.tax = [
+   async function (req, res, next) {   
+      try {
+         const paymentIntent = await stripe.paymentIntents.retrieve(req.body.paymentIntentId);
+         const products = JSON.parse(paymentIntent.metadata.orderDetails);
+
+         const taxCalculation = await stripe.tax.calculations.create({
+            currency: 'usd',
+            line_items: products.map(item => { 
+               return { 
+                  amount: 100 * item.unitPrice * item.quantityPurchased, reference: item.product 
+               };
+            }),
+            customer_details: {
+               address: req.body.address,
+               address_source: 'shipping'
+            }
+         });
+ 
+         const updatedPaymentIntent = await stripe.paymentIntents.update(
+            req.body.paymentIntentId,
+            {
+               amount: taxCalculation.amount_total,
+               metadata: {
+                  ...paymentIntent.metadata,
+                     taxAmount: taxCalculation.tax_amount_exclusive,
+                     taxCalcId: taxCalculation.id
+               }
+            }
+         );
+
+         res.json({ data: 
+            {
+               taxAmount: updatedPaymentIntent.metadata.taxAmount
+            }
+         });
+      } catch (err) {
+         console.log(err);
+         return next(err);
+      }
+   }
+];
+
 exports.webhook = [
    express.raw({ type: 'application/json' }),
 
@@ -26,8 +127,8 @@ exports.webhook = [
       switch (event.type) {
          case 'payment_intent.succeeded':
             const paymentIntent = event.data.object;
-
-            async function handlePaymentIntentSucceeded(paymentIntent) {
+      
+            async function saveOrderToDB(paymentIntent) {
                try {
                   await db.sequelize.transaction(async (t) => {
                      const newOrder = await db.Order.create({
@@ -35,7 +136,7 @@ exports.webhook = [
                         client: paymentIntent.metadata.customerId,
                         purchaseDate: Date.now(),
                         shippingCost: 0,
-                        tax: 0,   //TODO: implement tax API
+                        tax: paymentIntent.metadata.taxAmount,
                         fulfillmentStatus: 'delivered',
                         deliveryDate: Date.now()
                      }, { transaction: t });
@@ -63,7 +164,27 @@ exports.webhook = [
                }
             }
 
-            handlePaymentIntentSucceeded(paymentIntent);
+            async function createTaxTransaction(paymentIntent) {
+               const transaction = await stripe.tax.transactions.createFromCalculation({
+                  calculation: paymentIntent.metadata.taxCalcId,
+                  reference: paymentIntent.id,
+                  expand: ['line_items'],
+               });
+
+               await stripe.paymentIntents.update(
+                  paymentIntent.id,
+                  {
+                     metadata: {
+                        ...paymentIntent.metadata,
+                        taxTransactionId: transaction.id
+                     }
+                  }
+               );
+            }
+
+            saveOrderToDB(paymentIntent);
+            createTaxTransaction(paymentIntent);
+
             break;
          default:
             console.log(`Unhandled event type ${event.type}.`);
@@ -71,40 +192,6 @@ exports.webhook = [
       
       //Return 200 response to acknowledge receipt of the event
       res.send();
-   }
-];
-
-exports.checkout = [
-   async function (req, res, next) {   
-      try {
-         const customerId = req.user ? req.user.id : '570f5f82-fd73-4834-a872-88aa63938f47'; //guest user id
-         const totalAmount = 100 * req.body.reduce((sum, item) => {
-            return sum + (item.unitPrice * item.quantityPurchased);
-         }, 0);
-
-         const paymentIntent = await stripe.paymentIntents.create({
-            amount: totalAmount,
-            currency: 'usd',
-            metadata: {
-               customerId,
-               orderDetails: JSON.stringify(req.body)
-            },
-            automatic_payment_methods: {
-               enabled: true,
-            }
-         });
-      
-         res.json({ data: 
-            {
-               clientSecret: paymentIntent.client_secret,
-               // [DEV]: For demo purposes only, you should avoid exposing the PaymentIntent ID in the client-side code.
-               dpmCheckerLink: `https://dashboard.stripe.com/settings/payment_methods/review?transaction_id=${paymentIntent.id}`
-            }
-         });
-      } catch (err) {
-         console.log(err);
-         return next(err);
-      }
    }
 ];
 
