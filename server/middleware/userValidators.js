@@ -75,7 +75,8 @@ exports.signUp = [
             throw new Error('This email is linked to an existing account. Please enter a different email address');
          }
       }),
-   body('phone').isString().withMessage('Invalid value for Phone').bail()
+   body('phone').optional({ values: 'falsy' })
+      .isString().withMessage('Invalid value for Phone').bail()
       .trim().notEmpty().withMessage('Phone number cannot be blank')
       .isLength({ max: 25 }).withMessage('Phone number is too long; please enter a valid phone number')
       .isMobilePhone().withMessage('Please enter a valid phone number')
@@ -123,10 +124,12 @@ exports.update = [
          }
       }),
    body('newPassword')
-      .if((value) => {
+      .if((newPassword) => {
          //skip validation if newPassword field was omitted
-         return value !== undefined;
+         return newPassword;
       })
+      .custom((newPassword, { req }) => newPassword !== req.body.currPassword)
+      .withMessage('New password must be different from current password')
       .isString().withMessage('Invalid value for New Password').bail()
       .trim().notEmpty().withMessage('New Password cannot be blank')
       .isLength({ min: 8 }).withMessage('New Password cannot be shorter than 8 characters')
@@ -137,16 +140,16 @@ exports.update = [
    body('confirmNewPassword')
       .if((value, { req }) => {
          //skip validation if newPassword field was omitted
-         return req.body.newPassword !== undefined;
+         return req.body.newPassword;
       })
       .custom((value, { req }) => value === req.body.newPassword)
-      .withMessage('New Passwords do not match'),
+      .withMessage('New passwords do not match'),
    body('currPassword')
       .custom(
          async (value, { req }) => {
             const passwordsMatch = await bcrypt.compare(value, req.user.password);
             if (!passwordsMatch) {
-               throw new Error('Incorrect password');
+               throw new Error('Incorrect password. Please enter the correct, current password to save changes.');
             }
          }),
    body('email').isString().withMessage('Invalid value for Email').bail()
@@ -169,7 +172,8 @@ exports.update = [
             throw new Error('This email is linked to an existing account. Please enter a different email address');
          }
       }),
-   body('phone').isString().withMessage('Invalid value for Phone').bail()
+   body('phone').optional({ values: 'falsy' })
+      .isString().withMessage('Invalid value for Phone').bail()
       .trim().notEmpty().withMessage('Phone number cannot be blank')
       .isLength({ max: 25 }).withMessage('Phone number is too long; please enter a valid phone number')
       .isMobilePhone().withMessage('Please enter a valid phone number')

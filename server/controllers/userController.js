@@ -196,7 +196,7 @@ exports.update = [
             lastName: req.body.lastName,
             username: req.body.username,
             email: req.body.email,
-            phone: req.body.phone
+            phone: req.body.phone || null
          };
 
          //update password if new password has been provided
