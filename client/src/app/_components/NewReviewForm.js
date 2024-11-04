@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useMemo } from 'react';
 import Image from 'next/image';
 import { isValidImageType, formatFileSize } from '../_utils/utils';
@@ -91,7 +93,7 @@ export default function NewReviewForm({ product, revalidateProduct, revalidateRe
             setFormErrors(data.errors);
          }
       } catch (e) {
-         setFormErrors(e.errors || e);
+         setFormErrors([ e.message ]);
       }
    }
 
