@@ -208,7 +208,16 @@ exports.getAll = [
       try {
          let orderList = req.user.privilege === 'admin' 
             ? await db.Order.findAll({ raw: true })
-            : await db.Order.findAll({ where: { client: req.user.id }, raw: true });
+            : await db.Order.findAll({ 
+               where: { client: req.user.id },
+               include: [
+                  {
+                     model: db.Product,
+                     order: [[ 'name', 'ASC' ]]
+                  }
+               ],
+               order: [ ['purchaseDate', 'DESC'] ]    
+            });
          res.json({ data: orderList });
       } catch (err) {
          return next(err);
@@ -229,7 +238,16 @@ exports.getById = [
 
    async function (req, res, next) {
       try {
-         let orderData = await db.Order.findByPk(req.params.orderId);
+         let orderData = await db.Order.findByPk(req.params.orderId, 
+            { 
+               include: [
+                  {
+                     model: db.Product,
+                     order: [[ 'name', 'ASC' ]]
+                  }
+               ]
+            }
+         );
 
          if (
             orderData === null || 
