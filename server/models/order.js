@@ -54,6 +54,22 @@ module.exports = (sequelize, DataTypes) => {
          type: DataTypes.BIGINT,
          allowNull: false
       },
+      purchaseTotal: {
+         type: DataTypes.VIRTUAL,
+         get() {
+            if (this.Products) {
+               return this.Products.reduce((sum, product) => {
+                  const purchase = product.Purchase;
+                  return sum + (purchase.unitPrice * purchase.quantityPurchased);
+               }, 0);
+            } else {
+               return 0;
+            }
+         },
+         set(value) {
+            throw new Error('Do not try to set the `purchaseTotal` value!');
+         }
+      },
       fulfillmentStatus: {
          type: DataTypes.STRING(100),
          allowNull: false
