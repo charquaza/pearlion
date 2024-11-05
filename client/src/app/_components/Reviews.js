@@ -83,6 +83,8 @@ export default function Reviews({ productId }) {
                                     <ReviewCard productName={product.data.name} review={review} 
                                        reviewIndex={index}
                                        toggleReviewPopover={toggleReviewPopover}
+                                       revalidateProduct={productMutate}
+                                       revalidateReviewList={reviewListMutate} 
                                     />
                                  </li>
                               );
