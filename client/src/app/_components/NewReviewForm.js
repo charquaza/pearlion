@@ -14,12 +14,12 @@ export default function NewReviewForm({ product, revalidateProduct, revalidateRe
    const [ formErrors, setFormErrors ] = useState([]);
 
    const productImageURL = useMemo(() => {
-         let imgBuffer = product.data.Images[0].data.data;
-         let uint8Array = new Uint8Array(imgBuffer);
-         let imgBlob = new Blob([ uint8Array ], { type: 'image/jpeg' });
-         let imgURL = URL.createObjectURL(imgBlob);
-         
-         return imgURL;
+      let imgBuffer = product.data.Images[0].data.data;
+      let uint8Array = new Uint8Array(imgBuffer);
+      let imgBlob = new Blob([ uint8Array ], { type: 'image/jpeg' });
+      let imgURL = URL.createObjectURL(imgBlob);
+      
+      return imgURL;
    }, [ product ]);
 
    function toggleReviewForm(e) {
@@ -34,7 +34,8 @@ export default function NewReviewForm({ product, revalidateProduct, revalidateRe
    }
 
    function handleUpload(e) {
-      const currFiles = e.target.files;
+      const fileInputElem = e.target;
+      const currFiles = fileInputElem.files;
 
       if (currFiles.length !== 0) {
          let currFilesArray = [ ...currFiles ];
@@ -55,22 +56,34 @@ export default function NewReviewForm({ product, revalidateProduct, revalidateRe
          });
 
          setImgUploads([ ...imgUploads, ...newImgFiles ]);
+
+         //clear <input> value to prevent bugs -
+         //    <input type='file> cannot be a fully controlled component
+         // e.g. w/o resetting <input>.value, user cannot 
+         //    delete then immediately re-upload the same file,
+         //    since the same file is still stored in the <input> 
+         //    and therefore will not trigger onChange event
+         fileInputElem.value = '';
       }
    }
 
    function handleUploadDelete(e) {
-      const indexToDelete = Number(e.target.getAttribute('data-upload-index'));
+      const fileInputElem = e.target;
+      const indexToDelete = Number(fileInputElem.getAttribute('data-upload-index'));
+
       setImgUploads([ 
          ...imgUploads.slice(0, indexToDelete), 
          ...imgUploads.slice(indexToDelete + 1) 
       ]);
+
+      fileInputElem.value = '';
    }
 
    async function handleFormSubmit(e) {
       e.preventDefault();
 
       const formData = new FormData();
-      
+
       imgUploads.forEach(imgFile => formData.append('images', imgFile));
       Object.keys(inputValues).forEach(key => formData.append(key, inputValues[key]));
       formData.append('productId', product.data.id);
@@ -200,7 +213,7 @@ export default function NewReviewForm({ product, revalidateProduct, revalidateRe
                      accept='image/apng, image/avif, image/gif, 
                         image/jpeg, image/png, image/svg+xml, 
                         image/webp' 
-                     multiple 
+                     multiple
                      onChange={handleUpload}
                   />
                </label>
