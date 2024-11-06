@@ -10,7 +10,7 @@ import styles from '@/app/_styles/NewReviewForm.module.css';
 export default function NewReviewForm({ product, revalidateProduct, revalidateReviewList }) {
    const [ showReviewForm, setShowReviewForm ] = useState(false);
    const [ inputValues, setInputValues ] = useState({ rating: '0', review: '' });
-   const [ uploadPreview, setUploadPreview ] = useState([]);
+   const [ imgUploads, setImgUploads ] = useState([]);
    const [ formErrors, setFormErrors ] = useState([]);
 
    const productImageURL = useMemo(() => {
@@ -24,7 +24,7 @@ export default function NewReviewForm({ product, revalidateProduct, revalidateRe
 
    function toggleReviewForm(e) {
       setInputValues({ rating: '0', review: '' });
-      setUploadPreview([]);
+      setImgUploads([]);
       setFormErrors([]);
       setShowReviewForm(prev => !prev);
    }
@@ -36,34 +36,43 @@ export default function NewReviewForm({ product, revalidateProduct, revalidateRe
    function handleUpload(e) {
       const currFiles = e.target.files;
 
-      if (currFiles.length === 0) {
-         setUploadPreview([]);
-      } else {
-         let newUploadPreview = [];
+      if (currFiles.length !== 0) {
+         let currFilesArray = [ ...currFiles ];
+         let newImgFiles = currFilesArray.filter(newImgFile => {
+            let fileIsNew = -1 === imgUploads.findIndex(imgUpload => {
+               let isSameFile = (
+                  newImgFile.name === imgUpload.name &&
+                  newImgFile.size === imgUpload.size &&
+                  newImgFile.lastModified === imgUpload.lastModified &&
+                  newImgFile.webkitRelativePath === imgUpload.webkitRelativePath
+               );
+               return isSameFile;
+            });
+            
+            return (
+               isValidImageType(newImgFile) && fileIsNew
+            );
+         });
 
-         for (const file of currFiles) {
-            let previewInfo = {};
-
-            if (isValidImageType(file)) {
-               previewInfo.text = `${file.name} (${formatFileSize(file.size)})`;
-               previewInfo.imgSrc = URL.createObjectURL(file);
-               previewInfo.imgAlt = file.name;
-            } else {
-               previewInfo.text = `'${file.name}' is not a valid image, please choose a
-                  different image`;
-            }
-
-            newUploadPreview.push(previewInfo);
-         }
-
-         setUploadPreview(newUploadPreview);
+         setImgUploads([ ...imgUploads, ...newImgFiles ]);
       }
+   }
+
+   function handleUploadDelete(e) {
+      const indexToDelete = Number(e.target.getAttribute('data-upload-index'));
+      setImgUploads([ 
+         ...imgUploads.slice(0, indexToDelete), 
+         ...imgUploads.slice(indexToDelete + 1) 
+      ]);
    }
 
    async function handleFormSubmit(e) {
       e.preventDefault();
 
-      const formData = new FormData(e.target);
+      const formData = new FormData();
+      
+      imgUploads.forEach(imgFile => formData.append('images', imgFile));
+      Object.keys(inputValues).forEach(key => formData.append(key, inputValues[key]));
       formData.append('productId', product.data.id);
       
       const fetchOptions = {
@@ -80,7 +89,7 @@ export default function NewReviewForm({ product, revalidateProduct, revalidateRe
 
          if (res.ok) {
             setInputValues({ rating: '0', review: '' });
-            setUploadPreview([]); 
+            setImgUploads([]);
             setFormErrors([]);     
             setShowReviewForm(false);
 
@@ -198,15 +207,25 @@ export default function NewReviewForm({ product, revalidateProduct, revalidateRe
 
                <ul className={styles['file-upload-list']}>
                   {
-                     uploadPreview.map(info => {
+                     imgUploads.map((imgUpload, index) => {
+                        let uploadtext = `${imgUpload.name} (${formatFileSize(imgUpload.size)})`;
+                        let imgSrc = URL.createObjectURL(imgUpload);
+                        let imgAlt = imgUpload.name;
+
                         return (
-                           <li key={info.text}>
+                           <li key={uploadtext}>
+                              <button data-upload-index={index}
+                                 onClick={handleUploadDelete}
+                              >
+                                 x
+                              </button>
+
                               <div className={styles['file-upload-image-ctnr']}>
                                  {
-                                    (info.imgSrc && info.imgAlt) &&
+                                    (imgSrc && imgAlt) &&
                                        <Image
-                                          src={info.imgSrc}
-                                          alt={info.imgAlt}
+                                          src={imgSrc}
+                                          alt={imgAlt}
                                           fill
                                           quality={50}
                                           sizes='10vw'
@@ -214,7 +233,7 @@ export default function NewReviewForm({ product, revalidateProduct, revalidateRe
                                  }
                               </div>
 
-                              <p>{info.text}</p>
+                              <p>{uploadtext}</p>
                            </li>
                         );
                      })
