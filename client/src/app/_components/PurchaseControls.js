@@ -60,7 +60,6 @@ export default function PurchaseControls({ productId }) {
          </label>
 
          <div className={styles['buttons-container']}>
-            <button>Buy Now</button>
             <button onClick={handleAddToCart}>Add to Cart</button>
          </div>
       </div>
