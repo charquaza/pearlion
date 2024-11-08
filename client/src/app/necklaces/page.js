@@ -14,7 +14,7 @@ export default function NecklacesPage() {
       return (
          <main className={styles['necklaces-page']}>
             <h1>Necklaces</h1>
-            <p>Sorry, we're having trouble loading this page.</p>
+            <p>Sorry, we&apos;re having trouble loading this page.</p>
             <p>Please try again later.</p>
          </main>
       );

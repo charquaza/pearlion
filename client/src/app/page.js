@@ -18,7 +18,7 @@ export default function HomePage() {
 
       return (
          <main>
-            <p>Sorry, we're having trouble loading this page.</p>
+            <p>Sorry, we&apos;re having trouble loading this page.</p>
             <p>Please try again later.</p>
          </main>
       );

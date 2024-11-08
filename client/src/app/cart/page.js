@@ -102,7 +102,7 @@ export default function CartPage() {
          <main className={styles['cart']}>
             <h1>Shopping Cart</h1>
             
-            <p>Sorry, we're having trouble loading your cart.</p>
+            <p>Sorry, we&apos;re having trouble loading your cart.</p>
             <p>Please try again later.</p>
          </main>
       );

@@ -14,7 +14,7 @@ export default function EarringsPage() {
       return (
          <main className={styles['earrings-page']}>
             <h1>Earrings</h1>
-            <p>Sorry, we're having trouble loading this page.</p>
+            <p>Sorry, we&apos;re having trouble loading this page.</p>
             <p>Please try again later.</p>
          </main>
       );

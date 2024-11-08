@@ -48,7 +48,7 @@ export default function Checkout({ cart, setInCheckout }) {
             setDpmCheckerLink(data.data.dpmCheckerLink);
          })
          .catch(err => setCheckoutError(err));
-   }, []);
+   }, [cart]);
 
    const appearance = {
       theme: 'stripe',
@@ -92,7 +92,7 @@ export default function Checkout({ cart, setInCheckout }) {
       return (
          <main className={styles['checkout']}>
             <h1>Checkout</h1>
-            <p>We're having trouble with the checkout process...</p>
+            <p>We&apos;re having trouble with the checkout process...</p>
             <p>Please try again later, or contact us for assistance</p>
          </main>
       );

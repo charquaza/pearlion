@@ -88,7 +88,7 @@ export default function PaymentStatusPage() {
    if (error) {
       return (
          <main>
-            <p>Sorry, we're having trouble confirming your payment status.</p>
+            <p>Sorry, we&apos;re having trouble confirming your payment status.</p>
             <p>
                You can try refreshing this page, 
                or <Link href='/account'>check your account page</Link> for more 

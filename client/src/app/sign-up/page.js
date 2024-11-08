@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import styles from '@/app/_styles/signUpPage.module.css';
 
-export default function signUpPage() {
+export default function SignUpPage() {
    const [ inputValues, setInputValues ] = useState({
       firstName: '', lastName: '', username: '', password: '',
       confirmPassword: '', email: '', phone: ''

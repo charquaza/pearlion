@@ -10,8 +10,6 @@ export default function ReviewImageList({ reviewList, review, reviewIndex, toggl
       new Map([ ['startIndex', 0], ['count', 6] ])
    );
 
-   //remove ternary expression and simply return review.images
-   // once database is normalized
    var imageList = useMemo(() => {
       return reviewList
          ? 
@@ -23,7 +21,7 @@ export default function ReviewImageList({ reviewList, review, reviewIndex, toggl
                   let imgURL = URL.createObjectURL(imgBlob); 
 
                   return { imgURL, reviewIndex, imageIndex };
-               });     
+               });
             })
          :
             review.Images.map((imgData, imageIndex) => {
@@ -34,7 +32,7 @@ export default function ReviewImageList({ reviewList, review, reviewIndex, toggl
 
                return { imgURL, reviewIndex, imageIndex };
             });     
-   }, [reviewList, review]);
+   }, [reviewList, review, reviewIndex]);
    
    function handleSlideshowToggle(e) {
       if (e.target.id === 'previous-slide') {

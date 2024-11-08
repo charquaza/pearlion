@@ -15,7 +15,7 @@ export default function ProductDetails({ productId }) {
 
       return (
          <article className={styles['product-details']}>
-            <p>Sorry, we're having trouble loading the product details.</p>
+            <p>Sorry, we&apos;re having trouble loading the product details.</p>
             <p>Please try again later.</p>
          </article>
       );

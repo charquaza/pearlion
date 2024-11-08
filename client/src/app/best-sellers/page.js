@@ -14,7 +14,7 @@ export default function BestSellersPage() {
       return (
          <main className={styles['best-sellers-page']}>
             <h1>Best Sellers</h1>
-            <p>Sorry, we're having trouble loading this page.</p>
+            <p>Sorry, we&apos;re having trouble loading this page.</p>
             <p>Please try again later.</p>
          </main>
       );

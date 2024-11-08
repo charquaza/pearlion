@@ -11,7 +11,7 @@ export default function MyOrders() {
       return (
          <article className={styles['my-orders']}>
             <h2>My Orders</h2>
-            <p>We're having trouble loading your orders...</p>
+            <p>We&apos;re having trouble loading your orders...</p>
             <p>Please try again later, or contact us.</p>
          </article>
       );   
