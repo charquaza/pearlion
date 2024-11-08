@@ -172,7 +172,7 @@ exports.update = [
             return res.status(404).json({ errors: ['Product not found'] });
          }
 
-         const updateResult = await db.sequelize.transaction(async t => {
+         const updatedProduct = await db.sequelize.transaction(async t => {
             let productFieldsToUpdate = {
                name: req.body.name,
                description: req.body.description,
@@ -183,7 +183,7 @@ exports.update = [
             };
    
             let updateProductPromise = productToUpdate.update(productFieldsToUpdate, 
-               { raw: true, transaction: t}
+               { returning: true, transaction: t }
             );
 
             //reconsider method for updating images
@@ -211,10 +211,10 @@ exports.update = [
                updateProductPromise, createImagesPromise, deleteImagesPromise
             ]);
 
-            return updatedProduct;
+            return updatedProduct.get({ plain: true });
          });
 
-         res.json({ data: updateResult });
+         res.json({ data: updatedProduct });
       } catch (err) {
          return next(err);
       }

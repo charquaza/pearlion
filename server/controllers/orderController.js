@@ -343,7 +343,7 @@ exports.update = [
          if (orderToUpdate === null) {
             res.status(404).json({ errors: ['Order not found'] });
          } else {
-            let updatedOrder = await orderToUpdate.update(fieldsToUpdate);
+            let updatedOrder = await orderToUpdate.update(fieldsToUpdate, { returning: true });
             res.json({ data: updatedOrder.get({ plain: true }) });
          }
       } catch (err) {

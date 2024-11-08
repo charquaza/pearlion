@@ -209,7 +209,7 @@ exports.update = [
          if (userToUpdate === null) {
             res.status(404).json({ errors: ['User not found'] });
          } else {
-            let updatedUser = await userToUpdate.update(fieldsToUpdate);
+            let updatedUser = await userToUpdate.update(fieldsToUpdate, { returning: true });
 
             let userDataCopy = updatedUser.get({ plain: true });
             delete userDataCopy.password;

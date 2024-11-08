@@ -163,14 +163,14 @@ exports.update = [
             return res.status(404).json({ errors: ['Associated product not found'] });
          }
 
-         const updateResult = await db.sequelize.transaction(async t => {
+         const updatedReview = await db.sequelize.transaction(async t => {
             let reviewFieldsToUpdate = {
                rating: req.body.rating,
                review: req.body.review
             };
 
             let updateReviewPromise = reviewToUpdate.update(reviewFieldsToUpdate, 
-               { transaction: t}
+               { returning: true, transaction: t }
             );
 
             let createImagesPromise = Promise.all(req.files.map(file => {
@@ -198,7 +198,7 @@ exports.update = [
             return updatedReview.get({ plain: true });
          });
 
-         res.json({ data: updateResult });
+         res.json({ data: updatedReview });
       } catch (err) {
          return next(err);
       }
