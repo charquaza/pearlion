@@ -195,7 +195,23 @@ exports.update = [
                updateReviewPromise, createImagesPromise, deleteImagesPromise
             ]);
 
-            return updatedReview.get({ plain: true });
+            //re-query db to get updated review with user and images populated
+            const reviewFindOptions = { 
+               include: [
+                  {
+                     model: db.User
+                  },
+                  {
+                     model: db.Image,
+                     order: [[ 'createdAt', 'ASC' ]]
+                  }
+               ]
+            };
+            const updatedReviewWithImages = await db.Review.findByPk(
+               updatedReview.id, reviewFindOptions
+            );
+
+            return updatedReviewWithImages;
          });
 
          res.json({ data: updatedReview });

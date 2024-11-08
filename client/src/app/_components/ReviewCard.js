@@ -10,8 +10,8 @@ import EditReviewForm from './EditReviewForm';
 import styles from '@/app/_styles/ReviewCard.module.css';
 
 export default function ReviewCard({ 
-   productName, review, reviewIndex, toggleReviewPopover,
-   revalidateProduct, revalidateReviewList 
+   product, reviewList, review, reviewIndex, 
+   toggleReviewPopover, revalidateProduct, revalidateReviewList 
 }) {
    const [ inEditMode, setInEditMode ] = useState(false);
    const [ deleteError, setDeleteError ] = useState(false);
@@ -53,8 +53,8 @@ export default function ReviewCard({
          {inEditMode 
             ?
                <EditReviewForm
-                  review={review}
-                  productName={productName}
+                  review={review} product={product}
+                  reviewList={reviewList} reviewIndex={reviewIndex}
                   toggleEditMode={toggleEditMode} 
                   revalidateProduct={revalidateProduct}
                   revalidateReviewList={revalidateReviewList}
@@ -79,7 +79,7 @@ export default function ReviewCard({
                   <h3>{review.User.firstName + ' ' + review.User.lastName}</h3>
                   <RatingBar reviewCount={1} ratingSum={review.rating} context='review-card' />
                   <p>{DateTime.fromISO(review.createdAt).toLocaleString(DateTime.DATE_MED)}</p>
-                  <p>Product Reviewed: {productName}</p>
+                  <p>Product Reviewed: {product.data.name}</p>
                   <ReviewImageList review={review} 
                      reviewIndex={reviewIndex}
                      toggleReviewPopover={toggleReviewPopover}

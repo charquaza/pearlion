@@ -8,7 +8,8 @@ import prodImgPlaceholder from '../_images/prodImgPlaceholder';
 import styles from '@/app/_styles/EditReviewForm.module.css';
 
 export default function EditReviewForm({ 
-   review, productName, toggleEditMode, revalidateProduct, revalidateReviewList 
+   review, product, reviewList, reviewIndex, 
+   toggleEditMode, revalidateProduct, revalidateReviewList 
 }) {
    const [ inputValues, setInputValues ] = useState(
       { rating: String(review.rating), review: review.review }
@@ -120,7 +121,8 @@ export default function EditReviewForm({
       const fetchURL = apiURL + '/reviews/' + review.id;
 
       try {
-         let res = await fetch(fetchURL, fetchOptions);
+         const res = await fetch(fetchURL, fetchOptions);
+         const data = await res.json();
 
          if (res.ok) {
             setInputValues({ rating: '0', review: '' });
@@ -130,12 +132,19 @@ export default function EditReviewForm({
 
             //update Product (avg ratings + review count), Review list 
             // to account for updated review
-            revalidateProduct();
-            revalidateReviewList();
+            const updatedReview = data.data;
+            const updatedProduct = {
+               ...product.data, reviewCount: product.data.reviewCount + 1,
+               ratingSum: product.data.ratingSum + updatedReview.rating
+            }; 
+            const updatedReviewList = [ ...reviewList.data ];
+            updatedReviewList[reviewIndex] = updatedReview;
+
+            revalidateProduct({ data: updatedProduct });
+            revalidateReviewList({ data: updatedReviewList });
 
             toggleEditMode();
          } else {
-            let data = await res.json();
             setFormErrors(data.errors);
          }
       } catch (e) {
@@ -148,7 +157,7 @@ export default function EditReviewForm({
          encType='multipart/form-data'
          onSubmit={handleFormSubmit}
       >
-         <h3>Your Review for: {productName}</h3>
+         <h3>Your Review for: {product.data.name}</h3>
 
          {
             formErrors.length > 0 &&

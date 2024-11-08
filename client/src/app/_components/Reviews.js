@@ -78,14 +78,15 @@ export default function Reviews({ productId }) {
                      <ul className={styles['reviews-list']}>
                         {
                            currReviewList.map((review, index) => {
-                              //calculate index relatvie to original reviewList,
+                              //calculate index relative to original reviewList,
                               //  not currReviewList
                               const reviewIndex = index + (reviewsPerPage * (currPage - 1));
 
                               return (
                                  <li key={review.id}>
-                                    <ReviewCard productName={product.data.name} review={review} 
-                                       reviewIndex={reviewIndex}
+                                    <ReviewCard product={product} 
+                                       reviewList={reviewList} 
+                                       review={review} reviewIndex={reviewIndex}
                                        toggleReviewPopover={toggleReviewPopover}
                                        revalidateProduct={productMutate}
                                        revalidateReviewList={reviewListMutate} 
