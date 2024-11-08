@@ -77,15 +77,29 @@ exports.create = [
 ];
 
 exports.update = [
+   body('productId')
+      .custom(async (productId) => {
+         try {
+            var product = await db.Product.findByPk(productId);
+         } catch(err) {
+            throw new Error('Error in confirming product details. Please try again later, or report the issue.');
+         }
+
+         if (product === null) {
+            throw new Error('Cannot leave a review for this product');
+         }
+      }).bail({ level: 'request' }),
    body('rating')
       .custom((value) => {
-         if (!Number.isInteger(value)) {
+         const rating = Number(value);
+
+         if (!Number.isInteger(rating)) {
             throw new Error('Invalid value for Rating');
          }
-         if (value < 1) {
+         if (rating < 1) {
             throw new Error('Rating cannot be less than 1');
          }
-         if (value > 5) {
+         if (rating > 5) {
             throw new Error('Rating cannot be greater than 5');
          }
          return true;
@@ -94,7 +108,10 @@ exports.update = [
       .trim().notEmpty().withMessage('Review cannot be blank')
       .escape(),
    body('deletedImages').optional({ values: 'falsy' })
-      .isArray({ min: 1 }).withMessage('Invalid value for deletedImages'),
+      .custom((value) => {
+         const parsedValue = JSON.parse(value);
+         return Array.isArray(parsedValue) && parsedValue.length > 0;
+      }).withMessage('Invalid value for deletedImages'),
 
    checkValidation
 ];

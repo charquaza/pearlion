@@ -34,7 +34,7 @@ export default function ReviewImageList({ reviewList, review, reviewIndex, toggl
 
                return { imgURL, reviewIndex, imageIndex };
             });     
-   }, [reviewList]);
+   }, [reviewList, review]);
    
    function handleSlideshowToggle(e) {
       if (e.target.id === 'previous-slide') {

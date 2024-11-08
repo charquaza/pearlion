@@ -6,14 +6,20 @@ import useUser from '../_hooks/useUser';
 import { apiURL } from '@/root/config';
 import RatingBar from './RatingBar';
 import ReviewImageList from './ReviewImageList';
+import EditReviewForm from './EditReviewForm';
 import styles from '@/app/_styles/ReviewCard.module.css';
 
 export default function ReviewCard({ 
    productName, review, reviewIndex, toggleReviewPopover,
    revalidateProduct, revalidateReviewList 
 }) {
+   const [ inEditMode, setInEditMode ] = useState(false);
    const [ deleteError, setDeleteError ] = useState(false);
    const { user } = useUser();
+
+   function toggleEditMode(e) {
+      setInEditMode(prev => !prev);
+   }
 
    async function handleDeleteReview(e) {
       try {
@@ -44,29 +50,43 @@ export default function ReviewCard({
 
    return (
       <article className={styles['review']}>
-         {(user && user.data) && 
-            (user.data.id === review.client || user.data.privilege === 'admin') 
-            && 
+         {inEditMode 
+            ?
+               <EditReviewForm
+                  review={review}
+                  productName={productName}
+                  toggleEditMode={toggleEditMode} 
+                  revalidateProduct={revalidateProduct}
+                  revalidateReviewList={revalidateReviewList}
+               />
+            :
                <>
-                  <button onClick={handleDeleteReview}>Delete</button>
-
-                  {deleteError &&
-                     <p className={styles['error-messages']}>
-                        Review could not be deleted at this time; please try again later
-                     </p>
+                  {
+                     (user && user.data) && 
+                     (user.data.id === review.client || user.data.privilege === 'admin') && 
+                        <>
+                           <button onClick={toggleEditMode}>Edit</button>
+                           <button onClick={handleDeleteReview}>Delete</button>
+         
+                           {deleteError &&
+                              <p className={styles['error-messages']}>
+                                 Review could not be deleted at this time; please try again later
+                              </p>
+                           }
+                        </>
                   }
+         
+                  <h3>{review.User.firstName + ' ' + review.User.lastName}</h3>
+                  <RatingBar reviewCount={1} ratingSum={review.rating} context='review-card' />
+                  <p>{DateTime.fromISO(review.createdAt).toLocaleString(DateTime.DATE_MED)}</p>
+                  <p>Product Reviewed: {productName}</p>
+                  <ReviewImageList review={review} 
+                     reviewIndex={reviewIndex}
+                     toggleReviewPopover={toggleReviewPopover}
+                  />
+                  <p className={styles['review-text-body']}>{review.review}</p>   
                </>
          }
-
-         <h3>{review.User.firstName + ' ' + review.User.lastName}</h3>
-         <RatingBar reviewCount={1} ratingSum={review.rating} context='review-card' />
-         <p>{DateTime.fromISO(review.createdAt).toLocaleString(DateTime.DATE_MED)}</p>
-         <p>Product Reviewed: {productName}</p>
-         <ReviewImageList review={review} 
-            reviewIndex={reviewIndex}
-            toggleReviewPopover={toggleReviewPopover}
-         />
-         <p className={styles['review-text-body']}>{review.review}</p>
       </article>
    );
 };

@@ -1,0 +1,174 @@
+.edit-review-form {
+   padding: 1.5vw;
+   border-radius: 1vw 7vw 7vw 1vw;
+   background-color: rgb(215, 252, 235);
+   box-shadow: 0.2vw 0.5vw 0.5vw 0 rgb(217, 220, 219);
+}
+
+.edit-review-form h3 {
+   margin-top: 0;
+}
+
+.edit-review-form .form-errors {
+   color: rgb(255, 72, 0);
+   font-style: italic;
+}
+
+.edit-review-form label {
+   display: block;
+   padding: 0.8vw 0;
+}
+
+.edit-review-form textarea {
+   display: block;
+   padding: 0.7rem;
+   margin: 0.5vw 0;
+   width: 90%;
+   height: 30vh;
+   border-radius: 1vw;
+}
+
+.edit-review-form button {
+   margin-right: 1vw;
+}
+.edit-review-form button[type='submit'] {
+   font-size: 1.1rem;
+}
+.edit-review-form button[type='button'] {
+   font-size: 0.9rem;
+}
+
+.rating-fieldset {
+   position: relative;
+   margin: 0;
+   padding: 1vw 0 1vw 4.5rem;
+   border: none;
+}
+.rating-fieldset legend {
+   position: absolute;
+   top: 50%;
+   left: 0;
+   transform: translateY(-50%);
+   line-height: 1;
+}
+
+.rating {
+   --label-width: max(25px, 2.3vw);
+
+   display: flex;
+   width: calc(5 * var(--label-width));
+}
+.rating input {
+   position: absolute;
+   left: -100vw;
+   width: 1px;
+   height: 1px; 
+   border: 0;
+   padding: 0;
+   margin: 0;
+   overflow: hidden;
+   white-space: nowrap;
+}
+.rating label {
+   box-sizing: border-box;
+   width: var(--label-width);
+   height: var(--label-width);
+   padding: var(--label-width) 0 0;
+   overflow: hidden;
+   background: url("../_images/star-filled.svg") no-repeat;
+}
+.rating label:hover {
+   cursor: pointer;
+}
+
+.rating:not(:hover) input:indeterminate ~ label,
+.rating:not(:hover) input:checked ~ input + label,
+.rating label:hover ~ label {
+   background: url("../_images/star-empty.svg") no-repeat;
+}
+.rating:not(:hover) input:focus-visible + label {
+   background-color: rgb(42, 216, 135);
+   border-radius: 10%;
+}
+
+.prev-image-list {
+   list-style-type: none;
+   margin: 1vw 0;
+   padding: 1em;
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: flex-start;
+   background: rgb(240, 238, 238);
+   border-radius: 1em;
+}
+.prev-image-list li {
+   --width: 7vw;
+   --height: 7vw;
+
+   position: relative;
+   width: var(--width);
+   height: var(--height);
+   box-sizing: border-box;
+   margin: 0 0.7vw;
+}
+.prev-image-list li.deleted::after {
+   content: '';
+   position: absolute;
+   width: var(--width);
+   height: var(--height);
+   background-color: rgb(68, 68, 68);
+   opacity: 0.7;
+}
+.prev-image-list img {
+   width: 100%;
+   height: 100%;
+   object-fit: contain;
+}
+.prev-image-list button {
+   position: absolute;
+   z-index: 1;
+}
+
+.edit-review-form .file-upload-label {
+   width: 25%;
+   margin: 1vw 0 3vw;
+   font-size: 1em;
+   font-weight: bold;
+   text-align: center;
+   border: solid 1px gray;
+   border-radius: 0.5em;
+   background-color: rgb(216, 237, 255);
+   cursor: pointer;
+}
+.edit-review-form .file-upload-label:hover {
+   background-color: rgb(191, 225, 255);
+}
+
+.file-upload-label > input {
+   opacity: 0;
+   width: 1px;
+   height: 1px;
+}
+
+.file-upload-list {
+   list-style-type: none;
+}
+.file-upload-list li {
+   display: flex;
+   padding-bottom: 3%;
+}
+.file-upload-list p {
+   width: 60%;
+   padding-left: 8%;
+}
+
+.file-upload-image-ctnr {
+   width: 4em;
+   height: 4em;
+   position: relative;
+}
+.file-upload-image-ctnr img {
+   width: 100%;
+   height: 100%;
+   object-fit: contain;
+}

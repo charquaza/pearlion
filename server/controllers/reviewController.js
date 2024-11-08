@@ -170,7 +170,7 @@ exports.update = [
             };
 
             let updateReviewPromise = reviewToUpdate.update(reviewFieldsToUpdate, 
-               { raw: true, transaction: t}
+               { transaction: t}
             );
 
             let createImagesPromise = Promise.all(req.files.map(file => {
@@ -186,7 +186,7 @@ exports.update = [
             let deleteImagesPromise = req.body.deletedImages 
                ?
                   db.Image.destroy({
-                     where: { id: req.body.deletedImages },
+                     where: { id: JSON.parse(req.body.deletedImages) },
                      transaction: t
                   })
                : null;
@@ -195,7 +195,7 @@ exports.update = [
                updateReviewPromise, createImagesPromise, deleteImagesPromise
             ]);
 
-            return updatedReview;
+            return updatedReview.get({ plain: true });
          });
 
          res.json({ data: updateResult });
