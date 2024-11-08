@@ -40,6 +40,8 @@ export default memo(function ProductListCard({ product }) {
                   </Link>
                </h2>
 
+               <p>${product.price}</p>
+
                <div className={styles['rating-and-reviews-link']}>
                   <RatingBar reviewCount={product.reviewCount} ratingSum={product.ratingSum}
                      context={'product-list-card'} 
@@ -48,7 +50,7 @@ export default memo(function ProductListCard({ product }) {
                      href={`/${product.category}/${product.id}#reviews`}
                      className={styles['reviews-link']}
                   >
-                     Reviews
+                     Reviews ({product.reviewCount})
                   </Link>
                </div>
             </article>
