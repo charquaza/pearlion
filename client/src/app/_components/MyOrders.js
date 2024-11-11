@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { DateTime } from 'luxon';
 import useOrderList from '../_hooks/useOrderList';
 import styles from '../_styles/MyOrders.module.css';
@@ -21,11 +22,11 @@ export default function MyOrders() {
       <article className={styles['my-orders']}>
          <h2>My Orders</h2>
 
-         <table>
+         <table className={styles['orders-table']}>
             <caption>Orders</caption>
             <thead>
                <tr>
-                  <th scope='col'>ID</th>
+                  <th scope='col'>Order ID</th>
                   <th scope='col'>Purchase Date</th>
                   <th scope='col'>Products</th>
                   <th scope='col'>Shipping Cost</th>
@@ -50,7 +51,11 @@ export default function MyOrders() {
                                  return (
                                     <li key={product.id}>
                                        <p>
-                                          {product.Purchase.quantityPurchased} x {product.name} 
+                                          {product.Purchase.quantityPurchased} x 
+                                          &nbsp;
+                                          <Link href={'/' + product.category + '/' + product.id}>
+                                             {product.name}
+                                          </Link> 
                                           &nbsp;(${product.Purchase.unitPrice} each)
                                        </p>
                                     </li>
