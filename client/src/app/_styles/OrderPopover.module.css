@@ -1,0 +1,72 @@
+.order-popover {
+   position: absolute;
+   top: 6vw;
+   left: -36vw;
+}
+
+.close-popover-btn {
+   position: absolute;
+   top: 0.5vw;
+   left: 32.4vw;
+   font-size: 1.5vw;
+   padding: 0.1vw 0.4vw;
+   border: 0;
+   border-radius: 10%;
+   background-color: rgb(210, 210, 210);
+}
+.close-popover-btn:hover {
+   background-color: rgb(180, 180, 180);
+}
+.close-popover-btn:active {
+   background-color: rgb(160, 160, 160);
+}
+
+.order-details {
+   padding: 1vw;
+   width: 33vw;
+   max-height: 85vh;
+   border-radius: 0.8vw;
+   box-shadow: 0px 0px 0px 0.5px rgba(50, 50, 93, 0.1),
+     0px 2px 5px 0px rgba(50, 50, 93, 0.1), 0px 1px 1.5px 0px rgba(0, 0, 0, 0.07);
+   overflow: scroll;
+   background-color: #ebf0eb;
+}
+
+.order-details h3 {
+   margin: 0 0 1.2vw;
+   font-weight: 500;
+   font-size: 1.5vw;
+}
+
+.order-details div {
+   display: flex;
+   flex-direction: row;
+   gap: 2.5vw;
+}
+.order-details .shipping-tax-div {
+   padding-left: 2vw;
+}
+.order-details .shipping-tax-div p {
+   margin: 0 0 1.3vw;
+}
+
+.order-details p {
+   margin: 0.7vw 0;
+   font-weight: 500;
+   font-size: 1.2vw;
+}
+
+.order-details p span {
+   padding-left: 0.3vw;
+   font-weight: 400;
+   font-size: 1.23vw;
+}
+
+.order-details ul {
+   margin: 0 0 1.6vw;
+   padding: 0 0 0 3vw;
+}
+
+.order-details ul p {
+   font-weight: 400;
+}

@@ -82,6 +82,11 @@ export default function NewReviewForm({ product, revalidateProduct, revalidateRe
    async function handleFormSubmit(e) {
       e.preventDefault();
 
+      if (inputValues.rating === '0') {
+         setFormErrors([ 'Please provide a rating' ]);
+         return;
+      }
+
       const formData = new FormData();
 
       imgUploads.forEach(imgFile => formData.append('images', imgFile));
@@ -126,7 +131,6 @@ export default function NewReviewForm({ product, revalidateProduct, revalidateRe
                encType='multipart/form-data'
                onSubmit={handleFormSubmit}
             >
-               <h3>Your Review for:</h3>
                <div className={styles['product-info']}>
                   <div className={styles['product-image-container']}>
                      <Image
@@ -153,7 +157,7 @@ export default function NewReviewForm({ product, revalidateProduct, revalidateRe
                }
 
                <fieldset className={styles['rating-fieldset']}>
-                  <legend>Rating:</legend>
+                  <legend>Your Rating:</legend>
                   <div className={styles['rating']}>
                      <input type='radio' id='rating-1' name='rating' 
                         value='1' checked={inputValues.rating === '1'} 
@@ -198,7 +202,7 @@ export default function NewReviewForm({ product, revalidateProduct, revalidateRe
                </fieldset>
 
                <label>
-                  Review:&nbsp;
+                  Your Review:&nbsp;
                   <textarea
                      placeholder='Write your review here'
                      name='review' value={inputValues.review}
@@ -230,7 +234,7 @@ export default function NewReviewForm({ product, revalidateProduct, revalidateRe
                               <button data-upload-index={index}
                                  onClick={handleUploadDelete}
                               >
-                                 x
+                                 X
                               </button>
 
                               <div className={styles['file-upload-image-ctnr']}>
@@ -253,10 +257,11 @@ export default function NewReviewForm({ product, revalidateProduct, revalidateRe
                   }
                </ul>
 
-               <button type='submit'>Submit</button>
+               <button type='submit' className={styles['submit-btn']}>Submit</button>
 
                <button type='button' 
                   onClick={toggleReviewForm}
+                  className={styles['discard-btn']}
                >
                   Discard Review
                </button>
@@ -265,7 +270,7 @@ export default function NewReviewForm({ product, revalidateProduct, revalidateRe
             <button className={styles['add-review-button']}
                onClick={toggleReviewForm}
             >
-               Add a Review
+               Add Review
             </button>
    )
 };

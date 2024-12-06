@@ -1,9 +1,17 @@
 @import "normalize.css";
 
 :root {
-  --sidebar-width: 15vw;
+  --sidebar-width: 12vw;
   --primary-color: #ffdde4;
   --secondary-color: #fff8dd;
+
+  --pastel-pink: #ffdde4;
+  --beige: #fcf5e5;
+  --pastel-green: #cbe0cb;
+  --pastel-blue: #c1e1e1;
+  --mustard: #ffdb58;
+
+  --body-bg-color: #f8f6f0;
 }
 
 body {
@@ -17,6 +25,7 @@ body {
     "footer   footer";
   grid-template-rows: auto 1fr auto;
   grid-template-columns: var(--sidebar-width) 1fr;
+  background-color: #f8f6f0;
 }
 
 main {

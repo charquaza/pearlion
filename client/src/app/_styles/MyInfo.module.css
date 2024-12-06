@@ -1,32 +1,143 @@
-.my-info {
+.my-info, .my-info-form {
+   margin-bottom: 5vw;
+   width: 27vw;
+   font-size: 1.3vw;
+}
 
+.my-info p {
+   font-weight: 500;
+}
+.my-info .name {
+   font-size: 1.5vw;
+   font-weight: 400;
+}
+.my-info .info {
+   font-weight: 400;
+   font-size: 1.4vw;
+}
+.my-info .edit-info-btn {
+   padding: 0.15vw 0.5vw;
+   font-size: 1.4vw;
+   font-weight: 400;
+   border: 0.1vw solid rgb(100, 100, 100);
+   border-radius: 0.2vw;
+   background-color: rgb(230, 230, 230);
+}
+.my-info .edit-info-btn:hover {
+   background-color: rgb(210, 210, 210);
+}
+.my-info .edit-info-btn:active {
+   background-color: rgb(190, 190, 190);
+}
+
+.form-errors {
+   margin: 0 0 2vw;
+   color: rgb(255, 72, 0);
+   font-size: 1.2vw;
+   font-style: italic;
+}
+
+.my-info h2, .my-info-form h2 {
+   font-weight: 400;
+   text-decoration: underline;
+   text-underline-offset: 0.6vw;
+   text-decoration-thickness: 0.1vw;
+   text-decoration-color: rgb(120, 120, 120);
 }
 
 .my-info-form {
    display: flex;
    flex-direction: column;
    align-items: flex-start;
-   margin: 3vw 0;
-   width: 50vw;
-   padding: 1.8vw;
-   border-radius: 1vw 7vw 7vw 1vw;
-   background-color: rgb(215, 252, 235);
-   box-shadow: 0.2vw 0.5vw 0.5vw 0 rgb(217, 220, 219);
+}
+
+.my-info-form label {
+   width: 100%;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   margin-bottom: 1.2vw;
 }
 
 .my-info-form input {
-   margin-bottom: 1.5vw;
+   padding: 0.4vw 0.6vw;
+   border: 0.1vw solid rgb(100, 100, 100);
+   border-radius: 0.3vw;
+}
+.my-info-form input:focus {
+   border: 0.1vw solid #74aa74;
+   outline: 0.1vw solid #74aa74;
 }
 
 .change-password-container {
-   margin: 1vw 0 2vw 0;
+   margin: 0.5vw 0 3vw;
+   width: 100%;
+   display: flex;
+   flex-direction: column;
+   align-items: flex-end;
+}
+.change-password-container button {
+   padding: 0.3vw 0.4vw;
+   border: 0.1vw solid gray;
+   border: 0;
+   border-radius: 0.2vw;
+   background-color: rgb(224, 224, 224);
+   font-weight: 450;
+   font-size: 1.2vw;
+}
+.change-password-container button:hover {
+   background-color: rgb(205, 205, 205);
+}
+.change-password-container button:active {
+   background-color: rgb(185, 185, 185);
+}
+
+.change-password-container .cancel-password-change-btn {
+   margin-top: -0.4vw;
+   border: 0;
+   background-color: transparent;
+   text-decoration: underline;
+   text-decoration-thickness: 0.08vw;
+   text-underline-offset: 0.1vw;
+}
+.change-password-container .cancel-password-change-btn:hover {
+   background-color: transparent;
+}
+.change-password-container .cancel-password-change-btn:active {
+   background-color: transparent;
 }
 
 .form-controls {
-
+   margin-top: 0.8vw;
 }
 
-.form-errors {
-   color: rgb(255, 72, 0);
-   font-style: italic;
+.form-controls button[type='submit'] {
+   margin-right: 1vw;
+   padding: 0.5vw 0.7vw;
+   font-size: 1.4vw;
+   font-weight: 500;
+   border: 0;
+   border-radius: 0.2vw;
+   background-color: var(--pastel-blue);
+}
+.form-controls button[type='submit']:hover {
+   background-color: #a5c8c8;
+}
+.form-controls button[type='submit']:active {
+   background-color: #88acac;
+}
+
+.form-controls button[type='button'] {
+   padding: 0.4vw;
+   font-size: 1.4vw;
+   font-weight: 500;
+   border: 0.1vw solid transparent;
+   border-radius: 0.2vw;
+   background-color: rgb(230, 230, 230);
+}
+.form-controls button[type='button']:hover {
+   border: 0.1vw solid rgb(120, 120, 120);
+}
+.form-controls button[type='button']:active {
+   background-color: gainsboro;
 }

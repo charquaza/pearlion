@@ -1,5 +1,11 @@
 .cart {
+   padding-left: 4vw;
    width: 58vw;
+}
+
+.cart h1 {
+   margin-top: 0;
+   font-weight: 450;
 }
 
 .items-container {
@@ -38,14 +44,36 @@
 
 span.subtotal-text {
    font-size: 1.2rem;
+   font-weight: 500;
 }
 
 span.subtotal-number {
    font-size: 1.3rem;
-   font-weight: bold;
+   font-weight: 500;
 }
 
 p.taxes-shipping-text {
    font-size: 0.9rem;
-   margin-bottom: 2vw;
+   margin: 0;
+}
+
+.checkout-btn {
+   margin-top: 2vw;
+   padding: 0.6vw;
+   border: 0.2vw solid #b9e3fa;
+   border-radius: 0.4vw;
+   background-color: #b9e3fa;
+   /* background-color: rgb(0, 132, 255); */
+   color: rgb(50, 50, 50);
+   font-size: 1.6vw;
+   font-weight: 550;
+}
+.checkout-btn:hover {
+   border: 0.2vw solid #b9e3fa;
+   background-color: #e0f3ff;
+   color: rgb(80, 80, 80);
+}
+.checkout-btn:active {
+   border: 0.2vw solid #b9cad5;
+   background-color: #b9cad5;
 }

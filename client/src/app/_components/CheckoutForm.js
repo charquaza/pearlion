@@ -6,7 +6,7 @@ import {
 } from '@stripe/react-stripe-js';
 import styles from '../_styles/CheckoutForm.module.css';
 
-export default function CheckoutForm({ dpmCheckerLink }) {
+export default function CheckoutForm() {
    const [ message, setMessage ] = useState(null);
    const [ isLoading, setIsLoading ] = useState(false);
 
@@ -55,24 +55,12 @@ export default function CheckoutForm({ dpmCheckerLink }) {
             <PaymentElement className={styles['payment-element']} options={paymentElementOptions} />
             <button disabled={isLoading || !stripe || !elements} className={styles['submit']}>
                <span className={styles['button-text']}>
-                  {isLoading ? <div className={styles['spinner']} id='spinner'></div> : 'Pay now'}
+                  {isLoading ? <div className={styles['spinner']} id='spinner'></div> : 'Place Order'}
                </span>
             </button>
             {/* Show any error or success messages */}
             {message && <div className={styles['payment-message']}>{message}</div>}
          </form>
-         {/* [DEV]: Display dynamic payment methods annotation and integration checker */}
-         <div className={styles['dpm-annotation']}>
-            <p>
-               Payment methods are dynamically displayed based on customer location, order amount, and currency.&nbsp;
-               <a 
-                  href={dpmCheckerLink} target='_blank' rel='noopener noreferrer' 
-                  className={styles['dpm-integration-checker']}
-               >
-                  Preview payment methods by transaction
-               </a>
-            </p>
-         </div>
       </>
    );
 };

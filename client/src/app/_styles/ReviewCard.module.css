@@ -1,19 +1,53 @@
 .review {
    padding: 1.5vw;
-   background-color: rgba(224, 23, 23, 0.03);
-   box-shadow: 0.3vw 0.6vw 0.6vw 0 rgba(224, 23, 23, 0.2);
-   border-radius: 2vw 1vw 5vw 2vw;
+   background-color: #e5eee4;
+   border-radius: 0.6vw 0.6vw 4vw 1vw;
+}
+
+.username-buttons-ctnr {
+   display: flex;
+   flex-direction: row;
+   justify-content: space-between;
+   align-items: flex-start;
+}
+
+.edit-buttons-ctnr button {
+   margin-left: 1vw;
+   padding: 0;
+   border: 0;
+   background-color: transparent;
+   font-weight: 450;
+}
+.edit-buttons-ctnr button:hover {
+   text-decoration: underline;
+   text-underline-offset: 0.1vw;
+   text-decoration-thickness: 7%; 
+}
+.edit-buttons-ctnr button:first-child::after {
+   content: '';
+   padding-left: 1vw;
+   border-right: 1px solid black;
 }
 
 .review h3 {
-   margin-top: 0.5vw;
+   margin: 0 0 1vw;
+   font-weight: 500;
 }
 
-.review-text-body {
-   margin: 2.5vw 0 0.5vw;
+.review p {
+   margin: 0.8vw 0 0;
 }
 
-.error-messages {
+/* span.product-name {
+   font-weight: 450;
+} */
+
+p.review-text-body {
+   margin: 2vw 0 0.5vw;
+}
+
+p.error-messages {
+   margin: 0 0 1vw;
    color: rgb(255, 72, 0);
    font-style: italic;
    font-size: 0.9em;

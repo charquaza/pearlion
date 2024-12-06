@@ -105,7 +105,7 @@ export default function ReviewPagination({
                            return (
                               page === '...'
                                  ?
-                                    <li key={index * -1}>...</li>
+                                    <li key={index * -1}>.&nbsp;.&nbsp;.</li>
                                  :
                                     <li key={page}>
                                        <button disabled={currPage === page}

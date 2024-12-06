@@ -1,3 +1,18 @@
+.home-page-loading {
+   padding-left: 4vw;
+}
+
+.home-page {
+   padding-right: 4vw;
+}
+
+.home-page h2 {
+   font-size: 2.3vw;
+   font-weight: 450;
+   margin: 0;
+   padding-left: 4vw;
+}
+
 .slideshow-container {
    display: flex;
    flex-direction: column;
@@ -5,27 +20,85 @@
 }
 
 .new-arrivals ul {
+   --image-width-height: 15vw;
+
    list-style-type: none;
    display: flex;
+   /* align-items: center; */
    justify-content: space-evenly;
+   margin-bottom: 0;
    padding-left: 0;
 }
-
 .new-arrivals ul li {
-   padding: 0 1.7vw 1vw 1.7vw;
+   /* padding: 0 1.7vw 1vw 1.7vw; */
+   padding: 1vw 1.3vw;
    animation: 0.7s ease-in-out fadeIn;
+}
+
+.new-arrivals li:first-child,
+.new-arrivals li:last-child {
+   padding: 1vw 0;
+}
+.new-arrivals li:first-child button,
+.new-arrivals li:last-child button {
+   padding: 0;
+   width: 2.5vw;
+   height: var(--image-width-height);
+   line-height: var(--image-width-height);
+   font-size: 4.2vw;
+   font-weight: 300;
+   text-align: center;
+   border: 0;
+   border-radius: 0.2vw;
+   background: transparent;
+   color: rgb(100, 100, 100);
+}
+.new-arrivals li:first-child button:hover,
+.new-arrivals li:last-child button:hover {
+   color: black;
+   background: rgb(200, 200, 200);
+}
+.new-arrivals li:first-child button:active,
+.new-arrivals li:last-child button:active {
+   color: black;
+   background: rgb(149, 149, 149);
+}
+
+.new-arrivals .bottom-slideshow-nav button {
+   font-size: 1.8vw;
+   font-weight: 300;
+   width: 3vw;
+   padding: 0.1vw 0;
+   margin: 0.7vw 0.5vw 0 0.5vw;
+   border: 0;
+   border-radius: 0.2vw;
+   background: rgb(227, 227, 227);
+   color: rgb(60, 60, 60);
+}
+.new-arrivals .bottom-slideshow-nav button:hover {
+   color: black;
+   background: rgb(188, 188, 188);
+}
+.new-arrivals .bottom-slideshow-nav button:active {
+   color: black;
+   background: rgb(149, 149, 149);
+}
+
+.best-sellers h2 {
+   margin-top: 3vw;
 }
 
 .best-sellers ul {
    list-style-type: none;
    display: flex;
    flex-wrap: wrap;
-   justify-content: space-evenly;
-   padding-left: 0;
+   margin-top: 2.5vw;
+   padding-left: 4vw;
 }
 
 .best-sellers ul li {
-   padding-bottom: 3vw;
+   padding-bottom: 4vw;
+   margin-right: 3.5vw;
 }
 
 @keyframes fadeIn {

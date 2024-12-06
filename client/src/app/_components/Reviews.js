@@ -54,10 +54,12 @@ export default function Reviews({ productId }) {
       (product && reviewList) &&
          <article className={styles['reviews']}>
             <h2 id='reviews'>Reviews</h2>
-            <RatingBar reviewCount={product.data.reviewCount} ratingSum={product.data.ratingSum} 
-               context={'reviews'} 
-            />
-            
+            <div className={styles['rating-count-ctnr']}>
+               <RatingBar reviewCount={product.data.reviewCount} ratingSum={product.data.ratingSum} 
+                  context={'reviews'} 
+               />
+               <p>({product.data.reviewCount})</p>
+            </div>
             <ReviewImageList reviewList={reviewList} toggleReviewPopover={toggleReviewPopover} />
 
             {
@@ -108,7 +110,7 @@ export default function Reviews({ productId }) {
             {
                reviewPopoverInfo.show &&
                   <ReviewPopover 
-                     productName={product.name} 
+                     productName={product.data.name} 
                      reviewList={reviewList} 
                      reviewIndex={reviewPopoverInfo.reviewIndex}
                      imageIndex={reviewPopoverInfo.imageIndex}

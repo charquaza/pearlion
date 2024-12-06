@@ -14,36 +14,44 @@
 
 .prev-review-btn, .next-review-btn {
    position: fixed;
-   top: 10vh;
-   width: 5vw;
-   height: 80vh;
-   color: white;
+   top: 5vh;
+   width: 4vw;
+   height: 90vh;
+   color: black;
    font-size: 3rem;
-   background: linear-gradient(rgb(0,0,0,0), black, rgba(0,0,0,0));
+   background-color: var(--pastel-green);
    border: 0;
 }
 .prev-review-btn {
    left: 10vw;
+   border-radius: 0.4vw 0 0 0.4vw;
 }
 .next-review-btn {
    right: 10vw;
+   border-radius: 0 0.4vw 0.4vw 0;
 }
 
 .prev-review-btn:hover, .next-review-btn:hover {
-   font-size: 4.5rem;
-   background: linear-gradient(rgb(0,0,0,0), rgb(69, 69, 69), rgba(0,0,0,0));
+   font-size: 4rem;
+   background-color: #d9f0d9;
+}
+.prev-review-btn:active, .next-review-btn:active {
+   font-size: 4rem;
+   background-color: #b8ceb8;
 }
 .prev-review-btn:disabled, .next-review-btn:disabled {
-   color: rgb(160, 160, 160);
    font-size: 3rem;
-   background: linear-gradient(rgb(0,0,0,0), rgb(195, 195, 195), rgba(0,0,0,0));
+   color: rgb(100, 100, 100);
+   background-color: #9aa49a;
 }
 
 .main-popover {
    --main-top: 5vh;
-   --main-left: 15vw;
-   --main-width: 70vw;
+   --main-left: 14vw;
+   --main-width: 72vw;
    --main-height: 90vh;
+
+   --size: calc( var(--main-width) * 0.8 );
 
    position: fixed;
    top: var(--main-top);
@@ -52,8 +60,7 @@
    width: var(--main-width);
    height: var(--main-height);
    padding: 1.4vw;
-   border-radius: 1vw;
-   background-color: white;
+   background-color: #f8f6f0;
 
    display: grid;
    grid-template-columns: 1.25fr 1fr;
@@ -62,28 +69,38 @@
    overflow: scroll;
 }
 
-.review {
+.review {   
    text-wrap: pretty;
    overflow: scroll;
 }
 
+.review h3 {
+   margin: 1vw 0 1vw;
+   font-size: 1.4vw;
+   font-weight: 500;
+}
+
 .close-btn {
-   --btn-width: max(3.2vw, 25px);
+   --btn-width: max(3vw, 25px);
 
    position: fixed;
-   left: calc(var(--main-left) + var(--main-width) - (var(--btn-width) / 2) );
-   top: calc( var(--main-top) - (var(--btn-width) / 2) );
+   /* left: calc(var(--main-left) + var(--main-width) - (var(--btn-width) / 2) );
+   top: calc( var(--main-top) - (var(--btn-width) / 2) ); */
+   right: 1vw;
+   top: 1vw;
+
    width: var(--btn-width);
    height: var(--btn-width);
    padding: 0;
    border: none;
-   border-radius: 50%;
-   background-color: rgb(245, 169, 182);
-   font-size: calc( var(--btn-width) * 0.6 );
+   border-radius: 5%;
+   background-color: rgb(210, 210, 210);
+   font-size: calc( var(--btn-width) * 0.7 );
+   font-weight: 600;
 }
 .close-btn:hover {
-   background-color: rgb(226, 116, 135);
+   background-color: rgb(175, 175, 175);
 }
 .close-btn:active {
-   background-color: rgb(196, 67, 89);
+   background-color: rgb(145, 145, 145);
 }

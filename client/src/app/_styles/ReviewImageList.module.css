@@ -1,18 +1,38 @@
 .review-image-list-container {
+   --ctnr-height: 5vw;
+
    display: flex;
+   align-items: center;
+   height: var(--ctnr-height);
    padding-left: 1vw;
-   margin: 1.5vw 0;
+   margin: 1vw 0 0;
 }
+
+/* styles for image list comprised of images from all reviews */
+.all-reviews {
+   --ctnr-height: 7vw;
+   margin: 1.8vw 0 4vw;
+}
+
 .review-image-list-container button {
-   background: rgb(239, 238, 238);
+   background-color: rgb(220, 220, 220);
    border: none;
-   border-radius: 50%;
+   width: calc( var(--ctnr-height) / 3 );
+   height: var(--ctnr-height);
+   font-size: calc( var(--ctnr-height) / 3 );
+}
+.review-image-list-container button:first-child {
+   border-radius: 0.5vw 0 0 0.5vw;
+}
+.review-image-list-container button:last-child {
+   border-radius: 0 0.5vw 0.5vw 0;
 }
 .review-image-list-container button:hover {
-   background-color: rgb(224, 224, 224);
+   color: rgb(80, 80, 80);
+   background-color: rgb(200, 200, 200);
 }
 .review-image-list-container button:active {
-   background-color: rgb(170, 169, 169);
+   background-color: rgb(180, 180, 180);
 }
 
 .image-list {
@@ -21,12 +41,12 @@
    padding: 0;
    display: flex;
    justify-content: center;
-   background: radial-gradient(rgb(217, 214, 214), white);
+   background: rgb(242, 242, 242);
 }
 .image-list li {
    position: relative;
-   width: 5vw;
-   height: 5vw;
+   width: var(--ctnr-height);
+   height: var(--ctnr-height);
    box-sizing: border-box;
    margin: 0 0.7vw;
 }
@@ -37,12 +57,4 @@
    width: 100%;
    height: 100%;
    object-fit: contain;
-}
-
-/* styles for image list comprised of images from all reviews */
-.all-reviews .image-list li {
-   width: 7vw;
-   height: 7vw;
-   box-sizing: border-box;
-   margin: 0 0.7vw;
 }

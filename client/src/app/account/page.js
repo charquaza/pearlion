@@ -30,7 +30,7 @@ export default function Account() {
       <main className={styles['account-page']}>
          <h1>Account</h1>
          
-         <div className={styles['page-content']}>
+         <div className={styles['info-and-orders-ctnr']}>
             <MyInfo />
             <MyOrders />
          </div>

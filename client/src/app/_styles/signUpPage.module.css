@@ -1,6 +1,70 @@
+.sign-up-page {
+   padding-left: 4vw;
+}
+
+.sign-up-page h1 {
+   font-weight: 450;
+   margin: 0 0 3vw 0;
+}
+
 .sign-up-page form {
    display: flex;
    flex-direction: column;
-   align-items: flex-start;
+   align-items: start;
    row-gap: 1vw;
+}
+
+.first-last-name-inputs,
+.passwords-inputs {
+   display: flex;
+   flex-direction: row;
+   gap: 6vw;
+}
+
+.sign-up-page label {
+   width: 25.5vw;
+   margin-bottom: 1vw;
+   font-size: 1.4vw;
+   font-weight: 450;
+   line-height: 2vw;
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   justify-content: space-between;
+}
+.sign-up-page label[for='lastName'],
+.sign-up-page label[for='confirmPassword'] {
+   width: 25vw;
+}
+
+.sign-up-page input {
+   width: 16vw;
+   height: 3vw;
+   padding: 0.2vw 0.7vw 0vw;
+   border: 0.1vw solid black;
+   border-bottom: 0.2vw solid black;
+   border-radius: 0.5vw 0.5vw 1vw 0.5vw;
+   background-color: white;
+}
+.sign-up-page input:focus {
+   border: 0.1vw solid var(--pastel-green);
+   outline: 0.2vw solid var(--pastel-green);
+}
+
+.sign-up-page button[type='submit'] {
+   margin-top: 1.3vw;
+   padding: 0.7vw;
+   border: 0;
+   border-radius: 0.5vw;
+   background-color: #bbe8f8;
+   /* background-color: var(--pastel-blue); */
+   color: rgb(40, 40, 40);
+   font-size: 1.7vw;
+   font-weight: 500;
+}
+.sign-up-page button[type='submit']:hover {
+   background-color: #9ac2d0;
+}
+.sign-up-page button[type='submit']:active {
+   background-color: #728d97;
 }

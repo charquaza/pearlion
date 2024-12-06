@@ -1,8 +1,8 @@
 .login-form {
    display: flex;
    flex-direction: column;
-   align-items: center;
-   padding: 2vh;
+   align-items: flex-start;
+   padding: 1.2vw 1.5vw;
 }
 
 .login-form .error-msg {
@@ -12,10 +12,42 @@
    margin-top: 0;
 }
 
+.login-form label {
+   font-size: 1.4vw;
+   font-weight: 450;
+}
+
 .login-form input {
-   width: 15vw;
+   width: 13vw;
+   padding: 0.6vw 0.9vw;
+   margin: 0.1vw 0 1vw;
+   border: 0.1vw solid rgb(153, 153, 153);
+   border-radius: 0.5vw;
+   background-color: #fefffa;
+   /* background-color: rgb(228, 228, 228); */
+   font-size: 1.5vw;
+   font-weight: 450;
+}
+.login-form input:focus {
+   border: 0.1vw solid var(--pastel-green);
+   outline: 0.1vw solid var(--pastel-green);
 }
 
 .login-form button {
-   margin-top: 2vh;
+   align-self: center;
+   margin-top: 0.5vw;
+   padding: 0.7vw 1vw;
+   border: 0;
+   border-radius: 0.4vw;
+   font-size: 1.5vw;
+   font-weight: 550;
+   color: rgb(43, 43, 43);
+   /* background-image: radial-gradient(0px 0px, white, var(--pastel-green) 90%); */
+   background-color: var(--pastel-green);
+}
+.login-form button:hover {
+   background-color: #b5c7b5;
+}
+.login-form button:active {
+   background-color: #8c9b8c;
 }

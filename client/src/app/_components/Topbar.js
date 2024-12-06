@@ -30,7 +30,7 @@ export default function Topbar() {
          e.stopPropagation();
       }
 
-      var loginButton = document.getElementById('login-button');
+      var loginButton = document.getElementById('login-toggle-button');
       var popover = document.getElementById('popover');
 
       loginButton.addEventListener('click', toggleLoginPopover, false);
@@ -76,10 +76,12 @@ export default function Topbar() {
                   ?
                      <>
                         <li>
-                           <Link href='/account'>My Account</Link>
+                           <Link href='/account' className={styles['account-link']}>My Account</Link>
                         </li>
                         <li>
-                              <button onClick={handleLogOut}>Logout</button>
+                              <button 
+                                 onClick={handleLogOut} className={styles['logout-btn']}
+                              >Logout</button>
                         </li>
                      </>
                   :
@@ -87,7 +89,10 @@ export default function Topbar() {
                         <li>
                            <div className={styles['popover-control']}>
                               <button 
-                                 id='login-button'
+                                 id='login-toggle-button'
+                                 className={ showLoginPopover
+                                    ? styles['close-popover-btn'] : styles['open-popover-btn']
+                                 }
                               >
                                  { showLoginPopover ? 'Close' : 'Log In' }
                               </button>
@@ -111,13 +116,13 @@ export default function Topbar() {
                            </div>            
                         </li>
                         <li>
-                           <Link href='/sign-up'>Sign Up</Link>
+                           <Link href='/sign-up' className={styles['sign-up-link']}>Sign Up</Link>
                         </li>
                      </>
             }
 
             <li>
-               <Link href='/cart' aria-label='shopping cart'>🛒</Link>
+               <Link href='/cart' aria-label='shopping cart' className={styles['cart-link']}>🛒</Link>
             </li>
          </ul>
       </nav>

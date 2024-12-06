@@ -250,6 +250,7 @@ export default function EditReviewForm({
                                  type='button'
                                  data-img-id={imageDetails.id}
                                  onClick={handlePrevImageRestore}
+                                 className={styles['restore-btn']}
                               >
                                  Restore
                               </button>
@@ -259,7 +260,7 @@ export default function EditReviewForm({
                                  data-img-id={imageDetails.id}
                                  onClick={handlePrevImageDelete}
                               >
-                                 x
+                                 X
                               </button>
                         }
                      </li>
@@ -294,7 +295,7 @@ export default function EditReviewForm({
                            data-upload-index={index}
                            onClick={handleUploadDelete}
                         >
-                           x
+                           X
                         </button>
 
                         <div className={styles['file-upload-image-ctnr']}>
@@ -317,8 +318,12 @@ export default function EditReviewForm({
             }
          </ul>
 
-         <button type='submit'>Save</button>
-         <button type='button' onClick={handleEditCancel}>Discard Changes</button>
+         <button type='submit' className={styles['submit-btn']}>Save</button>
+         <button type='button' className={styles['discard-btn']} 
+            onClick={handleEditCancel}
+         >
+            Discard Changes
+         </button>
       </form>
    );
 };

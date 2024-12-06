@@ -4,11 +4,12 @@
    justify-content: space-between;
 }
 .cart-item h2 {
-   margin: 0;
-   font-size: 1.2rem;
+   margin: -0.2vw 0 0.5vw 0;
+   font-size: 1.5vw;
+   font-weight: 400;
 }
 .cart-item p {
-   margin: 0;
+   margin: 0.2vw 0;
 }
 
 .image-and-details {
@@ -23,13 +24,55 @@
    text-decoration: underline;
 }
 
+.quantity-label {
+   display: flex;
+   align-items: center;
+}
+
+.quantity-input-group {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   border: 0;
+   border-radius: 0.5vw;
+   background-color: gainsboro;
+}
+.quantity-input-group button {
+   display: block;
+   width: 1.3vw;
+   height: 1.8vw;
+   line-height: 1.8vw;
+   border: 0;
+   padding: 0 0.2vw;
+   font-size: 1.5vw;
+   font-weight: 400;
+   text-align: center;
+   background-color: transparent;
+}
+
 .quantity-input {
-   width: 1.5rem;
+   display: block;
+   width: 2.4vw;
+   height: 1.8vw;
+   padding: 0;
+   margin: 0;
+   font-size: 1.2vw;
+   font-weight: 450;
+   text-align: center;
+   border: 0;
 }
 
 .remove-button {
    display: block;
-   margin-top: 1vw;
+   margin-top: 1.2vw;
+   padding: 0;
+   border: 0;
+   border-bottom: 1px solid black;
+   background-color: transparent;
+   font-weight: 450;
+}
+.remove-button:hover {
+   font-weight: 600;
 }
 
 .image-container {
@@ -47,15 +90,21 @@
 .item-details {
    width: 20vw;
 }
+.item-details .unit-price {
+   font-size: 1.2vw;
+   font-weight: 450;
+}
 
 .item-subtotal {
    align-self: flex-start;
 }
 
 .price-x-quantity-text {
-   font-size: 0.9rem;
+   font-size: 1.2vw;
+   font-weight: 450;
 }
 
 .item-subtotal-number {
-   font-weight: bold;
+   font-size: 1.4vw;
+   font-weight: 450;
 }

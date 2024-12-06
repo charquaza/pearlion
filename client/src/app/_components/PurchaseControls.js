@@ -29,6 +29,14 @@ export default function PurchaseControls({ productId }) {
       }
    }
 
+   function handleQuantityDecrement(e) {
+      setQuantity(Math.max(0, Number(quantity) - 1));
+   }
+
+   function handleQuantityIncrement(e) {
+      setQuantity(Math.min(99, Number(quantity) + 1));
+   }
+
    function handleAddToCart(e) {
       var cart = JSON.parse(localStorage.getItem('cart'));
       cart = Object.prototype.toString.call(cart) === '[object Object]'
@@ -51,17 +59,32 @@ export default function PurchaseControls({ productId }) {
 
    return (
       <div className={styles['purchase-controls']}>
-         <label className={styles['bold']}>Quantity:&nbsp; 
-            <input type='text' required value={quantity}
-               className={styles['quantity-input']} 
-               onChange={handleQuantityChange}
-               onBlur={validateQuantity}
-            />
-         </label>
-
-         <div className={styles['buttons-container']}>
-            <button onClick={handleAddToCart}>Add to Cart</button>
+         <div className={styles['label-input-group']}>
+            <label htmlFor='quantity'
+               className={styles['quantity-label']}
+            >Quantity:</label>
+   
+            <div className={styles['input-group']}>
+               <button onClick={handleQuantityDecrement}
+                  disabled={Number(quantity) <= 0}
+               >-</button>
+      
+               <input type='text' id='quantity' required 
+                  value={quantity}
+                  className={styles['quantity-input']} 
+                  onChange={handleQuantityChange}
+                  onBlur={validateQuantity}
+               />
+      
+               <button onClick={handleQuantityIncrement}
+                  disabled={Number(quantity) >= 99}
+               >+</button>
+            </div>
          </div>
+
+         <button className={styles['add-to-cart-btn']}
+            onClick={handleAddToCart}
+         >Add to Cart</button>
       </div>
    );
 };

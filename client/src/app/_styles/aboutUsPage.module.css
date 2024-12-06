@@ -1,5 +1,7 @@
 .about-us-page {
    --video-width: 60vw;
+   --text-margin-left: calc(var(--video-width) / 10);
+
    padding-top: 1.25vw;
    padding-left: calc((100vw - var(--video-width)) / 2 - var(--sidebar-width));
 }
@@ -10,7 +12,20 @@
    height: calc(var(--video-width) * 9 / 16);
 }
 
+.about-us-page h1 {
+   width: var(--video-width);
+   margin: 3vw 0 0 0;
+   margin-left: var(--text-margin-left);
+   font-weight: 450;
+}
+
 .about-us-page p {
-   text-indent: 3.75vw;
-   padding-right: calc((100vw - var(--video-width)) / 2);
+   box-sizing: border-box;
+   width: var(--video-width);
+   padding: 0 var(--text-margin-left);
+}
+
+.about-us-page p::first-letter {
+   font-size: 1.3em;
+   font-weight: 450;
 }

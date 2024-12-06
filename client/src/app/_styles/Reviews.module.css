@@ -1,6 +1,21 @@
+.reviews {
+   padding-left: 4vw;
+}
+
 .reviews h2 {
-   margin-top: 2vw;
-   font-size: 1.9rem;
+   margin: 2vw 0;
+   font-size: 2.6vw;
+   font-weight: 450;
+}
+
+.rating-count-ctnr {
+   display: flex;
+   align-items: center;
+   gap: 1.1vw;
+   font-size: max(1.7vw);
+}
+.rating-count-ctnr p {
+   margin: 0;
 }
 
 .reviews-list {

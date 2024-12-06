@@ -11,25 +11,32 @@
    width: 100%;
 }
 .curr-image-controls-container button {
-   font-size: 1.5vw;
+   font-size: 3.5vw;
    aspect-ratio: 1 / 1;
-   width: 5%;
-   background: rgb(239, 238, 238);
+   width: 7%;
+   height: 100%;
+   background: rgb(238, 238, 238);
+   background-color: transparent;
    border: none;
-   border-radius: 30%;
+}
+.curr-image-controls-container button:first-child {
+   border-radius: 2vw 0 0 2vw;
+}
+.curr-image-controls-container button:last-child {
+   border-radius: 0 2vw 2vw 0;
 }
 .curr-image-controls-container button:hover {
    background-color: rgb(224, 224, 224);
 }
 .curr-image-controls-container button:active {
-   background-color: rgb(170, 169, 169);
+   background-color: rgb(180, 180, 180);
 }
 
 .curr-image-container {
    position: relative;
    aspect-ratio: 1 / 1;
    width: 100%;
-   background: radial-gradient(rgb(220, 220, 220), white 80%)
+   background: white;
 }
 .curr-image-container img {
    width: 100%;
@@ -40,13 +47,21 @@
 .slideshow-container {
    display: flex;
    width: 100%;
+   height: 15%;
+   margin-top: 1vw;
    justify-content: center;
    align-items: center;
 }
 .slideshow-container button {
-   background: rgb(239, 238, 238);
+   height: 100%;
+   background: rgb(238, 238, 238);
    border: none;
-   border-radius: 30%;
+}
+.slideshow-container button:first-child {
+   border-radius: 1vw 0 0 1vw;
+}
+.slideshow-container button:last-child {
+   border-radius: 0 1vw 1vw 0;
 }
 .slideshow-container button:hover {
    background-color: rgb(224, 224, 224);
@@ -57,17 +72,21 @@
 
 .image-list {
    list-style-type: none;
-   width: 75%;
-   margin: 1% 0;
+   width: 86%;
+   height: 100%;
+   /* margin: 2% 0; */
+   margin: 0;
    padding: 0;
    display: flex;
    justify-content: center;
-   background: radial-gradient(rgb(217, 214, 214), white);
+   background-color: rgba(95, 95, 95, 0.318);
+   background-color: rgb(242, 242, 242);
+   /* background-image: linear-gradient(90deg, transparent, gray, transparent); */
 }
 .image-list li {
    position: relative;
    aspect-ratio: 1 / 1;
-   width: 20%;
+   width: 18%;
    box-sizing: border-box;
    margin: 0 2%;
 }
@@ -86,7 +105,7 @@
 
 li.selected-image-container {
    background-color: white;
-   border: 0.4vh solid rgba(224, 23, 23, 0.2);
+   border: 0.4vh solid var(--pastel-green);
 }
 li.selected-image-container img {
    opacity: 100%;

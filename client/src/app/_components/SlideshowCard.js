@@ -4,6 +4,7 @@ import { memo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import RatingBar from './RatingBar';
+import { currencyFormat } from '../_utils/utils';
 import prodImgPlaceholder from '../_images/prodImgPlaceholder';
 import styles from '@/app/_styles/SlideshowCard.module.css';
 
@@ -31,25 +32,21 @@ export default memo(function SlideshowCard({ product }) {
                   />
                </div>
 
-               <h2>
+               <h3>
                   <Link 
                      href={`/${product.category}/${product.id}`}
                      className={styles['products-link']}
                   >
                      {product.name}
                   </Link>
-               </h2>
+               </h3>
                
-               <div className={styles['rating-and-reviews-link']}>
+               <div className={styles['rating-and-price-ctnr']}>
                   <RatingBar reviewCount={product.reviewCount} ratingSum={product.ratingSum} 
                      context={'slideshow-card'} 
                   />
-                  <Link 
-                     href={`/${product.category}/${product.id}#reviews`}
-                     className={styles['reviews-link']}
-                  >
-                     Reviews
-                  </Link>
+                  
+                  <p className={styles['product-price']}>{currencyFormat.format(product.price)}</p>
                </div>
             </article>
          :

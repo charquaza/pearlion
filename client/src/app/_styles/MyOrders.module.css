@@ -1,5 +1,14 @@
 .my-orders {
-   padding-right: 2vw;
+   width: 48vw;
+   position: relative;
+}
+
+.my-orders h2 {
+   font-weight: 400;
+   text-decoration: underline;
+   text-underline-offset: 0.6vw;
+   text-decoration-thickness: 0.1vw;
+   text-decoration-color: rgb(120, 120, 120);
 }
 
 .orders-table {
@@ -8,15 +17,17 @@
    width: 100%;
    height: 87vh;
    overflow: scroll;
-   border-bottom: 0.3em solid pink;
-   border-radius: 1em;
+   border: 0.3vw solid var(--pastel-green);
+   border-bottom: 0.8vw solid var(--pastel-green);
+   border-radius: 0.8vw;
    border-collapse: collapse;
    text-align: center;
+   background-color: #cbe0cb14;
 }
 
 .orders-table ul {
    margin: 0;
-   padding-left: 2em;
+   padding-left: 1.5em;
 }
 
 .orders-table caption {
@@ -32,30 +43,31 @@
    position: sticky;
    top: 0;
    vertical-align: top;
-   font-weight: bold;
    font-size: 1.1em;
-   background-color: var(--primary-color);
+   background-color: var(--pastel-green);
 }
 
 .orders-table thead th {
-   padding: 0.6em;
+   padding: 0.3em 0;
+   font-weight: 550;
 }
 
 .orders-table thead th:nth-child(1) {
-   width: 0%;
+   width: 1%;
 }
 .orders-table thead th:nth-child(2) {
-   width: 5%;
+   width: 13%;
 }
-.orders-table thead th:nth-child(3) {
-}
-.orders-table thead th:nth-child(4) {
-   width: 4%;
-}
+/* .orders-table thead th:nth-child(3) {
+   width: 69%
+} */
+/* .orders-table thead th:nth-child(4) {
+   width: 10%;
+} */
 .orders-table thead th:nth-child(5) {
-   width: 7%;
+   width: 1%;
 }
-.orders-table thead th:nth-child(6) {
+/* .orders-table thead th:nth-child(6) {
    width: 8%;
 }
 .orders-table thead th:nth-child(7) {
@@ -66,19 +78,32 @@
 }
 .orders-table thead th:nth-child(9) {
    width: 9%;
+} */
+
+/* .orders-table tbody tr:nth-child(even) {
+   background-color: rgba(255, 241, 243, 0.966);
+} */
+
+.orders-table tbody .order-id-ctnr:hover {
+   cursor: pointer;
+   text-decoration: underline;
+   background-color: rgb(230, 230, 230);
 }
 
-.orders-table tbody tr:nth-child(even) {
-   background-color: rgba(255, 241, 243, 0.966);
+.orders-table tbody .selected-order {
+   background-color: #cbe0cba6;
+}
+.orders-table tbody .selected-order .order-id-ctnr:hover {
+   background-color: transparent;
 }
 
 .orders-table tbody th {
    padding: 0.5vw;
+   font-weight: 400;
 }
 
 .orders-table tbody th, .orders-table tbody td {
-   border-left: 1px solid rgb(183, 183, 183);
-   border-right: 1px solid rgb(183, 183, 183);
+   border: 1px solid rgb(183, 183, 183);
    padding: 0.5em;
 }
 .orders-table tbody th:first-child {

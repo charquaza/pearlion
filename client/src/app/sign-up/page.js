@@ -22,19 +22,21 @@ export default function SignUpPage() {
          <h1>Sign Up</h1>
 
          <form onSubmit={handleSubmit}>
-            <label htmlFor='firstName'>First Name:&nbsp;
-               <input type='text' id='firstName' name='firstName' 
-                  required value={inputValues.firstName}
-                  onChange={handleInput}
-               />
-            </label>
-
-            <label htmlFor='lastName'>Last Name:&nbsp;
-               <input type='text' id='lastName' name='lastName' 
-                  required value={inputValues.lastName}
-                  onChange={handleInput}
-               />
-            </label>
+            <div className={styles['first-last-name-inputs']}>
+               <label htmlFor='firstName'>First <br/> Name:&nbsp;
+                  <input type='text' id='firstName' name='firstName' 
+                     required value={inputValues.firstName}
+                     onChange={handleInput}
+                  />
+               </label>
+   
+               <label htmlFor='lastName'>Last <br/> Name:&nbsp;
+                  <input type='text' id='lastName' name='lastName' 
+                     required value={inputValues.lastName}
+                     onChange={handleInput}
+                  />
+               </label>
+            </div>
 
             <label htmlFor='username'>Username:&nbsp;
                <input type='text' id='username' name='username' 
@@ -43,19 +45,21 @@ export default function SignUpPage() {
                />
             </label>
             
-            <label htmlFor='password'>Password:&nbsp;
-               <input type='password' id='password' name='password' 
-                  required value={inputValues.password}
-                  onChange={handleInput}
-               />
-            </label>
-
-            <label htmlFor='confirmPassword'>Confirm Password:&nbsp;
-               <input type='password' id='confirmPassword' name='confirmPassword' 
-                  required value={inputValues.confirmPassword}
-                  onChange={handleInput}
-               />
-            </label>
+            <div className={styles['passwords-inputs']}>
+               <label htmlFor='password'>Password:&nbsp;
+                  <input type='password' id='password' name='password' 
+                     required value={inputValues.password}
+                     onChange={handleInput}
+                  />
+               </label>
+   
+               <label htmlFor='confirmPassword'>Confirm <br/> Password:&nbsp;
+                  <input type='password' id='confirmPassword' name='confirmPassword' 
+                     required value={inputValues.confirmPassword}
+                     onChange={handleInput}
+                  />
+               </label>
+            </div>
 
             <label htmlFor='email'>Email:&nbsp;
                <input type='email' id='email' name='email' 
@@ -64,7 +68,7 @@ export default function SignUpPage() {
                />
             </label>
 
-            <label htmlFor='phone'>Phone (optional):&nbsp;
+            <label htmlFor='phone'>Phone <br/> (optional):&nbsp;
                <input type='tel' id='phone' name='phone' 
                   value={inputValues.phone} onChange={handleInput}
                />

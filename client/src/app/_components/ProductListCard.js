@@ -4,6 +4,7 @@ import { memo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import RatingBar from './RatingBar';
+import { currencyFormat } from '../_utils/utils';
 import prodImgPlaceholder from '../_images/prodImgPlaceholder';
 import styles from '@/app/_styles/ProductListCard.module.css';
 
@@ -31,16 +32,18 @@ export default memo(function ProductListCard({ product }) {
                   />
                </div>
 
-               <h2>
-                  <Link 
-                     href={`/${product.category}/${product.id}`}
-                     className={styles['products-link']}
-                  >
-                     {product.name}
-                  </Link>
-               </h2>
+               <div className={styles['name-price-ctnr']}>
+                  <h3>
+                     <Link 
+                        href={`/${product.category}/${product.id}`}
+                        className={styles['products-link']}
+                     >
+                        {product.name}
+                     </Link>
+                  </h3>
 
-               <p>${product.price}</p>
+                  <p className={styles['product-price']}>{currencyFormat.format(product.price)}</p>
+               </div>
 
                <div className={styles['rating-and-reviews-link']}>
                   <RatingBar reviewCount={product.reviewCount} ratingSum={product.ratingSum}
@@ -50,7 +53,7 @@ export default memo(function ProductListCard({ product }) {
                      href={`/${product.category}/${product.id}#reviews`}
                      className={styles['reviews-link']}
                   >
-                     Reviews ({product.reviewCount})
+                     Reviews (<span className={styles['review-count']}>{product.reviewCount}</span>)
                   </Link>
                </div>
             </article>

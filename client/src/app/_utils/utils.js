@@ -21,3 +21,8 @@ export function formatFileSize(number) {
       return `${(number / 1e6).toFixed(1)} MB`;
    }
 };
+
+export const currencyFormat = new Intl.NumberFormat('en-US', { 
+   style: 'currency', currency: 'USD', currencyDisplay: 'symbol',
+   maximumFractionDigits: 0 
+});

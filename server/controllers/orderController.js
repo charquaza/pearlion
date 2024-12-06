@@ -49,9 +49,7 @@ exports.checkout = [
             {
                clientSecret: paymentIntent.client_secret,
                paymentIntentId: paymentIntent.id,
-               taxEstimate: paymentIntent.metadata.taxAmount,
-               // [DEV]: For demo purposes only, you should avoid exposing the PaymentIntent ID in the client-side code.
-               dpmCheckerLink: `https://dashboard.stripe.com/settings/payment_methods/review?transaction_id=${paymentIntent.id}`
+               taxEstimate: paymentIntent.metadata.taxAmount
             }
          });
       } catch (err) {

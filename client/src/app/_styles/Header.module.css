@@ -5,8 +5,13 @@
    align-items: center;
 }
 
+/* .logo-ctnr {
+   background-image: radial-gradient(white, transparent 70%);
+} */
+
 .logo {
    display: block;
-   width: 10vw;
+   width: 15vw;
    height: auto;
+   padding-top: 10px;
 }

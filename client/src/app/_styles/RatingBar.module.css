@@ -31,6 +31,7 @@
 .rating {
    margin: 0;
    padding-left: 0.3em;
+   font-weight: 400;
 }
 
 .no-rating {
@@ -45,20 +46,20 @@
 
 /* overrides for ProductDetails component */
 .product-details {
-   --bar-width: calc( var(--size) * 5 );  
+   --bar-width: calc( var(--size) * 5.5 );  
 }
 
 /* overrides for ProductListCard component */
 .product-list-card {
-   --bar-width: calc( var(--size) * 5 );  
+   --bar-width: calc( var(--size) * 5.3 );  
 }
 
 /* overrides for SlideshowCard component */
 .slideshow-card {
-   --bar-width: calc( var(--size) * 5 );  
+   --bar-width: calc( var(--size) * 5.2 );  
 }
 
 /* overrides for ReviewCard component */
 .review-card {
-   --bar-width: calc( var(--size) * 0.19 );  
+   --bar-width: calc( var(--size) * 0.16 );  
 }

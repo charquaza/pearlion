@@ -1,9 +1,21 @@
+.new-arrivals-page {
+   padding-left: 4vw;
+}
+
+.new-arrivals-page h1 {
+   font-size: 2.5vw;
+   font-weight: 450;
+   margin: 0 0 2vw 0;
+}
+
 .new-arrivals-page ul {
    list-style-type: none;
-   display: grid;
-   grid-template-columns: 1fr 1fr;
+   display: flex;
+   flex-wrap: wrap;
+   padding-left: 0;
 }
 
 .new-arrivals-page ul li {
-   padding-bottom: 3vw;
+   padding-bottom: 4vw;
+   margin-right: 3.5vw;
 }

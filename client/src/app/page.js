@@ -8,7 +8,7 @@ import styles from './_styles/homePage.module.css';
 
 export default function HomePage() {
    const [ slideshow, setSlideshow ] = useState(
-      new Map([ ['startIndex', 0], ['count', 3] ])
+      new Map([ ['startIndex', 0], ['count', 4] ])
    );
 
    const { productList, error } = useProductList(null, ['new', 'bestseller'], 'main');
@@ -17,7 +17,7 @@ export default function HomePage() {
       console.error(error);
 
       return (
-         <main>
+         <main className={styles['home-page']}>
             <p>Sorry, we&apos;re having trouble loading this page.</p>
             <p>Please try again later.</p>
          </main>
@@ -46,13 +46,13 @@ export default function HomePage() {
    }
 
    function handleSlideshowNavigation(e) {
-      if (e.target.id === 'previous') {
+      if (e.target.getAttribute('data-nav') === 'previous') {
          let previousIndex = slideshow.get('startIndex') - 1;
          if (previousIndex === -1) {
             previousIndex = newArrivals.length - 1;
          }
          setSlideshow(new Map([ ...slideshow, ['startIndex', previousIndex] ]));
-      } else if (e.target.id === 'next') {
+      } else if (e.target.getAttribute('data-nav') === 'next') {
          let nextIndex = slideshow.get('startIndex') + 1;
          if (nextIndex === newArrivals.length) {
             nextIndex = 0;
@@ -66,12 +66,18 @@ export default function HomePage() {
    return (
       (productList) 
          ?
-            <main>
+            <main className={styles['home-page']}>
                <article className={styles['new-arrivals']}>
                   <h2>New Arrivals</h2>
 
                   <div className={styles['slideshow-container']}>
                      <ul>
+                        <li>
+                           <button 
+                              onClick={handleSlideshowNavigation}
+                              data-nav='previous'
+                           > &lt; </button>
+                        </li>
                         {
                            currSlideshowList.map(product => {
                               return (
@@ -81,11 +87,20 @@ export default function HomePage() {
                               );
                            })
                         }
+                        <li>
+                           <button 
+                                 onClick={handleSlideshowNavigation}
+                                 data-nav='next'
+                           > &gt; </button>
+                        </li>
                      </ul>
          
-                     <div onClick={handleSlideshowNavigation}>
-                        <button id='previous'> ← </button>
-                        <button id='next'> → </button>
+                     <div 
+                        className={styles['bottom-slideshow-nav']} 
+                        onClick={handleSlideshowNavigation}
+                     >
+                        <button data-nav='previous'> &lt; </button>
+                        <button data-nav='next'> &gt; </button>
                      </div>
                   </div>
                </article>
@@ -107,7 +122,7 @@ export default function HomePage() {
                </article>
             </main>
          :
-            <main>
+            <main className={styles['home-page-loading']}>
                <p>Loading...</p>
             </main>
    );

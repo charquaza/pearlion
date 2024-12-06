@@ -1,31 +1,46 @@
 .add-review-button {
    display: block;
-   margin: 3vw 0;
+   margin: 2.5vw 0;
+   padding: 0.8vw;
+   border: 0;
+   font-size: 1.3vw;
+   font-weight: 550;
+   background-color: var(--pastel-green);
+}
+.add-review-button:hover {
+   background-color: #d5ebd5;
+}
+.add-review-button:active {
+   background-color: #b8ceb8;
 }
 
 .new-review-form {
    margin: 3vw 0;
    width: 50vw;
-   padding: 1.8vw;
-   border-radius: 1vw 7vw 7vw 1vw;
-   background-color: rgb(215, 252, 235);
-   box-shadow: 0.2vw 0.5vw 0.5vw 0 rgb(217, 220, 219);
+   padding: 1.6vw;
+   border-radius: 0.8vw;
+   background-color: var(--pastel-green);
+   background-color: var(--beige);
+   background-color: #cfe3cf;
 }
 
-.new-review-form h3 {
-   margin-top: 0;
-   font-size: 1.3rem;
+.product-name {
+   font-weight: 550;
+   font-size: 1.7vw;
 }
 
-.new-review-form .form-errors {
+.form-errors {
    color: rgb(255, 72, 0);
    font-style: italic;
+   font-weight: 500;
+   font-size: 1.3vw;
 }
 
 .new-review-form label {
    display: block;
-   padding: 0.8vw 0;
-   font-size: 1.1rem;
+   padding: 0;
+   font-size: 1.3vw;
+   font-weight: 500;
 }
 
 .new-review-form textarea {
@@ -34,29 +49,54 @@
    margin: 0.5vw 0;
    width: 46vw;
    height: 30vh;
-   border-radius: 1vw;
+   border-radius: 0.3vw;
+   border: 0.1vw solid black;
+}
+.new-review-form textarea:focus {
+   outline: 0.1vw solid black;
 }
 
 .new-review-form button {
    margin-right: 1vw;
 }
-.new-review-form button[type='submit'] {
+
+.new-review-form .submit-btn {
+   margin-top: 2vw;
    font-size: 1.1rem;
+   padding: 0.7vw;
+   border: 0;
+   border-radius: 0.3vw;
+   font-weight: 550;
+   background-color: var(--beige);
 }
-.new-review-form button[type='button'] {
-   font-size: 0.9rem;
+.new-review-form .submit-btn:hover {
+   background-color: #e2dcce;
+}
+.new-review-form .submit-btn:active {
+   background-color: #c9c3b4;
+}
+
+.new-review-form .discard-btn {
+   margin-top: 2.6vw;
+   padding: 0;
+   border: 0;
+   background-color: transparent;
+   font-size: 1.2vw;
+   font-weight: 450;
+}
+.new-review-form .discard-btn:hover {
+   border-bottom: 1px solid black;
 }
 
 .product-info {
    display: flex;
    align-items: center;
-   padding: 0 0 1vw 2vw;
 }
 
 .product-image-container {
    position: relative;
-   width: 5rem;
-   height: 5rem;
+   width: 5vw;
+   height: 5vw;
 }
 .product-image-container img {
    width: 100%;
@@ -73,7 +113,7 @@
 .rating-fieldset {
    position: relative;
    margin: 0;
-   padding: 1vw 0 1vw 4.5rem;
+   padding: 1vw 0 1vw 9vw;
    border: none;
 }
 
@@ -82,12 +122,13 @@
    top: 50%;
    left: 0;
    transform: translateY(-50%);
-   font-size: 1.1rem;
+   font-size: 1.3vw;
+   font-weight: 500;
    line-height: 1;
 }
 
 .rating {
-   --label-width: max(25px, 3vw);
+   --label-width: max(25px, 2.3vw);
 
    display: flex;
    width: calc(5 * var(--label-width));
@@ -130,18 +171,22 @@
 }
 
 .new-review-form .file-upload-label {
-   width: 25%;
-   margin: 1vw 0 3vw;
-   font-size: 1em;
-   font-weight: bold;
+   width: 16%;
+   margin: 1vw 0 1vw;
+   padding: 0.2vw 0;
+   font-size: 1.2vw;
+   font-weight: 500;
    text-align: center;
-   border: solid 1px gray;
-   border-radius: 0.5em;
-   background-color: rgb(216, 237, 255);
+   border: solid 1px black;
+   border-radius: 0.4vw;
+   background-color: rgb(240, 240, 240);
    cursor: pointer;
 }
 .new-review-form .file-upload-label:hover {
-   background-color: rgb(191, 225, 255);
+   background-color: rgb(220, 220, 220);
+}
+.new-review-form .file-upload-label:active {
+   background-color: rgb(200, 200, 200);
 }
 
 .file-upload-label > input {
@@ -152,14 +197,33 @@
 
 .file-upload-list {
    list-style-type: none;
+   margin: 0;
 }
 .file-upload-list li {
    display: flex;
-   padding-bottom: 3%;
+   align-items: center;
+   margin-bottom: 1vw;
 }
 .file-upload-list p {
    width: 60%;
-   padding-left: 8%;
+   padding-left: 1vw;
+   margin: 0;
+}
+.file-upload-list button {
+   width: 2.1vw;
+   height: 2.1vw;
+   border: 0;
+   border-radius: 50%;
+   text-align: center;
+   font-size: 1.2vw;
+   font-weight: 550;
+   background-color: rgb(180, 180, 180);
+}
+.file-upload-list button:hover {
+   background-color: rgb(151, 151, 151);
+}
+.file-upload-list button:active {
+   background-color: rgb(111, 111, 111);
 }
 
 .file-upload-image-ctnr {

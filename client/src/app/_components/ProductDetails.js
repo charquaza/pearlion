@@ -5,6 +5,7 @@ import useProduct from '../_hooks/useProduct';
 import ProductImageList from './ProductImageList';
 import RatingBar from './RatingBar';
 import PurchaseControls from './PurchaseControls';
+import { currencyFormat } from '../_utils/utils';
 import styles from '@/app/_styles/ProductDetails.module.css';
 
 export default function ProductDetails({ productId }) {
@@ -30,14 +31,20 @@ export default function ProductDetails({ productId }) {
          
                   <div className={styles['description-container']}>
                      <h1>{product.data.name}</h1>
-                     <div className={styles['rating-and-reviews-link']}>
+
+                     <div className={styles['price-rating-ctnr']}>
                         <RatingBar reviewCount={product.data.reviewCount} 
                            ratingSum={product.data.ratingSum} context={'product-details'} 
                         />
-                        <Link href='#reviews'>Reviews</Link>
+
+                        <Link href='#reviews'>Reviews ({product.data.reviewCount})</Link>
+
+                        <p className={styles['price']}>
+                           {currencyFormat.format(product.data.price)}
+                        </p>
                      </div>
+
                      <p>{product.data.description}</p>
-                     <p><span className={styles['bold']}>Price:</span> ${product.data.price}</p>
                      
                      <PurchaseControls productId={product.data.id} />
                   </div>
@@ -47,10 +54,10 @@ export default function ProductDetails({ productId }) {
                   <h2>Product Details</h2>
 
                   <ul>
-                     <li>color: </li>
-                     <li>materials: </li>
-                     <li>dimensions: </li>
-                     <li>weight: </li>
+                     <li>color: pearl</li>
+                     <li>materials: pearl, silver, gold</li>
+                     <li>dimensions: 5cm x 5.5in</li>
+                     <li>weight: 1,200g</li>
                   </ul>
 
                   <p>
@@ -60,9 +67,7 @@ export default function ProductDetails({ productId }) {
             </article>
          : 
             <article className={styles['product-details']}>
-               <div className={styles['images-description-container']}>
-                  <p>Loading...</p>
-               </div>
+               <p>Loading...</p>
             </article>
    );
 };

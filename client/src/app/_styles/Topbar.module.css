@@ -1,9 +1,11 @@
 .topbar {
    align-self: flex-end;
+   margin-top: -1vw;
 }
 
 .nav-list {
    display: flex;
+   align-items: center;
    list-style-type: none;
    padding: 0 1.25vw 0 0;
    margin: 0;
@@ -11,21 +13,59 @@
 
 .nav-list li {
    padding: 0 0.625vw;
+   font-size: 1.3vw;
+   font-weight: 450;
 }
 
-.nav-list a {
+.account-link, .sign-up-link {
    text-decoration: none;
    color: black;
 }
-.nav-list a:hover {
+.account-link:hover, .sign-up-link:hover {
    text-decoration: underline;
 }
-.nav-list a:active {
-   color: rgb(214, 37, 96);
+
+.cart-link {
+   padding: 0.6vw 0.7vw;
+   border-radius: 50%;
+   font-size: 1.6vw;
+   text-decoration: none;
+}
+.cart-link:hover {
+   padding: 0.4vw 0.7vw;
+   text-decoration: none;
+   background-color: white;
+}
+.cart-link:active {
+   background-color: gainsboro;
 }
 
 .popover-control {
    position: relative;
+}
+
+.open-popover-btn {
+   padding: 0.5vw;
+   border: 0;
+   border-radius: 0.3vw;
+   background-color: var(--pastel-green);
+   font-weight: 450;
+}
+.open-popover-btn:hover {
+   background-color: #d8f0d8;
+}
+
+.close-popover-btn, .logout-btn {   
+   padding: 0.5vw;
+   border: 0;
+   border-radius: 0.3vw;
+   background-color: gainsboro;
+}
+.close-popover-btn:hover, .logout-btn:hover {
+   background-color: rgb(187, 187, 187);
+}
+.close-popover-btn:active, .logout-btn:active {
+   background-color: rgb(147, 147, 147);
 }
 
 .login-popover-open {
@@ -33,10 +73,10 @@
    left: -7vw;
    top: 6vh;
    z-index: 1;
-   width: 18vw;
    background-color: white;
-   border-radius: 1vw;
-   box-shadow: 0.3vw 0.6vw 0.6vw 0 rgba(224, 23, 23, 0.2);
+   border-radius: 0.8vw 1vw 1.9vw 1vw;
+   box-shadow: 0px 0px 0px 0.5px rgba(50, 50, 93, 0.1),
+     0px 2px 5px 0px rgba(50, 50, 93, 0.1), 0px 1px 1.5px 0px rgba(0, 0, 0, 0.07);
 }
 .login-popover-closed {
    display: none;

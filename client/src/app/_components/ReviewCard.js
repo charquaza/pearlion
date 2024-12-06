@@ -49,44 +49,48 @@ export default function ReviewCard({
    }
 
    return (
-      <article className={styles['review']}>
-         {inEditMode 
-            ?
-               <EditReviewForm
-                  review={review} product={product}
-                  reviewList={reviewList} reviewIndex={reviewIndex}
-                  toggleEditMode={toggleEditMode} 
-                  revalidateProduct={revalidateProduct}
-                  revalidateReviewList={revalidateReviewList}
-               />
-            :
+      inEditMode
+         ?
+            <EditReviewForm
+               review={review} product={product}
+               reviewList={reviewList} reviewIndex={reviewIndex}
+               toggleEditMode={toggleEditMode} 
+               revalidateProduct={revalidateProduct}
+               revalidateReviewList={revalidateReviewList}
+            />
+         :
+            <article className={styles['review']}>
                <>
                   {
                      (user && user.data) && 
                      (user.data.id === review.client || user.data.privilege === 'admin') && 
-                        <>
-                           <button onClick={toggleEditMode}>Edit</button>
-                           <button onClick={handleDeleteReview}>Delete</button>
-         
-                           {deleteError &&
-                              <p className={styles['error-messages']}>
-                                 Review could not be deleted at this time; please try again later
-                              </p>
-                           }
-                        </>
+                     deleteError &&
+                        <p className={styles['error-messages']}>
+                           Review could not be deleted at this time; please try again later
+                        </p>
                   }
-         
-                  <h3>{review.User.firstName + ' ' + review.User.lastName}</h3>
+
+                  <div className={styles['username-buttons-ctnr']}>
+                     <h3>{review.User.firstName + ' ' + review.User.lastName}</h3>
+                     {
+                        (user && user.data) && 
+                        (user.data.id === review.client || user.data.privilege === 'admin') && 
+                           <div className={styles['edit-buttons-ctnr']}>
+                              <button onClick={toggleEditMode}>Edit</button>
+                              <button onClick={handleDeleteReview}>Delete</button>
+                           </div>
+                     }
+                  </div>
+
                   <RatingBar reviewCount={1} ratingSum={review.rating} context='review-card' />
                   <p>{DateTime.fromISO(review.createdAt).toLocaleString(DateTime.DATE_MED)}</p>
-                  <p>Product Reviewed: {product.data.name}</p>
+                  <p>Product Reviewed: <span className={styles['product-name']}>{product.data.name}</span></p>
                   <ReviewImageList review={review} 
                      reviewIndex={reviewIndex}
                      toggleReviewPopover={toggleReviewPopover}
                   />
                   <p className={styles['review-text-body']}>{review.review}</p>   
                </>
-         }
-      </article>
+            </article>
    );
 };

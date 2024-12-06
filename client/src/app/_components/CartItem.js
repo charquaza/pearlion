@@ -3,11 +3,13 @@
 import { useMemo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { currencyFormat } from '../_utils/utils';
 import prodImgPlaceholder from '../_images/prodImgPlaceholder';
 import styles from '@/app/_styles/CartItem.module.css';
 
 export default function CartItem({ 
-   item, handleQuantityChange, validateQuantity, handleItemRemove 
+   item, handleQuantityChange, validateQuantity, 
+   handleQuantityDecrement, handleQuantityIncrement, handleItemRemove 
 }) {
    const imgURL = useMemo(() => {
       var mainProdImgData = item.product.Images[0];
@@ -39,12 +41,24 @@ export default function CartItem({
                      {item.product.name}
                   </Link>
                </h2>
-               <p>Price: ${item.product.price}</p>
-               <label className={styles['bold']}>Quantity:&nbsp; 
-                  <input type='text' required className={styles['quantity-input']}
-                     value={item.quantity} data-product-id={item.product.id} 
-                     onChange={handleQuantityChange} onBlur={validateQuantity}
-                  />
+               <p>Price: <span className={styles['unit-price']}>{currencyFormat.format(item.product.price)}</span></p>
+               <label className={styles['quantity-label']}>Quantity:&nbsp; 
+                  <div className={styles['quantity-input-group']}>
+                     <button onClick={handleQuantityDecrement}
+                        disabled={item.quantity <= 1}
+                        data-product-id={item.product.id}
+                     >-</button>
+
+                     <input type='text' required className={styles['quantity-input']}
+                        value={item.quantity} data-product-id={item.product.id} 
+                        onChange={handleQuantityChange} onBlur={validateQuantity}
+                     />
+
+                     <button onClick={handleQuantityIncrement}
+                        disabled={item.quantity >= 99}
+                        data-product-id={item.product.id}
+                     >+</button>
+                  </div>
                </label>
                <button onClick={handleItemRemove} 
                   data-product-id={item.product.id}
@@ -54,8 +68,8 @@ export default function CartItem({
          </div>
 
          <p className={styles['item-subtotal']}>
-            <span className={styles['price-x-quantity-text']}>${item.product.price} x {item.quantity} =&nbsp;&nbsp;</span>
-            <span className={styles['item-subtotal-number']}>${item.product.price * item.quantity}</span>
+            <span className={styles['price-x-quantity-text']}>{currencyFormat.format(item.product.price)} x {item.quantity} =&nbsp;&nbsp;</span>
+            <span className={styles['item-subtotal-number']}>{currencyFormat.format(item.product.price * item.quantity)}</span>
          </p>
       </article>
    );
