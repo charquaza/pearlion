@@ -1,37 +1,46 @@
 @import "normalize.css";
 
 :root {
-  --sidebar-width: 12vw;
-  --primary-color: #ffdde4;
-  --secondary-color: #fff8dd;
+   --sidebar-width: 12vw;
+   --primary-color: #ffdde4;
+   --secondary-color: #fff8dd;
 
-  --pastel-pink: #ffdde4;
-  --beige: #fcf5e5;
-  --pastel-green: #cbe0cb;
-  --pastel-blue: #c1e1e1;
-  --mustard: #ffdb58;
+   --pastel-pink: #ffdde4;
+   --beige: #fcf5e5;
+   --pastel-green: #cbe0cb;
+   --pastel-blue: #c1e1e1;
+   --mustard: #ffdb58;
 
-  --body-bg-color: #f8f6f0;
+   --body-bg-color: #f8f6f0;
 }
 
 body {
-  margin: 0;
-  line-height: 1.5;
-  min-height: 100vh;
-  display: grid;
-  grid-template-areas:
-    "header   header"
-    "sidebar  main"
-    "footer   footer";
-  grid-template-rows: auto 1fr auto;
-  grid-template-columns: var(--sidebar-width) 1fr;
-  background-color: #f8f6f0;
+   margin: 0;
+   line-height: 1.5;
+   min-height: 100vh;
+   display: grid;
+   grid-template-areas:
+      "header"
+      "main"
+      "footer";
+   grid-template-rows: auto 1fr auto;
+   background-color: #f8f6f0;
 }
 
 main {
-  grid-area: main;
-}
+   grid-area: main;
+}   
 
 button:hover {
-  cursor: pointer;
+   cursor: pointer;
+}
+
+@media (min-width: 26rem) {
+   body {
+      grid-template-areas:
+         "header    header"
+         "sidebar   main"
+         "footer    footer";
+      grid-template-columns: var(--sidebar-width) 1fr;
+   }
 }

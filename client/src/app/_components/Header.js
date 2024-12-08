@@ -4,6 +4,7 @@ import { useContext } from 'react';
 import CheckoutStatusContext from '../_contexts/CheckoutStatusContext';
 import Link from 'next/link';
 import Image from 'next/image';
+import Sidebar from './Sidebar';
 import Topbar from '@/app/_components/Topbar';
 import logo2 from '@/app/_images/logo-2.png';
 import styles from '@/app/_styles/Header.module.css';
@@ -13,6 +14,8 @@ export default function Header() {
 
    return (
       <header className={styles.header}>
+         {!inCheckout && <Sidebar />}
+
          <div className={styles['logo-ctnr']}>
             {inCheckout
                ?

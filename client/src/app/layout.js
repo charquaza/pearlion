@@ -11,7 +11,6 @@ import {
 } from 'next/font/google';
 import CheckoutStatusProvider from './_contexts/CheckoutStatusProvider';
 import Header from './_components/Header';
-import Sidebar from './_components/Sidebar';
 import Footer from './_components/Footer';
 import '@/app/_styles/globals.css';
 
@@ -55,7 +54,6 @@ export default function RootLayout({ children }) {
          <body>
             <CheckoutStatusProvider>
                <Header />
-               <Sidebar />
                {children}
                <Footer />
             </CheckoutStatusProvider>

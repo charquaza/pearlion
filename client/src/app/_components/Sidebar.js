@@ -1,36 +1,34 @@
 'use client';
 
-import { useContext } from 'react';
+import { useState } from 'react';
 import { usePathname } from 'next/navigation';
-import { Libre_Baskerville, Quicksand, Courgette } from 'next/font/google';
 import Link from 'next/link';
-import CheckoutStatusContext from '../_contexts/CheckoutStatusContext';
 import styles from '@/app/_styles/Sidebar.module.css';
 
-const courgette = Courgette({
-   weight: [ '400' ],
-   subsets: [ 'latin' ]
-});
-const quicksand = Quicksand({
-   subsets: [ 'latin' ]
-});
-const libreBaskerville = Libre_Baskerville({
-   weight: [ '400', '700' ],
-   style: [ 'italic' ],
-   subsets: [ 'latin' ]
-});
-
 export default function Sidebar() {
+   const [ menuOpen, setMenuOpen ] = useState(false);
    const pathname = usePathname();
-   const { inCheckout } = useContext(CheckoutStatusContext);
 
-   if (inCheckout) {
-      return null;
+   function handleMenuToggle(e) {
+      setMenuOpen(prev => !prev);
    }
 
    return (
-      <nav className={quicksand.className + ' ' + styles.sidebar}>
-         <ul className={styles['nav-list']}>
+      <nav className={styles.sidebar}>
+         {menuOpen 
+            ?
+               <button className={styles['menu-icon-close']} onClick={handleMenuToggle}
+                  aria-label='Close Menu'
+               >&#x2715;</button>
+            :
+               <button className={styles['menu-icon-open']} onClick={handleMenuToggle}
+                  aria-label='Open Menu'
+               >&equiv;</button>
+         }
+      
+         <ul className={
+            menuOpen ? styles['nav-list'] : (styles['nav-list'] + ' ' + styles['mobile-hidden']) 
+         }>
             <li>
                <Link href='/about-us' 
                   className={pathname === '/about-us' ? styles['current-route'] : undefined}
@@ -63,5 +61,5 @@ export default function Sidebar() {
             </li>
          </ul>
       </nav>
-   );   
+   );
 };

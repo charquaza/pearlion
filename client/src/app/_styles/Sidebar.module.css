@@ -1,36 +1,49 @@
 .sidebar {
    --sidebar-top-padding: 1.25vw;
 
-   grid-area: sidebar;
+   width: 17vw;
+   /* position: relative;
+   top: 1vw;
+   left: 1vw; */
 }
 
-.side-bar svg {
-   overflow: visible;
+.menu-icon-open, .menu-icon-close {
+   display: block;
+   width: 1rem;
+   height: 1.1rem;
+   padding: 0 0 0 2.8vw;
+   border: 0;
+   background: none;
+   font-size: 1rem;
+   font-weight: 300;
+   color: rgb(80, 80, 80);
+}
+.menu-icon-close {
+   font-size: 0.5rem;
 }
 
 .nav-list {
-   position: sticky;
-   top: 1vw;
+   position: absolute;
+   height: 100vh;
    display: flex;
    flex-direction: column;
    list-style-type: none;
-   width: 10vw;
-   padding: 0.3vw 1vw 9vw 1vw;
+   padding: 0.3vw 2.5vw 9vw 1vw;
    margin: 0;
-   border-right: 1px solid;
+   border-right: 1px solid rgb(130, 130, 130);
+   /* background-color: var(--beige); */
+   background: linear-gradient(var(--body-bg-color), var(--beige));
    /* border-image: linear-gradient(transparent, black, transparent) 1; */
+}
+.nav-list.mobile-hidden {
+   display: none;
 }
 
 .nav-list li {
-   font-size: 1.5vw;
+   font-size: 0.5rem;
    font-weight: 400;
    margin: 0.7vw 0;
-   text-align: center;
-   /* background-image: linear-gradient(white, transparent, white); */
-   /*
    padding: 0.8vw;
-   border-radius: 0.3vw 1.5vw 1.5vw 0.3vw;
-   background-color: var(--pastel-green); */
 }
 .nav-list li::first-letter {
    font-size: 1.1em;
@@ -49,4 +62,46 @@
 
 .nav-list a.current-route {
    font-weight: 600;
+}
+
+@media (min-width: 26rem) {
+   .sidebar {
+      position: fixed;
+      width: var(--sidebar-width);
+   }
+
+   .menu-icon-open, .menu-icon-close {
+      display: none;
+   }
+
+   .nav-list {
+      position: fixed;
+      left: 0;
+      top: 7.5vw;
+      width: 10vw;
+      height: auto;
+      padding: 0.3vw 1vw 9vw 1vw;
+      border-right: 1px solid black;
+      background: none;
+      background-color: transparent;
+   }   
+   .nav-list.mobile-hidden {
+      display: flex;
+   }
+
+   .nav-list li {
+      /* font-size: 1.5vw; */
+      font-size: calc(0.95vw + 0.4rem);
+      font-weight: 400;
+      margin: 1vw 0;
+      text-align: center;
+      padding: 0;
+   }
+   .nav-list li::first-letter {
+      font-size: 1.1em;
+   }
+   
+   .nav-list a.current-route {
+      font-weight: 600;
+   }   
 }

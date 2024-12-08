@@ -8,24 +8,24 @@
 .login-form .error-msg {
    color: rgb(255, 72, 0);
    font-style: italic;
-   font-size: 0.9em;
+   font-size: 0.34rem;
    margin-top: 0;
 }
 
 .login-form label {
-   font-size: 1.4vw;
+   font-size: 0.45rem;
    font-weight: 450;
 }
 
 .login-form input {
-   width: 13vw;
+   width: 4rem;
    padding: 0.6vw 0.9vw;
    margin: 0.1vw 0 1vw;
    border: 0.1vw solid rgb(153, 153, 153);
-   border-radius: 0.5vw;
+   border-radius: 1vw;
    background-color: #fefffa;
    /* background-color: rgb(228, 228, 228); */
-   font-size: 1.5vw;
+   font-size: 0.45rem;
    font-weight: 450;
 }
 .login-form input:focus {
@@ -39,7 +39,7 @@
    padding: 0.7vw 1vw;
    border: 0;
    border-radius: 0.4vw;
-   font-size: 1.5vw;
+   font-size: 0.45rem;
    font-weight: 550;
    color: rgb(43, 43, 43);
    /* background-image: radial-gradient(0px 0px, white, var(--pastel-green) 90%); */
@@ -50,4 +50,28 @@
 }
 .login-form button:active {
    background-color: #8c9b8c;
+}
+
+@media (min-width: 26rem) {
+   .login-form {
+      font-size: calc(1vw + 0.4rem);
+   }
+
+   .login-form .error-msg {
+      font-size: 0.8em;
+   }
+   
+   .login-form label {
+      font-size: 0.93em;
+   }
+   
+   .login-form input {
+      width: 13vw;
+      border-radius: 0.5vw;
+      font-size: 1em;
+   }
+
+   .login-form button {
+      font-size: 1em;
+   }
 }
