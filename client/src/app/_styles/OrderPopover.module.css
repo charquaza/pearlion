@@ -8,7 +8,7 @@
    position: absolute;
    top: 0.5vw;
    left: 32.4vw;
-   font-size: 1.5vw;
+   font-size: 1.21em;
    padding: 0.1vw 0.4vw;
    border: 0;
    border-radius: 10%;
@@ -35,7 +35,7 @@
 .order-details h3 {
    margin: 0 0 1.2vw;
    font-weight: 500;
-   font-size: 1.5vw;
+   font-size: 1.21em;
 }
 
 .order-details div {
@@ -53,13 +53,13 @@
 .order-details p {
    margin: 0.7vw 0;
    font-weight: 500;
-   font-size: 1.2vw;
+   font-size: 0.97em;
 }
 
 .order-details p span {
    padding-left: 0.3vw;
    font-weight: 400;
-   font-size: 1.23vw;
+   font-size: 0.99em;
 }
 
 .order-details ul {

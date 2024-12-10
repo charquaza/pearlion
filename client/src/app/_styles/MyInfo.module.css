@@ -1,23 +1,23 @@
 .my-info, .my-info-form {
    margin-bottom: 5vw;
    width: 27vw;
-   font-size: 1.3vw;
+   font-size: 1.05em;
 }
 
 .my-info p {
    font-weight: 500;
 }
 .my-info .name {
-   font-size: 1.5vw;
+   font-size: 1.21em;
    font-weight: 400;
 }
 .my-info .info {
    font-weight: 400;
-   font-size: 1.4vw;
+   font-size: 1.13em;
 }
 .my-info .edit-info-btn {
    padding: 0.15vw 0.5vw;
-   font-size: 1.4vw;
+   font-size: 1.13em;
    font-weight: 400;
    border: 0.1vw solid rgb(100, 100, 100);
    border-radius: 0.2vw;
@@ -33,7 +33,7 @@
 .form-errors {
    margin: 0 0 2vw;
    color: rgb(255, 72, 0);
-   font-size: 1.2vw;
+   font-size: 0.97em;
    font-style: italic;
 }
 
@@ -83,7 +83,7 @@
    border-radius: 0.2vw;
    background-color: rgb(224, 224, 224);
    font-weight: 450;
-   font-size: 1.2vw;
+   font-size: 0.97em;
 }
 .change-password-container button:hover {
    background-color: rgb(205, 205, 205);
@@ -114,7 +114,7 @@
 .form-controls button[type='submit'] {
    margin-right: 1vw;
    padding: 0.5vw 0.7vw;
-   font-size: 1.4vw;
+   font-size: 1.13em;
    font-weight: 500;
    border: 0;
    border-radius: 0.2vw;
@@ -129,7 +129,7 @@
 
 .form-controls button[type='button'] {
    padding: 0.4vw;
-   font-size: 1.4vw;
+   font-size: 1.13em;
    font-weight: 500;
    border: 0.1vw solid transparent;
    border-radius: 0.2vw;

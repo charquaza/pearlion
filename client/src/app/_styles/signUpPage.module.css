@@ -24,7 +24,7 @@
 .sign-up-page label {
    width: 25.5vw;
    margin-bottom: 1vw;
-   font-size: 1.4vw;
+   font-size: 1.13em;
    font-weight: 450;
    line-height: 2vw;
    display: flex;
@@ -58,7 +58,7 @@
    border-radius: 0.5vw;
    background-color: #c7e7e7;
    color: rgb(40, 40, 40);
-   font-size: 1.7vw;
+   font-size: 1.37em;
    font-weight: 500;
 }
 .sign-up-page button[type='submit']:hover {

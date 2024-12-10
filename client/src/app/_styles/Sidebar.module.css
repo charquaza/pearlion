@@ -12,12 +12,12 @@
    padding: 0 0 0 2.8vw;
    border: 0;
    background: none;
-   font-size: 1rem;
+   font-size: 1.04em;
    font-weight: 300;
    color: rgb(80, 80, 80);
 }
 .menu-icon-close {
-   font-size: 0.5rem;
+   font-size: 0.52em;
 }
 
 .nav-list {
@@ -38,7 +38,7 @@
 }
 
 .nav-list li {
-   font-size: 0.5rem;
+   font-size: 0.52em;
    font-weight: 400;
    margin: 0.7vw 0;
    padding: 0.8vw;
@@ -89,7 +89,7 @@
 
    .nav-list li {
       /* font-size: 1.5vw; */
-      font-size: calc(0.95vw + 0.4rem);
+      font-size: calc(0.95vw + 0.42em);
       font-weight: 400;
       margin: 0.5vw 0 1.3vw;
       text-align: center;

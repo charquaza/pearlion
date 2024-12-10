@@ -16,7 +16,7 @@
 }
 
 .slideshow-card h3 {
-   font-size: 1.3vw;
+   font-size: 1.05em;
    font-weight: 400;
    margin: 0.8vw 0 0 0;
 }
@@ -40,7 +40,7 @@
 }
 
 .product-price {
-   font-size: 1.2vw;
+   font-size: 0.97em;
    font-weight: 400;
    text-align: right;
    height: 1.5vw;

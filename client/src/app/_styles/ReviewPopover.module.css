@@ -18,7 +18,7 @@
    width: 4vw;
    height: 90vh;
    color: black;
-   font-size: 3rem;
+   font-size: 3.13em;
    background-color: var(--pastel-green);
    border: 0;
 }
@@ -32,15 +32,15 @@
 }
 
 .prev-review-btn:hover, .next-review-btn:hover {
-   font-size: 4rem;
+   font-size: 4.18em;
    background-color: #d9f0d9;
 }
 .prev-review-btn:active, .next-review-btn:active {
-   font-size: 4rem;
+   font-size: 4.18em;
    background-color: #b8ceb8;
 }
 .prev-review-btn:disabled, .next-review-btn:disabled {
-   font-size: 3rem;
+   font-size: 3.13em;
    color: rgb(100, 100, 100);
    background-color: #9aa49a;
 }
@@ -76,7 +76,7 @@
 
 .review h3 {
    margin: 1vw 0 1vw;
-   font-size: 1.4vw;
+   font-size: 1.13em;
    font-weight: 500;
 }
 

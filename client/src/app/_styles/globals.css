@@ -25,6 +25,8 @@ body {
       "footer";
    grid-template-rows: auto 1fr auto;
    background-color: #f8f6f0;
+   font-size: calc(0.4rem + 0.74vw);
+   /* at desktop width: 1.3vw === 1.05em (~0.8 multiplier) */
 }
 
 main {

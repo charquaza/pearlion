@@ -4,7 +4,7 @@
 
 .reviews h2 {
    margin: 2vw 0;
-   font-size: 2.6vw;
+   font-size: 2.1em;
    font-weight: 450;
 }
 
@@ -12,7 +12,7 @@
    display: flex;
    align-items: center;
    gap: 1.1vw;
-   font-size: max(1.7vw);
+   font-size: 1.37em;
 }
 .rating-count-ctnr p {
    margin: 0;

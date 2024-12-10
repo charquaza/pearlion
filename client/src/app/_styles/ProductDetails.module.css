@@ -11,7 +11,7 @@
 .description-container h1 {
    margin: 0;
    font-weight: 450;
-   font-size: 2.5vw;
+   font-size: 2.02em;
 }
 .description-container p {
    margin: 0;
@@ -20,7 +20,7 @@
    text-decoration: none;
    color: black;
    font-weight: 400;
-   font-size: 1.1vw;
+   font-size: 0.89em;
 }
 .description-container a:hover {
    text-decoration: underline;
@@ -41,7 +41,7 @@
 }
 .price-rating-ctnr a {
    /* padding-left: var(--size); */
-   font-size: var(--size);
+   font-size: calc(var(--size) / 1.3vw * 1.05em);
    line-height: var(--size);
 }
 .price-rating-ctnr .price {
@@ -50,7 +50,7 @@
    border-left: 1px solid black;
    margin: 0 0 0 0.8vw;
    padding-left: 1.8vw;
-   font-size: 1.6vw;
+   font-size: 1.29em;
    font-weight: 400;
 }
 
@@ -59,14 +59,14 @@
 }
 .details-section h2 {
    margin: 0;
-   font-size: 1.9vw;
+   font-size: 1.53em;
    font-weight: 500;
 }
 .details-section ul {
    margin: 0.7vw 0;
-   font-size: 1.25vw;
+   font-size: 1.01em;
 }
 .details-section p {
    width: 60vw;
-   font-size: 1.25vw;
+   font-size: 1.01em;
 }

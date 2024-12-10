@@ -14,7 +14,7 @@
 
 .nav-list li {
    padding: 0 1vw;
-   font-size: 0.4rem;
+   font-size: 0.42em;
    font-weight: 450;
 }
 
@@ -75,7 +75,7 @@
 .login-popover-open {
    position: absolute;
    margin-top: 1vw;
-   left: -180%;
+   left: -350%;
    z-index: 2;
    background-color: white;
    border-radius: 0.8vw 1vw 1.9vw 1vw;
@@ -96,7 +96,7 @@
 
    .nav-list li {
       padding: 0 0.6vw;
-      font-size: calc(0.85vw + 0.35rem)
+      font-size: calc(0.85vw + 0.36em)
    }
    
    .sign-up-link {
