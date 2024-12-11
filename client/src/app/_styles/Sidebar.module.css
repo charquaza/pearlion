@@ -7,17 +7,17 @@
 
 .menu-icon-open, .menu-icon-close {
    display: block;
-   width: 1rem;
-   height: 1.1rem;
-   padding: 0 0 0 2.8vw;
+   width: 1.2em;
+   height: 1.1em;
+   padding: 0 0 0 2vw;
    border: 0;
    background: none;
-   font-size: 1.04em;
+   font-size: 1.5em;
    font-weight: 300;
    color: rgb(80, 80, 80);
 }
 .menu-icon-close {
-   font-size: 0.52em;
+   font-size: 1.2em;
 }
 
 .nav-list {
@@ -26,7 +26,7 @@
    display: flex;
    flex-direction: column;
    list-style-type: none;
-   padding: 0.3vw 2.5vw 9vw 1vw;
+   padding: 0.3vw 4vw 9vw 1vw;
    margin: 0;
    border-right: 1px solid rgb(130, 130, 130);
    /* background-color: var(--beige); */
@@ -38,7 +38,7 @@
 }
 
 .nav-list li {
-   font-size: 0.52em;
+   font-size: 1.3em;
    font-weight: 400;
    margin: 0.7vw 0;
    padding: 0.8vw;
