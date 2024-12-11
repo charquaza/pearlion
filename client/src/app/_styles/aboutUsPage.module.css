@@ -1,9 +1,10 @@
 .about-us-page {
-   --video-width: 60vw;
-   --text-margin-left: calc(var(--video-width) / 10);
+   --video-width: 90vw;
 
-   padding-top: 1.25vw;
-   padding-left: calc((100vw - var(--video-width)) / 2 - var(--sidebar-width));
+   padding-top: 2vw;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
 }
 
 .about-us-page iframe {
@@ -14,18 +15,36 @@
 
 .about-us-page h1 {
    width: var(--video-width);
-   margin: 3vw 0 0 0;
-   margin-left: var(--text-margin-left);
+   margin: 4vw 0 2vw;
    font-weight: 450;
 }
 
 .about-us-page p {
-   box-sizing: border-box;
    width: var(--video-width);
-   padding: 0 var(--text-margin-left);
+   margin: 2vw 0;
 }
 
 .about-us-page p::first-letter {
    font-size: 1.3em;
    font-weight: 450;
+}
+
+@media (min-width: 26rem) {
+   .about-us-page {
+      --video-width: 60vw;
+      --text-margin-left: calc(var(--video-width) / 10);
+   
+      padding-top: 1.25vw;
+      padding-left: calc((100vw - var(--video-width)) / 2 - var(--sidebar-width));
+      display: block;
+   }
+
+   .about-us-page h1 {
+      margin: 3vw 0 0 var(--text-margin-left);
+   }
+   
+   .about-us-page p {
+      box-sizing: border-box;
+      padding: 0 var(--text-margin-left);
+   }
 }
