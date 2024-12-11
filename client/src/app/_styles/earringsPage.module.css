@@ -1,5 +1,5 @@
 .earrings-page {
-   padding-left: 4vw;
+   padding: 0 2vw 0;
 }
 
 .earrings-page h1 {
@@ -11,10 +11,25 @@
    list-style-type: none;
    display: flex;
    flex-wrap: wrap;
+   justify-content: space-between;
    padding-left: 0;
 }
 
 .earrings-page ul li {
-   padding-bottom: 4vw;
-   margin-right: 3.5vw;
+   padding-bottom: 8vw;
+}
+
+@media (min-width: 26rem) {
+   .earrings-page {
+      padding: 0 0 0 4vw;
+   }
+
+   .earrings-page ul {
+      justify-content: normal;
+   }   
+
+   .earrings-page ul li {
+      padding-bottom: 4vw;
+      margin-right: 3.5vw;
+   }   
 }
