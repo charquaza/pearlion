@@ -30,7 +30,7 @@
 }
 
 .rating-and-price-ctnr {
-   --size: 1.2vw;
+   --size: 0.97em;
 
    display: flex;
    /* justify-content: space-between; */

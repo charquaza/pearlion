@@ -59,7 +59,7 @@
 } */
 
 .nav-list a.current-route {
-   font-weight: 600;
+   font-weight: 550;
 }
 
 @media (min-width: 26rem) {
@@ -79,7 +79,7 @@
       width: 10vw;
       height: auto;
       padding: 0 1vw 9vw 1vw;
-      border-right: 1px solid black;
+      border-right: 0.8px solid black;
       background: none;
       background-color: transparent;
    }   
@@ -88,18 +88,9 @@
    }
 
    .nav-list li {
-      /* font-size: 1.5vw; */
-      font-size: calc(0.95vw + 0.42em);
-      font-weight: 400;
+      font-size: 1.05em;
       margin: 0.5vw 0 1.3vw;
       text-align: center;
       padding: 0;
    }
-   .nav-list li::first-letter {
-      font-size: 1.1em;
-   }
-   
-   .nav-list a.current-route {
-      font-weight: 600;
-   }   
 }

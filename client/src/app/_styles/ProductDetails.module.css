@@ -30,7 +30,7 @@
 }
 
 .price-rating-ctnr {
-   --size: 1.4vw;
+   --size: 1.13em;
 
    display: flex;
    align-items: center;
@@ -41,7 +41,7 @@
 }
 .price-rating-ctnr a {
    /* padding-left: var(--size); */
-   font-size: calc(var(--size) / 1.3vw * 1.05em);
+   font-size: var(--size);
    line-height: var(--size);
 }
 .price-rating-ctnr .price {

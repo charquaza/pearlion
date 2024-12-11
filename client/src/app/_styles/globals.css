@@ -33,6 +33,10 @@ main {
    grid-area: main;
 }   
 
+h1 {
+   font-size: 1.6em;
+}
+
 button:hover {
    cursor: pointer;
 }

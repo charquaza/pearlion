@@ -6,6 +6,7 @@
 .cart-item h2 {
    margin: -0.2vw 0 0.5vw 0;
    font-weight: 400;
+   font-size: 1.2em;
 }
 .cart-item p {
    margin: 0.2vw 0;

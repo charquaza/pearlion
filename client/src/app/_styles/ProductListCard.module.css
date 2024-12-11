@@ -18,20 +18,19 @@
 .name-price-ctnr {
    display: flex;
    justify-content: space-between;
-   align-items: center;
    gap: 2vw;
    margin-top: 0.8vw;
 }
 
 .product-list-card h3 {
-   font-size: 1.21em;
+   font-size: 1.1em;
    font-weight: 400;
    margin: 0;
 }
 
 .product-price {
    max-width: 20%;
-   font-size: 1.13em;
+   font-size: 1em;
    font-weight: 400;
    text-align: right;
    margin: 0;
@@ -46,7 +45,7 @@
 }
 
 .rating-and-reviews-link {
-   --size: 1.2vw;
+   --size: 0.97em;
 
    display: flex;
    align-items: center;
@@ -56,7 +55,7 @@
 }
 .rating-and-reviews-link a {
    padding-left: calc( var(--size) * 0.7 );
-   font-size: calc(var(--size) / 1.3vw * 1.05em);
+   font-size: var(--size);
    font-weight: 400;
    line-height: var(--size);
    text-decoration: none;

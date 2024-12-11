@@ -1,5 +1,5 @@
 .rating-container {
-   --bar-width: max(100px, 10vw);
+   --bar-width: max(100px, 5.5em);
    --bar-height: calc( var(--bar-width) / 5 );
 
    display: flex;
