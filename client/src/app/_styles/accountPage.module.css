@@ -1,5 +1,5 @@
 .account-page {
-   padding-left: 4vw;
+   padding: 0 2vw;
 }
 
 .account-page h1 {
@@ -7,7 +7,13 @@
    font-weight: 450;
 }
 
-.info-and-orders-ctnr {
-   display: flex;
-   gap: 7vw;
+@media (min-width: 26rem) {
+   .account-page {
+      padding: 0 0 0 4vw;
+   }
+   
+   .info-and-orders-ctnr {
+      display: flex;
+      gap: 7vw;
+   }
 }
