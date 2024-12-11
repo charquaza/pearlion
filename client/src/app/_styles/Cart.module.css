@@ -1,6 +1,5 @@
 .cart {
-   padding-left: 4vw;
-   width: 58vw;
+   padding: 0 2vw 0;
 }
 
 .cart h1 {
@@ -9,7 +8,6 @@
 }
 
 .items-container {
-   padding-left: 3vw;
    padding-bottom: 2vw;
 }
 
@@ -20,7 +18,7 @@
 }
 
 .items-container ul li {
-   padding-bottom: 1.8vw;
+   padding-bottom: 1.5em;
 }
 
 .shop-link {
@@ -36,7 +34,6 @@
    align-items: flex-end;
    border-top: 1px solid black;
    padding-top: 1.5vw;
-   margin-left: 3vw;
 }
 .total-and-checkout p {
    margin: 0;
@@ -53,15 +50,15 @@ span.subtotal-number {
 }
 
 p.taxes-shipping-text {
-   font-size: 0.8em;
+   font-size: 0.9em;
    margin: 0;
 }
 
 .checkout-btn {
    margin-top: 2vw;
-   padding: 0.6vw;
+   padding: 0.3em;
    border: 0.2vw solid #b9e3fa;
-   border-radius: 0.4vw;
+   border-radius: 0.2em;
    background-color: #b9e3fa;
    /* background-color: rgb(0, 132, 255); */
    color: rgb(50, 50, 50);
@@ -76,4 +73,32 @@ p.taxes-shipping-text {
 .checkout-btn:active {
    border: 0.2vw solid #b9cad5;
    background-color: #b9cad5;
+}
+
+@media (min-width: 26rem) {
+   .cart {
+      padding: 0 0 0 4vw;
+      width: 58vw;
+   }
+
+   .items-container {
+      padding-left: 3vw;
+   }
+
+   .items-container ul li {
+      padding-bottom: 1.8vw;
+   }
+
+   .total-and-checkout {
+      margin-left: 3vw;
+   }
+   
+   p.taxes-shipping-text {
+      font-size: 0.8em;
+   }
+   
+   .checkout-btn {
+      padding: 0.6vw;
+      border-radius: 0.4vw;
+   }   
 }

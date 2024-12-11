@@ -6,7 +6,7 @@
 .cart-item h2 {
    margin: -0.2vw 0 0.5vw 0;
    font-weight: 400;
-   font-size: 1.2em;
+   font-size: 1.1em;
 }
 .cart-item p {
    margin: 0.2vw 0;
@@ -39,12 +39,10 @@
 }
 .quantity-input-group button {
    display: block;
-   width: 1.3vw;
-   height: 1.8vw;
-   line-height: 1.8vw;
+   width: 0.9em;
    border: 0;
    padding: 0 0.2vw;
-   font-size: 1.2em;
+   font-size: 1.5em;
    font-weight: 450;
    text-align: center;
    background-color: transparent;
@@ -52,8 +50,8 @@
 
 .quantity-input {
    display: block;
-   width: 2.4vw;
-   height: 1.8vw;
+   width: 2.4em;
+   height: 1.8em;
    padding: 0;
    margin: 0;
    font-size: 1em;
@@ -77,8 +75,8 @@
 
 .image-container {
    position: relative;
-   width: 10vw;
-   height: 10vw;
+   width: 15vw;
+   height: 15vw;
 }
 .image-container img {
    width: 100%;
@@ -88,7 +86,6 @@
 }
 
 .item-details {
-   width: 20vw;
 }
 .item-details .unit-price {
    font-weight: 450;
@@ -99,11 +96,44 @@
 }
 
 .price-x-quantity-text {
-   font-size: 0.9em;
-   font-weight: 450;
+   display: none;
 }
 
 .item-subtotal-number {
    font-size: 1.1em;
    font-weight: 450;
+}
+
+@media (min-width: 26rem) {
+   .cart-item h2 {
+      margin: -0.2vw 0 0.5vw 0;
+      font-weight: 400;
+      font-size: 1.2em;
+   }
+   
+   .quantity-input-group button {
+      width: 1.3vw;
+      height: 1.8vw;
+      line-height: 1.8vw;
+      font-size: 1.2em;
+   }
+
+   .quantity-input {
+      width: 2.4vw;
+      height: 1.8vw;
+   }
+   
+   .image-container {
+      width: 10vw;
+      height: 10vw;
+   }
+
+   .item-details {
+      width: 20vw;
+   }
+
+   .price-x-quantity-text {
+      font-size: 0.9em;
+      font-weight: 450;
+   }   
 }
