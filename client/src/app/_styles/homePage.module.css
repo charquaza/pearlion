@@ -1,16 +1,11 @@
-.home-page-loading {
-   padding-left: 4vw;
-}
-
-.home-page {
-   padding-right: 4vw;
+.home-page-loading, .home-page {
+   padding: 0 2vw 0;
 }
 
 .home-page h2 {
    font-size: 1.6em;
    font-weight: 450;
    margin: 0;
-   padding-left: 4vw;
 }
 
 .slideshow-container {
@@ -20,12 +15,12 @@
 }
 
 .new-arrivals ul {
-   --image-width-height: 15vw;
+   --image-width-height: 19vw;
 
+   width: 100%;
    list-style-type: none;
    display: flex;
-   /* align-items: center; */
-   justify-content: space-evenly;
+   justify-content: space-between;
    margin-bottom: 0;
    padding-left: 0;
 }
@@ -42,10 +37,10 @@
 .new-arrivals li:first-child button,
 .new-arrivals li:last-child button {
    padding: 0;
-   width: 2.5vw;
+   width: 4.5vw;
    height: var(--image-width-height);
    line-height: var(--image-width-height);
-   font-size: 3.4em;
+   font-size: 2em;
    font-weight: 300;
    text-align: center;
    border: 0;
@@ -67,9 +62,9 @@
 .new-arrivals .bottom-slideshow-nav button {
    font-size: 1.45em;
    font-weight: 300;
-   width: 3vw;
-   padding: 0.1vw 0;
-   margin: 0.7vw 0.5vw 0 0.5vw;
+   width: 5vw;
+   padding: 0;
+   margin: 0.7vw 1vw 0 1vw;
    border: 0;
    border-radius: 0.2vw;
    background: rgb(227, 227, 227);
@@ -92,13 +87,13 @@
    list-style-type: none;
    display: flex;
    flex-wrap: wrap;
+   justify-content: space-between;
+   padding-left: 0;
    margin-top: 2.5vw;
-   padding-left: 4vw;
 }
 
 .best-sellers ul li {
-   padding-bottom: 4vw;
-   margin-right: 3.5vw;
+   padding-bottom: 8vw;
 }
 
 @keyframes fadeIn {
@@ -107,5 +102,47 @@
    }
    100% { 
       opacity: 1; 
+   }
+}
+
+@media (min-width: 26rem) {
+   .home-page-loading {
+      padding-left: 4vw;
+   }
+   .home-page {
+      padding: 0 4vw 0 0;
+   }
+
+   .home-page h2 {
+      padding-left: 4vw;
+   }
+
+   .new-arrivals ul {
+      --image-width-height: 15vw;
+   
+      width: auto;
+      justify-content: space-evenly;
+   }
+   
+   .new-arrivals li:first-child button,
+   .new-arrivals li:last-child button {
+      width: 2.5vw;
+      font-size: 3.4em;
+   }
+
+   .new-arrivals .bottom-slideshow-nav button {
+      width: 3vw;
+      padding: 0.1vw 0;
+      margin: 0.7vw 0.5vw 0 0.5vw;   
+   }
+
+   .best-sellers ul {
+      justify-content: normal;
+      padding-left: 4vw;
+   }
+
+   .best-sellers ul li {
+      padding-bottom: 4vw;
+      margin-right: 3.5vw;
    }
 }
