@@ -75,7 +75,7 @@
 .login-popover-open {
    position: absolute;
    margin-top: 1vw;
-   left: -350%;
+   left: -185%;
    z-index: 2;
    background-color: white;
    border-radius: 0.8vw 1vw 1.9vw 1vw;
