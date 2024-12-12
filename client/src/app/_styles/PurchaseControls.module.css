@@ -15,28 +15,29 @@
    display: flex;
    align-items: center;
    border: 0.1vw solid var(--pastel-blue);
-   border-radius: 1vw;
-   padding: 0.6vw 0.8vw;
+   border-radius: 0.5em;
+   padding: 0.2em 0.5em;
    background-color: white;
 }
 .input-group button {
    border: 0;
    padding: 0;
-   font-size: 1.45em;
+   font-size: 1.5em;
    background-color: transparent;
 }
 
 .quantity-label {
+   margin-right: 0.5em;
    font-size: 1.05em;
    font-weight: 500;
    color: rgb(40, 40, 40);
 }
 
 .quantity-input {
-   width: 2.4vw;
-   height: 2vw;
-   margin: 0 0.5vw;
-   font-size: 1.13em;
+   width: 1.5em;
+   height: 1.5em;
+   margin: 0 0.2em;
+   font-size: 1.2em;
    font-weight: 500;
    text-align: center;
    border: 0;
@@ -45,10 +46,10 @@
 
 .add-to-cart-btn {
    background-color: var(--pastel-blue);
-   margin-left: 3vw;
-   padding: 0.8vw;
+   margin-left: 2em;
+   padding: 0.45em;
    border: 0.2vw solid transparent;
-   border-radius: 0.7vw;
+   border-radius: 0.3em;
    font-weight: 600;
    font-size: 1.13em;
    color: #222222;
@@ -84,5 +85,32 @@
       border: 0.2vw solid gainsboro;
       background-color: gainsboro;
       color: #698787;
+   }
+}
+
+@media (min-width: 26rem) {
+   .input-group {
+      border-radius: 1vw;
+      padding: 0.6vw 0.8vw;
+   }   
+   .input-group button {
+      font-size: 1.45em;
+   }   
+
+   .quantity-label {
+      margin: revert;
+   }
+   
+   .quantity-input {
+      width: 2.4vw;
+      height: 2vw;
+      margin: 0 0.5vw;
+      font-size: 1.13em;
+   }  
+
+   .add-to-cart-btn {
+      margin-left: 3vw;
+      padding: 0.8vw;
+      border-radius: 0.7vw;
    }
 }

@@ -12,12 +12,10 @@
 }
 .curr-image-controls-container button {
    font-size: 2.82em;
-   aspect-ratio: 1 / 1;
-   width: 7%;
-   height: 100%;
    background: rgb(238, 238, 238);
    background-color: transparent;
    border: none;
+   padding: 0 0.1em;
 }
 .curr-image-controls-container button:first-child {
    border-radius: 2vw 0 0 2vw;
@@ -56,6 +54,8 @@
    height: 100%;
    background: rgb(238, 238, 238);
    border: none;
+   padding: 0.5em 0.2em;
+   font-size: 1.3em;
 }
 .slideshow-container button:first-child {
    border-radius: 1vw 0 0 1vw;
@@ -109,4 +109,18 @@ li.selected-image-container {
 }
 li.selected-image-container img {
    opacity: 100%;
+}
+
+@media (min-width: 26rem) {
+   .curr-image-controls-container button {
+      aspect-ratio: 1 / 1;
+      width: 7%;
+      height: 100%;
+      padding: revert;
+   }
+
+   .slideshow-container button {
+      padding: revert;
+      font-size: revert;
+   }   
 }
