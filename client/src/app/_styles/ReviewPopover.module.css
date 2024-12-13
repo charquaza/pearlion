@@ -1,5 +1,6 @@
 .review-popover {
    position: fixed;
+   z-index: 3;
 }
 .review-popover::before {
    content: "";
@@ -14,44 +15,42 @@
 
 .prev-review-btn, .next-review-btn {
    position: fixed;
-   top: 5vh;
-   width: 4vw;
+   top: 7vh;
+   width: 6vw;
    height: 90vh;
    color: black;
-   font-size: 3.13em;
+   font-size: 2em;
    background-color: var(--pastel-green);
    border: 0;
+   padding: 0;
 }
 .prev-review-btn {
-   left: 10vw;
+   left: 2vw;
    border-radius: 0.4vw 0 0 0.4vw;
 }
 .next-review-btn {
-   right: 10vw;
+   right: 2vw;
    border-radius: 0 0.4vw 0.4vw 0;
 }
 
 .prev-review-btn:hover, .next-review-btn:hover {
-   font-size: 4.18em;
    background-color: #d9f0d9;
 }
 .prev-review-btn:active, .next-review-btn:active {
-   font-size: 4.18em;
    background-color: #b8ceb8;
 }
 .prev-review-btn:disabled, .next-review-btn:disabled {
-   font-size: 3.13em;
    color: rgb(100, 100, 100);
    background-color: #9aa49a;
 }
 
 .main-popover {
-   --main-top: 5vh;
-   --main-left: 14vw;
-   --main-width: 72vw;
+   --main-top: 7vh;
+   --main-left: 8vw;
+   --main-width: 84vw;
    --main-height: 90vh;
 
-   --size: calc( var(--main-width) * 0.8 );
+   --size: calc( var(--main-width) * 1.6 );
 
    position: fixed;
    top: var(--main-top);
@@ -61,15 +60,11 @@
    height: var(--main-height);
    padding: 1.4vw;
    background-color: #f8f6f0;
-
-   display: grid;
-   grid-template-columns: 1.25fr 1fr;
-   gap: 3vw;
-
    overflow: scroll;
 }
 
-.review {   
+.review {
+   padding: 1em 0.5em 0;
    text-wrap: pretty;
    overflow: scroll;
 }
@@ -80,8 +75,12 @@
    font-weight: 500;
 }
 
+.review p {
+   margin: 0.5em 0;
+}
+
 .close-btn {
-   --btn-width: max(3vw, 25px);
+   --btn-width: 5vh;
 
    position: fixed;
    /* left: calc(var(--main-left) + var(--main-width) - (var(--btn-width) / 2) );
@@ -94,13 +93,70 @@
    padding: 0;
    border: none;
    border-radius: 5%;
-   background-color: rgb(210, 210, 210);
+   background-color: #ff9285;
    font-size: calc( var(--btn-width) * 0.7 );
    font-weight: 600;
 }
 .close-btn:hover {
-   background-color: rgb(175, 175, 175);
+   background-color: #d3796f;
 }
 .close-btn:active {
-   background-color: rgb(145, 145, 145);
+   background-color: #ad6b63;
+}
+
+@media (min-width: 26rem) {
+   .prev-review-btn, .next-review-btn {
+      top: 5vh;
+      width: 4vw;
+      font-size: 3.13em;
+      padding: revert;
+   }
+   .prev-review-btn {
+      left: 10vw;
+   }
+   .next-review-btn {
+      right: 10vw;
+   }
+   
+   .prev-review-btn:hover, .next-review-btn:hover {
+      font-size: 4.18em;
+   }
+   .prev-review-btn:active, .next-review-btn:active {
+      font-size: 4.18em;
+   }
+   .prev-review-btn:disabled, .next-review-btn:disabled {
+      font-size: 3.13em;
+   }
+   
+   .main-popover {
+      --main-top: 5vh;
+      --main-left: 14vw;
+      --main-width: 72vw;
+   
+      --size: calc( var(--main-width) * 0.8 );
+      
+      display: grid;
+      grid-template-columns: 1.25fr 1fr;
+      gap: 3vw;
+   }
+   
+   .review {
+      padding: revert;
+   }
+   
+   .review p {
+      margin: revert;
+   }
+   
+   .close-btn {
+      --btn-width: max(3vw, 25px);
+      
+      background-color: rgb(210, 210, 210);
+   }
+   .close-btn:hover {
+      background-color: rgb(175, 175, 175);
+   }
+   .close-btn:active {
+      background-color: rgb(145, 145, 145);
+   }
 }

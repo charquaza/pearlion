@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
+import { DateTime } from 'luxon';
 import RatingBar from './RatingBar';
 import ProductImageList from './ProductImageList';
 import styles from '@/app/_styles/ReviewPopover.module.css';
@@ -79,7 +80,7 @@ export default function ReviewPopover({
             <article className={styles['review']}>
                <h3>{currReview.User.firstName + ' ' + currReview.User.lastName}</h3>
                <RatingBar reviewCount={1} ratingSum={currReview.rating} context='review-card' />
-               <p>{currReview.date}</p>
+               <p>{DateTime.fromISO(currReview.createdAt).toLocaleString(DateTime.DATE_MED)}</p>
                <p>Product Reviewed: {productName}</p>
                <p>{currReview.review}</p>
             </article>
