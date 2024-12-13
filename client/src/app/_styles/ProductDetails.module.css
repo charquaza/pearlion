@@ -7,7 +7,7 @@
    font-weight: 450;
    font-size: 2.02em;
 }
-.description-container p {
+.description-container > p {
    margin: 0.8em 0 1.5em;
 }
 .description-container a {
@@ -33,7 +33,7 @@
    padding: calc( var(--size) / 2 ) 0 1.7vw 0;
 }
 .price-rating-ctnr a {
-   padding-left: 0.5em;
+   padding-left: 0.8em;
    font-size: var(--size);
    line-height: var(--size);
 }
@@ -78,7 +78,7 @@
    .description-container h1 {
       margin: 0;
    }
-   .description-container p {
+   .description-container > p {
       margin: 0;
    }   
 
