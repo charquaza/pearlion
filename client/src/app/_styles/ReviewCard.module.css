@@ -1,5 +1,5 @@
 .review {
-   padding: 1.5vw;
+   padding: 0.7em;
    background-color: #e5eee4;
    border-radius: 0.6vw 0.6vw 4vw 1vw;
 }
@@ -12,7 +12,6 @@
 }
 
 .edit-buttons-ctnr button {
-   margin-left: 1vw;
    padding: 0;
    border: 0;
    background-color: transparent;
@@ -25,8 +24,8 @@
 }
 .edit-buttons-ctnr button:first-child::after {
    content: '';
-   padding-left: 1vw;
-   border-right: 1px solid black;
+   margin: 0 0.6em 0;
+   border-right: 0.7px solid black;
 }
 
 .review h3 {
@@ -35,7 +34,7 @@
 }
 
 .review p {
-   margin: 0.8vw 0 0;
+   margin: 0.4em 0 0;
 }
 
 /* span.product-name {
@@ -43,7 +42,7 @@
 } */
 
 p.review-text-body {
-   margin: 2vw 0 0.5vw;
+   margin: 1em 0 0.2em;
 }
 
 p.error-messages {
@@ -51,4 +50,22 @@ p.error-messages {
    color: rgb(255, 72, 0);
    font-style: italic;
    font-size: 0.9em;
+}
+
+@media (min-width: 26rem) {
+   .review {
+      padding: 1.5vw;
+   }
+
+   .edit-buttons-ctnr button:first-child::after {
+      border-right: 1px solid black;
+   }
+
+   .review p {
+      margin: 0.8vw 0 0;
+   }
+
+   p.review-text-body {
+      margin: 2vw 0 0.5vw;
+   }   
 }

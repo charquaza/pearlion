@@ -220,54 +220,56 @@ export default function EditReviewForm({
             />
          </label>
 
-         <ul className={styles['prev-image-list']}>
-            {
-               imageList.map((imageDetails) => {
-                  const imgMarkedForDelete = deletedImages.has(imageDetails.id);
+         {imageList.length > 0 &&
+            <ul className={styles['prev-image-list']}>
+               {
+                  imageList.map((imageDetails) => {
+                     const imgMarkedForDelete = deletedImages.has(imageDetails.id);
 
-                  return (
-                     <li 
-                        key={imageDetails.id}
-                        className={styles[imgMarkedForDelete ? 'deleted' : '']}
-                     >
-                        <Image
-                           src={imageDetails.imgURL}
-                           placeholder={prodImgPlaceholder}
-                           alt={imgMarkedForDelete 
+                     return (
+                        <li 
+                           key={imageDetails.id}
+                           className={styles[imgMarkedForDelete ? 'deleted' : '']}
+                        >
+                           <Image
+                              src={imageDetails.imgURL}
+                              placeholder={prodImgPlaceholder}
+                              alt={imgMarkedForDelete 
+                                 ? 
+                                    'marked for delete - image uploaded with review'
+                                 :
+                                    'image uploaded with review'
+                              }
+                              fill={true}
+                              quality={100}
+                              sizes='50vw'
+                           />
+
+                           {imgMarkedForDelete
                               ? 
-                                 'marked for delete - image uploaded with review'
+                                 <button 
+                                    type='button'
+                                    data-img-id={imageDetails.id}
+                                    onClick={handlePrevImageRestore}
+                                    className={styles['restore-btn']}
+                                 >
+                                    Restore
+                                 </button>
                               :
-                                 'image uploaded with review'
+                                 <button 
+                                    type='button'
+                                    data-img-id={imageDetails.id}
+                                    onClick={handlePrevImageDelete}
+                                 >
+                                    X
+                                 </button>
                            }
-                           fill={true}
-                           quality={100}
-                           sizes='50vw'
-                        />
-
-                        {imgMarkedForDelete
-                           ? 
-                              <button 
-                                 type='button'
-                                 data-img-id={imageDetails.id}
-                                 onClick={handlePrevImageRestore}
-                                 className={styles['restore-btn']}
-                              >
-                                 Restore
-                              </button>
-                           :
-                              <button 
-                                 type='button'
-                                 data-img-id={imageDetails.id}
-                                 onClick={handlePrevImageDelete}
-                              >
-                                 X
-                              </button>
-                        }
-                     </li>
-                  );
-               })
-            } 
-         </ul>
+                        </li>
+                     );
+                  })
+               } 
+            </ul>
+         }
 
          <label className={styles['file-upload-label']}>
             Add Images

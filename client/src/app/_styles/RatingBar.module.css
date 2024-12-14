@@ -1,5 +1,5 @@
 .rating-container {
-   --bar-width: max(100px, 5.5em);
+   --bar-width: 5.5em;
    --bar-height: calc( var(--bar-width) / 5 );
 
    display: flex;
@@ -61,5 +61,12 @@
 
 /* overrides for ReviewCard component */
 .review-card {
-   --bar-width: calc( var(--size) * 0.16 );  
+   --bar-width: calc( var(--size) * 0.23 );  
+}
+
+@media (min-width: 26rem) {
+   /* overrides for ReviewCard component */
+   .review-card {
+      --bar-width: calc( var(--size) * 0.16 );  
+   }
 }

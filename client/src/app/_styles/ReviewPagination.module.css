@@ -26,6 +26,7 @@
 
 .pages-list {
    list-style-type: none;
+   margin: 0.5em 0;
    padding: 0 0 0.4vw calc(3rem + 7.5vw);
    width: 35vw;
    display: flex;
@@ -37,4 +38,10 @@
    background-color: transparent;
    font-size: 1.13em;
    font-weight: 500;
+}
+
+@media (min-width: 26rem) {
+   .pages-list {
+      margin: revert;
+   }   
 }

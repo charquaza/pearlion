@@ -1,5 +1,5 @@
 .reviews {
-   padding-left: 4vw;
+   padding: 0 2vw 0;
 }
 
 .reviews h2 {
@@ -20,15 +20,29 @@
 
 .reviews-list {
    list-style-type: none;
-   padding: 0 0 0 3rem;
+   padding: 0;
    margin: 0;
 }
 .reviews-list > li {
-   --size: 50vw;
+   --size: 96vw;
    width: var(--size);
-   padding-bottom: 2vw;
+   padding-bottom: 0.7em;
 }
 
 .no-reviews-msg {
    padding: 0 0 0 3rem;
+}
+
+@media (min-width: 26rem) {
+   .reviews {
+      padding: 0 0 0 4vw;
+   }   
+
+   .reviews-list {
+      padding: 0 0 0 3rem;
+   }   
+   .reviews-list > li {
+      --size: 50vw;
+      padding-bottom: 2vw;
+   }   
 }
