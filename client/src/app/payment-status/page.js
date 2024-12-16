@@ -77,6 +77,8 @@ export default function PaymentStatusPage() {
                setStatus(paymentIntent.status);
                setIntentId(paymentIntent.id);
                setError(false);
+
+               localStorage.removeItem('cart');
             }
          } catch (err) {
             console.log(err);
