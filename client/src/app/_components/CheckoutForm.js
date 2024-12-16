@@ -46,8 +46,19 @@ export default function CheckoutForm() {
    }
 
    const paymentElementOptions = {
-      layout: 'tabs'
-   }
+      layout: 'tabs',
+      // appearance: {
+      //    theme: 'stripe',
+      //    variables: {
+      //       fontSizeBase: '1vw'
+      //    },
+      //    rules: {
+      //       '.Input': {
+      //          padding: '0.4em'
+      //       }
+      //    }
+      // }
+   };
 
    return (
       <>

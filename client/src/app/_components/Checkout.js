@@ -51,9 +51,18 @@ export default function Checkout({ cart, setInCheckout }) {
          .catch(err => setCheckoutError(err));
    }, [cart]);
 
-   const appearance = {
+   const addressAppearance = {
       theme: 'stripe',
+      variables: {
+         fontSizeBase: '1em',
+      },
+      rules: {
+         '.Input': {
+            padding: '0.6em'
+         }
+      }
    };
+
    // Enable the skeleton loader UI for optimal loading.
    const loader = 'auto';
 
@@ -127,10 +136,10 @@ export default function Checkout({ cart, setInCheckout }) {
             
             {clientSecret 
                ? 
-                  <Elements key={clientSecret} options={{clientSecret, appearance, loader}} stripe={stripePromise}>
+                  <Elements key={clientSecret} options={{clientSecret, loader, appearance: addressAppearance}} stripe={stripePromise}>
                      <h2>Shipping</h2>
                      <div className={styles['shipping-section']}>
-                        <AddressElement options={{ mode: 'shipping' }} onChange={handleAddressInput} />
+                        <AddressElement options={{ mode: 'shipping', appearance: addressAppearance }} onChange={handleAddressInput} />
                      </div>
 
                      <h2>Payment</h2>

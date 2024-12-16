@@ -10,9 +10,9 @@
    z-index: 2;
 }
 
-/* .logo-ctnr {
-   background-image: radial-gradient(white, transparent 70%);
-} */
+.logo-ctnr {
+   margin: 0 auto;
+}
 
 .logo {
    display: block;
@@ -26,6 +26,10 @@
       justify-content: center;
    }
 
+   .logo-ctnr {
+      margin: revert;
+   }
+   
    .logo {
       width: 12vw;
       padding: 0.5vw 0;

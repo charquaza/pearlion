@@ -1,7 +1,6 @@
 .payment-form {
    box-sizing: border-box;
    width: 100%;
-   min-width: 400px;
    align-self: center;
    box-shadow: 0px 0px 0px 0.5px rgba(50, 50, 93, 0.1),
      0px 2px 5px 0px rgba(50, 50, 93, 0.1), 0px 1px 1.5px 0px rgba(0, 0, 0, 0.07);
@@ -18,8 +17,8 @@
    color: #ffffff;
    border-radius: 4px;
    border: 0;
-   padding: 12px 16px;
-   font-size: 20px;
+   padding: 0.5em 0.67em;
+   font-size: 2em;
    font-weight: 600;
    cursor: pointer;
    display: block;
@@ -111,9 +110,9 @@
    }
 }
 
-@media only screen and (max-width: 600px) {
-   .payment-form {
-      width: 80vw;
-      min-width: initial;
+@media (min-width: 26rem) {
+   .payment-form button {
+      padding: 12px 16px;
+      font-size: 20px;
    }
 }
