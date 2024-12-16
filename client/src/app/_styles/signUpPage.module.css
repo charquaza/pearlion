@@ -7,6 +7,13 @@
    margin: 0 0 0.8em 0;
 }
 
+.sign-up-page .error-list {
+   margin: -1em 0 1.3em;
+   padding-left: 2em;
+   color: rgb(255, 72, 0);
+   font-style: italic;
+}
+
 .sign-up-page form {
    display: flex;
    flex-direction: column;
@@ -39,6 +46,7 @@
 }
 .sign-up-page input:focus {
    border: 0.1vw solid var(--pastel-green);
+   border-bottom: 0.2vw solid var(--pastel-green);
    outline: 0.2vw solid var(--pastel-green);
 }
 

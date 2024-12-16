@@ -1,6 +1,9 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import useUser from '../_hooks/useUser';
+import { apiURL } from '@/root/config';
 import styles from '@/app/_styles/signUpPage.module.css';
 
 export default function SignUpPage() {
@@ -8,18 +11,57 @@ export default function SignUpPage() {
       firstName: '', lastName: '', username: '', password: '',
       confirmPassword: '', email: '', phone: ''
    });
+   const [ signUpErrors, setSignUpErrors ] = useState([]);
+
+   const { mutate } = useUser();
+   const router = useRouter();
 
    function handleInput(e) {
       setInputValues({ ...inputValues, [e.target.name]: e.target.value });
    }
 
-   function handleSubmit(e) {
+   async function handleSubmit(e) {
       e.preventDefault();
+
+      try {
+         const fetchOptions = {
+            method: 'POST',
+            headers: { 
+               'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(inputValues),
+            mode: 'cors',
+            credentials: 'include',
+            cache: 'no-store'
+         };
+         const fetchURL = apiURL + '/users/sign-up';
+   
+         const res = await fetch(fetchURL, fetchOptions);
+   
+         if (res.ok) {
+            setSignUpErrors(false);
+            mutate();
+            router.push('/');
+         } else {
+            const data = await res.json();
+            setSignUpErrors(data.errors);
+         }
+      } catch (e) {
+         setSignUpErrors([ 'Unable to log in at this time, please try again later' ]);
+         console.error('Error message: ' + e);
+      }
    }
 
    return (
       <main className={styles['sign-up-page']}>
          <h1>Sign Up</h1>
+
+         {
+            signUpErrors.length > 0 &&
+               <ul className={styles['error-list']}>
+                  {signUpErrors.map(errMsg => <li key={errMsg}>{errMsg}</li>)}
+               </ul>
+         }
 
          <form onSubmit={handleSubmit}>
             <div className={styles['first-last-name-inputs']}>
