@@ -144,7 +144,9 @@
       margin: 0;
       position: absolute;
       top: 8.4vw;
+      top: 7.2vw;
       left: 1.2vw;
+      width: calc(var(--sidebar-width) - 2.4vw);
    }
 
    .checkout-ui {
@@ -169,7 +171,7 @@
 
    .order-breakdown {
       position: sticky;
-      top: 2vw;
+      top: 6.1vw;
       width: 33vw;
       margin-top: 3.5vw;
       padding: 1vw 1.5vw;
