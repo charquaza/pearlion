@@ -12,6 +12,10 @@
    text-decoration-color: rgb(120, 120, 120);
 }
 
+.no-orders-text {
+   font-style: italic;
+}
+
 .orders-table {
    display: block;
    table-layout: fixed;

@@ -43,67 +43,72 @@ export default function MyOrders() {
             />
          }
 
-         <table className={styles['orders-table']}>
-            <caption>Orders</caption>
-            <thead>
-               <tr>
-                  <th scope='col'>Order ID</th>
-                  <th scope='col'>Date</th>
-                  <th scope='col'>Products</th>
-                  {/* <th scope='col'>Shipping Cost</th>
-                  <th scope='col'>Tax</th> */}
-                  {/* <th scope='col'>Total</th> */}
-                  <th scope='col'>Status</th>
-                  {/* <th scope='col'>Delivery Date</th> */}
-                  {/* <th scope='col'>Return Status</th> */}
-               </tr>
-            </thead>
-            <tbody>
-               {orderList && orderList.data.map((order, index) => {
-                  return (
-                     <tr key={order.id} 
-                        className={index == popoverOrderIndex ? styles['selected-order'] : ''}
-                     >
-                        <th scope='row' onClick={openOrderPopover}
-                           className={styles['order-id-ctnr']}
-                           data-order-index={index}
-                        >
-                           {order.id}
-                        </th>
-                        <td>
-                           {DateTime.fromISO(order.purchaseDate).toLocaleString(DateTime.DATE_MED)}
-                        </td>
-                        <td>
-                           <ul>
-                              {order.Products.map(product => {
-                                 return (
-                                    <li key={product.id}>
-                                       <p>
-                                          {product.Purchase.quantityPurchased} x 
-                                          &nbsp;
-                                          <Link href={'/' + product.category + '/' + product.id}>
-                                             {product.name}
-                                          </Link> 
-                                          &nbsp;(${product.Purchase.unitPrice} each)
-                                       </p>
-                                    </li>
-                                 );
-                              })}
-                           </ul>
-                        </td>
-                        {/* <td>${order.shippingCost}</td>
-                        <td>${order.tax}</td> */}
-                        {/* <td>${order.purchaseTotal}</td> */}
-                        <td>{order.fulfillmentStatus}</td>
-                        {/* <td>
-                           {DateTime.fromISO(order.deliveryDate).toLocaleString(DateTime.DATE_MED)}
-                        </td> */}
-                        {/* <td>{order.returnStatus || 'N/A'}</td> */}
-                     </tr>   
-                  );
-               })}
-            </tbody>
-         </table>
+         {orderList && orderList.length > 0
+            ?
+               <table className={styles['orders-table']}>
+                  <caption>Orders</caption>
+                  <thead>
+                     <tr>
+                        <th scope='col'>Order ID</th>
+                        <th scope='col'>Date</th>
+                        <th scope='col'>Products</th>
+                        {/* <th scope='col'>Shipping Cost</th>
+                        <th scope='col'>Tax</th> */}
+                        {/* <th scope='col'>Total</th> */}
+                        <th scope='col'>Status</th>
+                        {/* <th scope='col'>Delivery Date</th> */}
+                        {/* <th scope='col'>Return Status</th> */}
+                     </tr>
+                  </thead>
+                  <tbody>
+                     {orderList && orderList.data.map((order, index) => {
+                        return (
+                           <tr key={order.id} 
+                              className={index == popoverOrderIndex ? styles['selected-order'] : ''}
+                           >
+                              <th scope='row' onClick={openOrderPopover}
+                                 className={styles['order-id-ctnr']}
+                                 data-order-index={index}
+                              >
+                                 {order.id}
+                              </th>
+                              <td>
+                                 {DateTime.fromISO(order.purchaseDate).toLocaleString(DateTime.DATE_MED)}
+                              </td>
+                              <td>
+                                 <ul>
+                                    {order.Products.map(product => {
+                                       return (
+                                          <li key={product.id}>
+                                             <p>
+                                                {product.Purchase.quantityPurchased} x 
+                                                &nbsp;
+                                                <Link href={'/' + product.category + '/' + product.id}>
+                                                   {product.name}
+                                                </Link> 
+                                                &nbsp;(${product.Purchase.unitPrice} each)
+                                             </p>
+                                          </li>
+                                       );
+                                    })}
+                                 </ul>
+                              </td>
+                              {/* <td>${order.shippingCost}</td>
+                              <td>${order.tax}</td> */}
+                              {/* <td>${order.purchaseTotal}</td> */}
+                              <td>{order.fulfillmentStatus}</td>
+                              {/* <td>
+                                 {DateTime.fromISO(order.deliveryDate).toLocaleString(DateTime.DATE_MED)}
+                              </td> */}
+                              {/* <td>{order.returnStatus || 'N/A'}</td> */}
+                           </tr>   
+                        );
+                     })}
+                  </tbody>
+               </table>
+            :
+               <p className={styles['no-orders-text']}>No order history</p>
+         }
       </article>
    );
 };
