@@ -23,6 +23,7 @@ export default function CheckoutForm() {
       }
 
       setIsLoading(true);
+      localStorage.setItem('clearCartAfterCheckout', 'true');
 
       const { error } = await stripe.confirmPayment({
          elements,
@@ -43,6 +44,7 @@ export default function CheckoutForm() {
       }
 
       setIsLoading(false);
+      localStorage.setItem('clearCartAfterCheckout', 'false');
    }
 
    const paymentElementOptions = {

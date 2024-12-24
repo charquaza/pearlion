@@ -73,12 +73,16 @@ export default function PaymentStatusPage() {
 
             if (error) {
                setError(true);
+               localStorage.setItem('clearCartAfterCheckout', 'false');
             } else {
                setStatus(paymentIntent.status);
                setIntentId(paymentIntent.id);
                setError(false);
 
-               localStorage.removeItem('cart');
+               if (localStorage.getItem('clearCartAfterCheckout') === 'true') {
+                  localStorage.removeItem('cart');
+                  localStorage.setItem('clearCartAfterCheckout', 'false');
+               }
             }
          } catch (err) {
             console.log(err);
