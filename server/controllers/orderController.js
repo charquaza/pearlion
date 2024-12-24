@@ -1,4 +1,5 @@
 const express = require('express');
+const { Op } = require('sequelize');
 const stripe = require('stripe')(process.env.STRIPE_API_KEY);
 const db = require('../models/index');
 const orderValidators = require('../middleware/orderValidators');
@@ -29,16 +30,39 @@ exports.checkout = [
             console.log('Tax could not be calculated based on customer IP address');
          }
 
+         //store order details in db to reference in webhook after completing checkout
+         const order = await db.sequelize.transaction(async (t) => {
+            const order = await db.Order.create({
+               client: customerId,
+               purchaseDate: Date.now(),
+               shippingCost: 0,
+               tax: taxCalculation ? taxCalculation.tax_amount_exclusive : 0,
+               fulfillmentStatus: 'in-checkout'
+            }, { transaction: t });
+
+            //create Purchase entries for Order
+            await Promise.all(req.body.map(product => {
+               return db.Purchase.create({
+                  order: order.id,
+                  product: product.product,
+                  unitPrice: Number(product.unitPrice),
+                  quantityPurchased: Number(product.quantityPurchased)
+               }, { transaction: t });
+            }));
+
+            return order;
+         });
+
          const paymentIntent = await stripe.paymentIntents.create({
             amount: (taxCalculation && taxCalculation.amount_total) || totalBeforeTax,
             currency: 'usd',
             metadata: {
                customerId,
+               orderId: order.id,
                ...(taxCalculation && {
                   taxAmount: taxCalculation.tax_amount_exclusive,
                   taxCalcId: taxCalculation.id
-               }),
-               orderDetails: JSON.stringify(req.body)
+               })
             },
             automatic_payment_methods: {
                enabled: true,
@@ -63,13 +87,18 @@ exports.tax = [
    async function (req, res, next) {   
       try {
          const paymentIntent = await stripe.paymentIntents.retrieve(req.body.paymentIntentId);
-         const products = JSON.parse(paymentIntent.metadata.orderDetails);
 
-         const taxCalculation = await stripe.tax.calculations.create({
+         const purchaseData = await db.Purchase.findAll({
+            where: { order: paymentIntent.metadata.orderId },
+            raw: true
+         });
+
+         const newTaxCalc = await stripe.tax.calculations.create({
             currency: 'usd',
-            line_items: products.map(item => { 
+            line_items: purchaseData.map(purchase => {
                return { 
-                  amount: 100 * item.unitPrice * item.quantityPurchased, reference: item.product 
+                  amount: 100 * purchase.unitPrice * purchase.quantityPurchased, 
+                  reference: purchase.product 
                };
             }),
             customer_details: {
@@ -81,11 +110,11 @@ exports.tax = [
          const updatedPaymentIntent = await stripe.paymentIntents.update(
             req.body.paymentIntentId,
             {
-               amount: taxCalculation.amount_total,
+               amount: newTaxCalc.amount_total,
                metadata: {
                   ...paymentIntent.metadata,
-                     taxAmount: taxCalculation.tax_amount_exclusive,
-                     taxCalcId: taxCalculation.id
+                     taxAmount: newTaxCalc.tax_amount_exclusive,
+                     taxCalcId: newTaxCalc.id
                }
             }
          );
@@ -122,41 +151,37 @@ exports.webhook = [
          return res.sendStatus(400);
       }
 
+      const paymentIntent = event.data.object;
+
       switch (event.type) {
+         case 'payment_intent.created':
+            //delete orders abandoned in checkout
+            try {
+               await db.Order.destroy({ where: {
+                  fulfillmentStatus: 'in-checkout',
+                  purchaseDate: { [Op.lt]: Date.now() - 1000*60*60*24  } //older than 1 day
+               } });   
+            } catch (err) {
+               console.log(err);
+            }
+
+            break;
          case 'payment_intent.succeeded':
-            const paymentIntent = event.data.object;
-      
             async function saveOrderToDB(paymentIntent) {
                try {
-                  await db.sequelize.transaction(async (t) => {
-                     const newOrder = await db.Order.create({
+                  const [ countOrdersUpdated ] = await db.Order.update(
+                     {
                         paymentApiId: paymentIntent.id,
-                        client: paymentIntent.metadata.customerId,
-                        purchaseDate: Date.now(),
-                        shippingCost: 0,
                         tax: paymentIntent.metadata.taxAmount,
                         fulfillmentStatus: 'delivered',
                         deliveryDate: Date.now()
-                     }, { transaction: t });
-         
-                     //create Purchase entries for Order
-                     const orderDetails = JSON.parse(paymentIntent.metadata.orderDetails);
+                     }, 
+                     { where: { id: paymentIntent.metadata.orderId } }
+                  );
 
-                     if (!orderDetails.every(
-                           product => product.unitPrice >= 0 && product.quantityPurchased > 0 
-                     )) {
-                        throw new Error('Invalid unitPrice or quantityPurchased');
-                     }
-
-                     await Promise.all(orderDetails.map(product => {
-                        return db.Purchase.create({
-                           order: newOrder.id,
-                           product: product.product,
-                           unitPrice: product.unitPrice,
-                           quantityPurchased: product.quantityPurchased
-                        }, { transaction: t });
-                     }));
-                  });
+                  if (countOrdersUpdated !== 1) {
+                     console.log('ERROR: countOrdersUpdated = ' + countOrdersUpdated);
+                  }
                } catch (err) {
                   console.log(err);
                }

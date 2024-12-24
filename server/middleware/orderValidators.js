@@ -46,7 +46,7 @@ exports.create = [
    body('fulfillmentStatus')
       .isString().withMessage('Invalid value for Fulfillment Status').bail()
       .trim().custom((value) => {
-         const allowedValues = [ 'processing', 'shipped', 'delivered' ];
+         const allowedValues = [ 'in-checkout', 'processing', 'shipped', 'delivered' ];
          return allowedValues.includes(value); 
       }).withMessage('Invalid value for Fulfillment Status'),
    body('deliveryDate').optional({ values: 'falsy' })
