@@ -114,13 +114,15 @@ export default function Checkout({ cart, setInCheckout }) {
    }
 
    if (checkoutError) {
+      contextSetInCheckout(false);
+
       console.error(checkoutError);
       
       return (
          <main className={styles['checkout-error']}>
             <h1>Checkout</h1>
             <p>We&apos;re having trouble with the checkout process...</p>
-            <p>Please try again later, or contact us for assistance.</p>
+            <p>Please try again later.</p>
          </main>
       );
    }

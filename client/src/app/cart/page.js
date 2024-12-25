@@ -1,8 +1,9 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import Link from 'next/link';
 import { apiURL } from '@/root/config';
+import CheckoutStatusContext from '../_contexts/CheckoutStatusContext';
 import Cart from '../_components/Cart';
 import Checkout from '../_components/Checkout';
 import styles from '@/app/_styles/cartPage.module.css';
@@ -11,6 +12,7 @@ export default function CartPage() {
    const [ cart, setCart ] = useState(null);
    const [ error, setError ] = useState(false);
    const [ inCheckout, setInCheckout ] = useState(false); 
+   const { setInCheckout: contextSetInCheckout } = useContext(CheckoutStatusContext);
 
    useEffect(function getCartFromLocalStorage() {
       (async () => {
@@ -94,6 +96,14 @@ export default function CartPage() {
 
          setCart(validatedCartMap);
       })();
+   }, []);
+
+   useEffect(() => {
+      //reset CheckoutStatusContext on navigation away from Cart page
+      //including browser back button
+      return () => {
+         contextSetInCheckout(false);
+      };
    }, []);
 
    //error state
