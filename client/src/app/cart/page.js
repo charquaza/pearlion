@@ -2,11 +2,12 @@
 
 import { useState, useEffect, useContext } from 'react';
 import Link from 'next/link';
-import { apiURL } from '@/root/config';
 import CheckoutStatusContext from '../_contexts/CheckoutStatusContext';
 import Cart from '../_components/Cart';
 import Checkout from '../_components/Checkout';
 import styles from '@/app/_styles/cartPage.module.css';
+
+const apiURL = process.env.NEXT_PUBLIC_API_URL;
 
 export default function CartPage() {
    const [ cart, setCart ] = useState(null);

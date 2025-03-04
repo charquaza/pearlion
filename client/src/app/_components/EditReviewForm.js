@@ -3,9 +3,10 @@
 import { useState, useMemo } from 'react';
 import Image from 'next/image';
 import { isValidImageType, formatFileSize } from '../_utils/utils';
-import { apiURL } from '@/root/config';
 import prodImgPlaceholder from '../_images/prodImgPlaceholder';
 import styles from '@/app/_styles/EditReviewForm.module.css';
+
+const apiURL = process.env.NEXT_PUBLIC_API_URL;
 
 export default function EditReviewForm({ 
    review, product, reviewList, reviewIndex, 

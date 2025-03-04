@@ -1,0 +1,36 @@
+# Ignore node modules and dependencies
+node_modules
+npm-debug.log
+yarn.lock
+package-lock.json
+pnpm-lock.yaml
+
+# Ignore environment and configuration files
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+*.pem  # Ignore any private keys
+
+# Ignore OS-specific and editor files
+.DS_Store
+*.swp
+*.swo
+.vscode/
+.idea/
+*.log
+
+# Ignore build artifacts
+.next
+out
+dist
+coverage
+
+# Ignore logs and temporary files
+logs
+*.log
+*.pid
+*.seed
+*.tar
+tmp/

@@ -3,11 +3,13 @@
 import { useState, useEffect, useContext } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements, AddressElement } from '@stripe/react-stripe-js';
-import { publicStripeAPIKey, apiURL } from '@/root/config';
 import CheckoutStatusContext from '../_contexts/CheckoutStatusContext';
 import CheckoutForm from './CheckoutForm';
 import { currencyFormat } from '../_utils/utils';
 import styles from '../_styles/Checkout.module.css';
+
+const apiURL = process.env.NEXT_PUBLIC_API_URL;
+const publicStripeAPIKey = process.env.NEXT_PUBLIC_STRIPE_API_KEY;
 
 const stripePromise = loadStripe(publicStripeAPIKey);
 

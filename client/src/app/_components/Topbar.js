@@ -4,8 +4,9 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import useUser from '@/app/_hooks/useUser';
 import LoginFormPopover from './LoginFormPopover';
-import { apiURL } from '@/root/config';
 import styles from '@/app/_styles/Topbar.module.css';
+
+const apiURL = process.env.NEXT_PUBLIC_API_URL;
 
 export default function Topbar() {
    const [ showLoginPopover, setShowLoginPopover ] = useState(false);

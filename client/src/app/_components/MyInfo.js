@@ -2,8 +2,9 @@
 
 import { useState } from 'react';
 import useUser from '../_hooks/useUser';
-import { apiURL } from '@/root/config';
 import styles from '@/app/_styles/MyInfo.module.css';
+
+const apiURL = process.env.NEXT_PUBLIC_API_URL;
 
 export default function MyInfo() {
    const [ inEditMode, setInEditMode ] = useState(false);

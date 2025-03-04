@@ -1,5 +1,6 @@
 import useSWR from 'swr';
-import { apiURL } from '@/root/config'; 
+
+const apiURL = process.env.NEXT_PUBLIC_API_URL;
 
 export default function useUser() {
    const { data, error, isLoading, mutate } = useSWR(

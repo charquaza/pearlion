@@ -3,11 +3,12 @@
 import { useState } from 'react';
 import { DateTime } from 'luxon';
 import useUser from '../_hooks/useUser';
-import { apiURL } from '@/root/config';
 import RatingBar from './RatingBar';
 import ReviewImageList from './ReviewImageList';
 import EditReviewForm from './EditReviewForm';
 import styles from '@/app/_styles/ReviewCard.module.css';
+
+const apiURL = process.env.NEXT_PUBLIC_API_URL;
 
 export default function ReviewCard({ 
    product, reviewList, review, reviewIndex, 

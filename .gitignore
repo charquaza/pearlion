@@ -31,8 +31,14 @@ yarn-error.log*
 # vercel
 .vercel
 
-#vscode
+# vscode
 .vscode/
 
 config
 config.js
+
+# development/testing
+client/src/app/_images/earrings/
+client/src/app/_images/necklaces/
+client/src/app/_images/earringImageList.js
+client/src/app/_images/necklaceImageList.js

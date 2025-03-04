@@ -1,8 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { apiURL } from '@/root/config';
 import styles from '@/app/_styles/LoginFormPopover.module.css';
+
+const apiURL = process.env.NEXT_PUBLIC_API_URL;
 
 export default function LoginFormPopover({ setShowLoginPopover, revalidateCurrUser }) {
    const [ inputValues, setInputValues ] = useState({

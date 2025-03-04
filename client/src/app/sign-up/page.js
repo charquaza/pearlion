@@ -3,8 +3,9 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import useUser from '../_hooks/useUser';
-import { apiURL } from '@/root/config';
 import styles from '@/app/_styles/signUpPage.module.css';
+
+const apiURL = process.env.NEXT_PUBLIC_API_URL;
 
 export default function SignUpPage() {
    const [ inputValues, setInputValues ] = useState({
