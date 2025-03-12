@@ -1,4 +1,4 @@
-.home-page-loading, .home-page {
+.home-page-loading, .home-page-error, .home-page {
    padding: 0 2vw 0;
 }
 
@@ -106,7 +106,7 @@
 }
 
 @media (min-width: 26rem) {
-   .home-page-loading {
+   .home-page-loading, .home-page-error {
       padding-left: 4vw;
    }
    .home-page {

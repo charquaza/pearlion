@@ -17,7 +17,7 @@ export default function HomePage() {
       console.error(error);
 
       return (
-         <main className={styles['home-page']}>
+         <main className={styles['home-page-error']}>
             <p>Sorry, we&apos;re having trouble loading this page.</p>
             <p>Please try again later.</p>
          </main>
