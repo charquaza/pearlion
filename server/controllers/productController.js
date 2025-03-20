@@ -1,6 +1,7 @@
 const db = require('../models/index');
 const productValidators = require('../middleware/productValidators');
 const { imageUpload } = require('../middleware/multerUploads');
+const { bucket } = require('../storage/storageConfig');
 
 exports.getAll = [
    productValidators.checkStatusQuery,
@@ -128,12 +129,21 @@ exports.create = [
             }, { raw: true, transaction: t });
    
             const images = await Promise.all(req.files.map((file, index) => {
-               return db.Image.create({
-                  product: newProduct.id,
-                  name: newProduct.name + index,
-                  description: newProduct.name + index,
-                  data: file.buffer
-               }, { raw: true, transaction: t });
+               const fileName = newProduct.name + index;
+               const newUpload = bucket.file(`${product-images}/${newProduct.category}/${fileName}`);
+
+               return newUpload.save(file.buffer, {
+                  metadata: { contentType: file.mimetype },
+                  public: true
+               })
+               .then(() => {
+                  return db.Image.create({
+                     product: newProduct.id,
+                     name: fileName,
+                     description: newProduct.name + index,
+                     url: newUpload.publicUrl()
+                  }, { raw: true, transaction: t });
+               })
             }));
 
             return newProduct;
@@ -191,12 +201,21 @@ exports.update = [
             // since names are based on index
             // and deleting and adding images can jeopardize order
             let createImagesPromise = Promise.all(req.files.map((file, index) => {
-               return db.Image.create({
-                  product: productToUpdate.id,
-                  name: productToUpdate.name + index,
-                  description: productToUpdate.name + index,
-                  data: file.buffer
-               }, { raw: true, transaction: t });
+               const fileName = req.body.name + index;
+               const newUpload = bucket.file(`${product-images}/${newProduct.category}/${fileName}`);
+
+               return newUpload.save(file.buffer, {
+                  metadata: { contentType: file.mimetype },
+                  public: true
+               })
+               .then(() => {
+                  return db.Image.create({
+                     product: productToUpdate.id,
+                     name: fileName,
+                     description: req.body.name + index,
+                     url: newUpload.publicUrl()
+                  }, { raw: true, transaction: t });
+               })
             }));
 
             let deleteImagesPromise = req.body.deletedImages 

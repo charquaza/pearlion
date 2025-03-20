@@ -49,8 +49,8 @@ module.exports = (sequelize, DataTypes) => {
          type: DataTypes.TEXT,
          allowNull: false
       },
-      data: {
-         type: DataTypes.BLOB,
+      url: {
+         type: DataTypes.TEXT,
          allowNull: false
       }
    }, {

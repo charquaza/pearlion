@@ -2,7 +2,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const { Product, Image, ProductImage } = require('../models/index');
+const { Product, Image } = require('../models/index');
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -214,7 +214,7 @@ module.exports = {
               product: product.id,
               name: file,
               description: file,
-              data: await fs.promises.readFile(filePath)
+              url: `https://storage.googleapis.com/pearlion/product-images/${productType}/${file}`
             };
             imageList.push(imageData);
 

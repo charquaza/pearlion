@@ -104,13 +104,22 @@ exports.create = [
             }, { raw: true, transaction: t });
 
             const images = await Promise.all(req.files.map(file => {
-               return db.Image.create({
-                  review: newReview.id,
-                  name: req.user.username + '_' + product.name,
-                  description: 'Image uploaded with review of ' + product.name + 
-                     ', by ' + req.user.username,
-                  data: file.buffer
-               }, { raw: true, transaction: t });
+               const fileName = `${req.user.username}_${product.name}_${Date.now()}`;
+               const newUpload = bucket.file(`${review-images}/${fileName}`);
+
+               return newUpload.save(file.buffer, {
+                  metadata: { contentType: file.mimetype },
+                  public: true
+               })
+               .then(() => {
+                  return db.Image.create({
+                     review: newReview.id,
+                     name: fileName,
+                     description: 'Image uploaded with review of ' + product.name + 
+                        ', by ' + req.user.username,
+                     url: newUpload.publicUrl()
+                  }, { raw: true, transaction: t });
+               });
             }));
 
             return newReview;
@@ -174,13 +183,22 @@ exports.update = [
             );
 
             let createImagesPromise = Promise.all(req.files.map(file => {
-               return db.Image.create({
-                  review: reviewToUpdate.id,
-                  name: req.user.username + '_' + product.name,
-                  description: 'Image uploaded with review of ' + product.name + 
-                     ', by ' + req.user.username,
-                  data: file.buffer
-               }, { raw: true, transaction: t });
+               const fileName = `${req.user.username}_${product.name}_${Date.now()}`;
+               const newUpload = bucket.file(`${review-images}/${fileName}`);
+
+               return newUpload.save(file.buffer, {
+                  metadata: { contentType: file.mimetype },
+                  public: true
+               })
+               .then(() => {
+                  return db.Image.create({
+                     review: reviewToUpdate.id,
+                     name: fileName,
+                     description: 'Image uploaded with review of ' + product.name + 
+                        ', by ' + req.user.username,
+                     url: newUpload.publicUrl()
+                  }, { raw: true, transaction: t });
+               });
             }));
 
             let deleteImagesPromise = req.body.deletedImages 
