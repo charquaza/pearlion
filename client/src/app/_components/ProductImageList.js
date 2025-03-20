@@ -1,23 +1,12 @@
 'use client';
 
-import { useState, useMemo, memo } from 'react';
+import { useState, memo } from 'react';
 import Image from 'next/image';
 import prodImgPlaceholder from '../_images/prodImgPlaceholder';
 import styles from '@/app/_styles/ProductImageList.module.css';
 
 export default memo(function ProductImageList({ product, review, imageIndex }) {
-   const imageList = useMemo(() => {
-      let images = review ? review.Images : product.Images;
-
-      return images.map(imgData => {
-         let imgBuffer = imgData.data.data;
-         let uint8Array = new Uint8Array(imgBuffer);
-         let imgBlob = new Blob([ uint8Array ], { type: 'image/jpeg' });
-         let imgURL = URL.createObjectURL(imgBlob);
-         
-         return { name: imgData.name, url: imgURL };
-      });
-   }, [ product, review ]);
+   const imageList = review ? review.Images : product.Images;
 
    const [ currImageIndex, setCurrImageIndex ] = useState(imageIndex || 0);
    const [ slideshowLength, setSlideshowLength ] = useState(4);

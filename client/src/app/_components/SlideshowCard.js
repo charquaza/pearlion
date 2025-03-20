@@ -9,21 +9,13 @@ import prodImgPlaceholder from '../_images/prodImgPlaceholder';
 import styles from '@/app/_styles/SlideshowCard.module.css';
 
 export default memo(function SlideshowCard({ product }) {
-   if (product) {
-      var mainProdImgData = product.Images[0];
-      var imgBuffer = mainProdImgData.data.data;
-      var uint8Array = new Uint8Array(imgBuffer);
-      var imgBlob = new Blob([ uint8Array ], { type: 'image/jpeg' });
-      var imgURL = URL.createObjectURL(imgBlob);   
-   }
-
    return (
       product
          ?
             <article className={styles['slideshow-card']}>
                <div className={styles['image-container']}>
                   <Image 
-                     src={imgURL} 
+                     src={product.Images[0].url} 
                      placeholder={prodImgPlaceholder}
                      alt={product.name}
                      fill={true}

@@ -9,23 +9,15 @@ import prodImgPlaceholder from '../_images/prodImgPlaceholder';
 import styles from '@/app/_styles/ProductListCard.module.css';
 
 export default memo(function ProductListCard({ product }) {
-   if (product) {
-      var mainProdImgData = product.Images[0];
-      var imgBuffer = mainProdImgData.data.data;
-      var uint8Array = new Uint8Array(imgBuffer);
-      var imgBlob = new Blob([ uint8Array ], { type: 'image/jpeg' });
-      var imgURL = URL.createObjectURL(imgBlob);   
-   }
-
    return (
       product 
          ?
             <article className={styles['product-list-card']}>
                <div className={styles['image-container']}>
                   <Image 
-                     src={imgURL}
+                     src={product.Images[0].url}
                      placeholder={prodImgPlaceholder}
-                     alt={mainProdImgData.description}
+                     alt={product.Images[0].description}
                      fill={true}
                      quality={100}
                      sizes='30vw'

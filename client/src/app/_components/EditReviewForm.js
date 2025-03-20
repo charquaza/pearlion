@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import { isValidImageType, formatFileSize } from '../_utils/utils';
 import prodImgPlaceholder from '../_images/prodImgPlaceholder';
@@ -18,19 +18,6 @@ export default function EditReviewForm({
    const [ imgUploads, setImgUploads ] = useState([]);
    const [ deletedImages, setDeletedImages ] = useState(new Map());
    const [ formErrors, setFormErrors ] = useState([]);
-
-   var imageList = useMemo(() => {
-      return (
-         review.Images.map((imgData, imageIndex) => {
-            let imgBuffer = imgData.data.data;
-            let uint8Array = new Uint8Array(imgBuffer);
-            let imgBlob = new Blob([ uint8Array ], { type: 'image/jpeg' });
-            let imgURL = URL.createObjectURL(imgBlob);
-
-            return { id: imgData.id, imgURL };
-         })
-      );
-   }, [review]);
 
    function handleEditCancel(e) {
       toggleEditMode();
@@ -221,10 +208,10 @@ export default function EditReviewForm({
             />
          </label>
 
-         {imageList.length > 0 &&
+         {review.Images.length > 0 &&
             <ul className={styles['prev-image-list']}>
                {
-                  imageList.map((imageDetails) => {
+                  review.Images.map((imageDetails) => {
                      const imgMarkedForDelete = deletedImages.has(imageDetails.id);
 
                      return (
@@ -233,7 +220,7 @@ export default function EditReviewForm({
                            className={styles[imgMarkedForDelete ? 'deleted' : '']}
                         >
                            <Image
-                              src={imageDetails.imgURL}
+                              src={imageDetails.url}
                               placeholder={prodImgPlaceholder}
                               alt={imgMarkedForDelete 
                                  ? 

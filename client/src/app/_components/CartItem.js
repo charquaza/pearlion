@@ -1,6 +1,5 @@
 'use client';
 
-import { useMemo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { currencyFormat } from '../_utils/utils';
@@ -11,14 +10,7 @@ export default function CartItem({
    item, handleQuantityChange, validateQuantity, 
    handleQuantityDecrement, handleQuantityIncrement, handleItemRemove 
 }) {
-   const imgURL = useMemo(() => {
-      var mainProdImgData = item.product.Images[0];
-      var imgBuffer = mainProdImgData.data.data;
-      var uint8Array = new Uint8Array(imgBuffer);
-      var imgBlob = new Blob([ uint8Array ], { type: 'image/jpeg' });
-      var imgURL = URL.createObjectURL(imgBlob);   
-      return imgURL;
-   }, [item]);
+   const imgURL = item.product.Images[0].url;
 
    return (
       <article className={styles['cart-item']}>

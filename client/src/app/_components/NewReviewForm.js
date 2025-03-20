@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import { isValidImageType, formatFileSize } from '../_utils/utils';
 import prodImgPlaceholder from '../_images/prodImgPlaceholder';
@@ -14,14 +14,7 @@ export default function NewReviewForm({ product, revalidateProduct, revalidateRe
    const [ imgUploads, setImgUploads ] = useState([]);
    const [ formErrors, setFormErrors ] = useState([]);
 
-   const productImageURL = useMemo(() => {
-      let imgBuffer = product.data.Images[0].data.data;
-      let uint8Array = new Uint8Array(imgBuffer);
-      let imgBlob = new Blob([ uint8Array ], { type: 'image/jpeg' });
-      let imgURL = URL.createObjectURL(imgBlob);
-      
-      return imgURL;
-   }, [ product ]);
+   const productImageURL = product.data.Images[0].url;
 
    function toggleReviewForm(e) {
       setInputValues({ rating: '0', review: '' });

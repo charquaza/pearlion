@@ -15,22 +15,12 @@ export default function ReviewImageList({ reviewList, review, reviewIndex, toggl
          ? 
             reviewList.data.flatMap((review, reviewIndex) => {
                return review.Images.map((imgData, imageIndex) => {
-                  let imgBuffer = imgData.data.data;
-                  let uint8Array = new Uint8Array(imgBuffer);
-                  let imgBlob = new Blob([ uint8Array ], { type: 'image/jpeg' });
-                  let imgURL = URL.createObjectURL(imgBlob); 
-
-                  return { imgURL, reviewIndex, imageIndex };
+                  return { imgURL: imgData.url, reviewIndex, imageIndex };
                });
             })
          :
             review.Images.map((imgData, imageIndex) => {
-               let imgBuffer = imgData.data.data;
-               let uint8Array = new Uint8Array(imgBuffer);
-               let imgBlob = new Blob([ uint8Array ], { type: 'image/jpeg' });
-               let imgURL = URL.createObjectURL(imgBlob);
-
-               return { imgURL, reviewIndex, imageIndex };
+               return { imgURL: imgData.url, reviewIndex, imageIndex };
             });     
    }, [reviewList, review, reviewIndex]);
    
