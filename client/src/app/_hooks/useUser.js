@@ -8,6 +8,9 @@ export default function useUser() {
       url => {
          const fetchOptions = {
             method: 'GET',
+            headers: {
+               'Authorization': 'Bearer ' + localStorage.getItem('token')
+            },
             mode: 'cors',
             credentials: 'include',
             cache: 'no-store'

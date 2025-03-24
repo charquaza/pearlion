@@ -1,5 +1,6 @@
 const passport = require('passport');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const db = require('../models/index');
 const userValidators = require('../middleware/userValidators');
 
@@ -19,15 +20,6 @@ exports.signUp = [
    userValidators.signUp,
 
    async function (req, res, next) {
-      //if a user is logged in, log out before proceeding with new user sign up
-      if (req.user) {
-         req.logout(function (err) {
-            if (err) {
-               return next(err);
-            }
-         });
-      }
-
       try {
          let hashedPassword = await bcrypt.hash(req.body.password, 10);
 
@@ -42,7 +34,8 @@ exports.signUp = [
          });
          newUser = newUser.get({ plain: true });
 
-         req.login(newUser, next);
+         req.user = user;
+         return next();
       } catch (err) {
          return next(err);
       }
@@ -50,8 +43,16 @@ exports.signUp = [
 
    function (req, res, next) {
       let userDataCopy = { ...req.user };
+
+      const token = jwt.sign(
+         { id: userDataCopy.id }, 
+         process.env.JWT_SECRET, 
+         { expiresIn: process.env.JWT_EXPIRES_IN }
+      );
+
       delete userDataCopy.password;
-      res.json({ data: userDataCopy });
+
+      res.json({ data: userDataCopy, token });
    }
 ];
 
@@ -59,15 +60,6 @@ exports.logIn = [
    userValidators.logIn,
 
    function (req, res, next) {
-      //if a user is logged in, log out before proceeding with new log in
-      if (req.user) {
-         req.logout(function (err) {
-            if (err) {
-               return next(err);
-            }
-         });
-      }
-
       passport.authenticate('local', function (err, user, info) {
          if (err) {
             return next(err);
@@ -76,41 +68,30 @@ exports.logIn = [
          if (!user) {
             res.status(401).json({ errors: [ info.message ] });
          } else {
-            req.login(user, next);
+            req.user = user;
+            return next();
          }
       })(req, res, next);
    },
    
    function (req, res, next) {
       let userDataCopy = { ...req.user };
+
+      const token = jwt.sign(
+         { id: userDataCopy.id }, 
+         process.env.JWT_SECRET, 
+         { expiresIn: process.env.JWT_EXPIRES_IN }
+      );
+
       delete userDataCopy.password;
-      res.json({ data: userDataCopy });
+
+      res.json({ data: userDataCopy, token });
    }
 ];
 
 exports.logOut = [
    function (req, res, next) {
-      if (!req.user) {
-         return res.status(200).json({});
-      }
-
-      req.logout(function (err) {
-         if (err) {
-            return next(err);
-         }
-
-         // req.logout causes a new session object to be created
-         // (even if there is no authenticated user to log out),
-         // thus causing the new session to be stored
-         // even though it is devoid of any user info
-         req.session.destroy(function (err) {
-            if (err) {
-               return next(err);
-            }
-
-            res.status(200).json({});
-         });
-      });
+      return res.status(200).json({});
    }
 ];
 

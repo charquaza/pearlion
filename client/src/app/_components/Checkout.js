@@ -32,7 +32,10 @@ export default function Checkout({ cart, setInCheckout }) {
 
       fetch(apiURL + '/orders/checkout', {
          method: 'POST',
-         headers: { 'Content-Type': 'application/json' },
+         headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+         },
          body: JSON.stringify(cartArray),
          mode: 'cors',
          credentials: 'include',
@@ -96,7 +99,10 @@ export default function Checkout({ cart, setInCheckout }) {
 
             const res = await fetch(apiURL + '/orders/tax', {
                method: 'POST',
-               headers: { 'Content-Type': 'application/json' },
+               headers: { 
+                  'Content-Type': 'application/json',
+                  'Authorization': 'Bearer ' + localStorage.getItem('token')
+               },
                body: JSON.stringify({ paymentIntentId, address }),
                mode: 'cors',
                credentials: 'include',

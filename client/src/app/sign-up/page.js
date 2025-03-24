@@ -29,6 +29,7 @@ export default function SignUpPage() {
             method: 'POST',
             headers: { 
                'Content-Type': 'application/json',
+               'Authorization': 'Bearer ' + localStorage.getItem('token')
             },
             body: JSON.stringify(inputValues),
             mode: 'cors',
@@ -38,17 +39,20 @@ export default function SignUpPage() {
          const fetchURL = apiURL + '/users/sign-up';
    
          const res = await fetch(fetchURL, fetchOptions);
+         const data = await res.json();
    
          if (res.ok) {
+            //store auth token in localStorage
+            localStorage.setItem('token', data.token);
+
             setSignUpErrors(false);
             mutate();
             router.push('/');
          } else {
-            const data = await res.json();
             setSignUpErrors(data.errors);
          }
       } catch (e) {
-         setSignUpErrors([ 'Unable to log in at this time, please try again later' ]);
+         setSignUpErrors([ 'Unable to sign up at this time, please try again later' ]);
          console.error('Error message: ' + e);
       }
    }

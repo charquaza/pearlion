@@ -101,6 +101,9 @@ export default function EditReviewForm({
       
       const fetchOptions = {
          method: 'PUT',
+         headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('token'),
+         },
          body: formData,
          mode: 'cors',
          credentials: 'include',

@@ -27,6 +27,9 @@ export default function useProductList(category, status, images, cartProductIds)
       async url => {
          const fetchOptions = {
             method: 'GET',
+            headers: {
+               'Authorization': 'Bearer ' + localStorage.getItem('token')
+            },
             mode: 'cors',
             credentials: 'include',
             cache: 'no-store'

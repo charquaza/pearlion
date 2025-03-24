@@ -20,6 +20,7 @@ export default function LoginFormPopover({ setShowLoginPopover, revalidateCurrUs
             method: 'POST',
             headers: { 
                'Content-Type': 'application/json',
+               'Authorization': 'Bearer ' + localStorage.getItem('token')
             },
             body: JSON.stringify(inputValues),
             mode: 'cors',
@@ -29,13 +30,16 @@ export default function LoginFormPopover({ setShowLoginPopover, revalidateCurrUs
          const fetchURL = apiURL + '/users/log-in';
    
          const res = await fetch(fetchURL, fetchOptions);
+         const data = await res.json();
    
          if (res.ok) {
+            //store auth token in localStorage
+            localStorage.setItem('token', data.token);
+
             setShowLoginPopover(false);
             revalidateCurrUser();
             setLoginError(null);
          } else if (res.status === 401) {
-            const data = await res.json();
             setLoginError(data.errors[0]);
          } else {
             setLoginError('Unable to log in at this time, please try again later');

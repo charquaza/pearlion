@@ -26,6 +26,9 @@ export default function ReviewCard({
       try {
          const fetchOptions = {
             method: 'DELETE',
+            headers: {
+               'Authorization': 'Bearer ' + localStorage.getItem('token')
+            },
             mode: 'cors',
             credentials: 'include',
             cache: 'no-store'

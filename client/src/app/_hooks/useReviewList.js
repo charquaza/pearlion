@@ -17,6 +17,9 @@ export default function useReviewList(productId, images) {
       async url => {
          const fetchOptions = {
             method: 'GET',
+            headers: {
+               'Authorization': 'Bearer ' + localStorage.getItem('token')
+            },
             mode: 'cors',
             credentials: 'include',
             cache: 'no-store'

@@ -49,6 +49,9 @@ export default function Topbar() {
       try {
          const fetchOptions = {
             method: 'POST',
+            headers: {
+               'Authorization': 'Bearer ' + localStorage.getItem('token')
+            },
             mode: 'cors',
             credentials: 'include'
          };
@@ -57,6 +60,7 @@ export default function Topbar() {
          const res = await fetch(fetchURL, fetchOptions);
          
          if (res.ok) {
+            localStorage.removeItem('token');
             mutate();
          } else {
             const data = await res.json();

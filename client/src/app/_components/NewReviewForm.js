@@ -89,6 +89,9 @@ export default function NewReviewForm({ product, revalidateProduct, revalidateRe
       
       const fetchOptions = {
          method: 'POST',
+         headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+         },
          body: formData,
          mode: 'cors',
          credentials: 'include',

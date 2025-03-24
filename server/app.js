@@ -1,14 +1,12 @@
 require('dotenv').config();
 
 const express = require('express');
-const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
 const cors = require('cors');
-const session = require('express-session');
-const SequelizeStore = require("connect-session-sequelize")(session.Store);
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
+const { Strategy: JwtStrategy, ExtractJwt } = require('passport-jwt');
 const bcrypt = require('bcryptjs');
 
 const db = require('./models/index');
@@ -22,13 +20,6 @@ const corsOptions = {
    credentials: true,
    optionsSuccessStatus: 200
 };
-
-//Set up connect-session-sequelize store
-const sessionStore = new SequelizeStore({
-   db: db.sequelize,
-   tableName: 'sessions'
-})
-sessionStore.sync(); //create/sync session table
 
 //Configure passport
 passport.use(
@@ -57,40 +48,39 @@ passport.use(
       };
    })
 );
-passport.serializeUser((user, done) => {
-   done(null, user.id);
-});
-passport.deserializeUser(async (id, done) => {
-   try {
-      let user = await db.User.findByPk(id, { raw: true });
-      //user = user.get();
-      done(null, user);
-   } catch(err) {
-      done(err);
-   };
-}); 
+
+passport.use(
+   new JwtStrategy(
+     {
+         jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+         secretOrKey : process.env.JWT_SECRET
+     }, 
+      async function (payload, done) {
+         try {
+            const user = await Member.findById(payload.id).exec();
+            return done(null, user);
+         } catch (err) {
+            return done(err);
+         }
+      }
+   )
+);
 
 app.use(logger('dev'));
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
 
 app.use(cors(corsOptions));
 
-//Set up sessions and passport
-app.use(session({
-   secret: process.env.SESSION_SECRET,
-   name: 'sid',
-   resave: false,
-   saveUninitialized: false,
-   cookie: {
-      maxAge: 24 * 60 * 60 * 1000 // 24 hours
-   },
-   store: sessionStore
-}));
-app.use(passport.session());
-
 //Set up router
-app.use('/', indexRouter);
+app.use('/',
+   (req, res, next) => {
+      passport.authenticate('jwt', { session: false }, (err, user, info) => {
+         req.user = user; // Attach user (may be falsy) to request
+         next();
+      })(req, res, next);
+   },
+   indexRouter
+);
 
 // catch 404
 app.use(function(req, res, next) {
