@@ -43,7 +43,7 @@ export default function MyOrders() {
             />
          }
 
-         {orderList && orderList.length > 0
+         {orderList && orderList.data.length > 0
             ?
                <table className={styles['orders-table']}>
                   <caption>Orders</caption>
