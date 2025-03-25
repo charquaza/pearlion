@@ -57,8 +57,8 @@ passport.use(
      }, 
       async function (payload, done) {
          try {
-            const user = await Member.findById(payload.id).exec();
-            return done(null, user);
+            const user = await db.User.findByPk(payload.id);
+            return done(null, user.get({ plain: true }));
          } catch (err) {
             return done(err);
          }

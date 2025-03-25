@@ -34,7 +34,7 @@ exports.signUp = [
          });
          newUser = newUser.get({ plain: true });
 
-         req.user = user;
+         req.user = newUser;
          return next();
       } catch (err) {
          return next(err);
