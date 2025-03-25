@@ -232,7 +232,10 @@ exports.getAll = [
          let orderList = req.user.privilege === 'admin' 
             ? await db.Order.findAll({ raw: true })
             : await db.Order.findAll({ 
-               where: { client: req.user.id },
+               where: { 
+                  client: req.user.id,
+                  fulfillmentStatus: { [Op.not]: 'in-checkout' }
+               },
                include: [
                   {
                      model: db.Product,
