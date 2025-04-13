@@ -1,6 +1,7 @@
 const db = require('../models/index');
 const reviewValidators = require('../middleware/reviewValidators');
 const { imageUpload } = require('../middleware/multerUploads');
+const { bucket } = require('../storage/storageConfig');
 
 exports.getAll = [
    reviewValidators.checkProductIdQuery,
