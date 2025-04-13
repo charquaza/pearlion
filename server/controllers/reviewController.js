@@ -106,7 +106,7 @@ exports.create = [
 
             const images = await Promise.all(req.files.map(file => {
                const fileName = `${req.user.username}_${product.name}_${Date.now()}`;
-               const newUpload = bucket.file(`${review-images}/${fileName}`);
+               const newUpload = bucket.file(`review-images/${fileName}`);
 
                return newUpload.save(file.buffer, {
                   metadata: { contentType: file.mimetype },
@@ -185,7 +185,7 @@ exports.update = [
 
             let createImagesPromise = Promise.all(req.files.map(file => {
                const fileName = `${req.user.username}_${product.name}_${Date.now()}`;
-               const newUpload = bucket.file(`${review-images}/${fileName}`);
+               const newUpload = bucket.file(`review-images/${fileName}`);
 
                return newUpload.save(file.buffer, {
                   metadata: { contentType: file.mimetype },

@@ -130,7 +130,7 @@ exports.create = [
    
             const images = await Promise.all(req.files.map((file, index) => {
                const fileName = newProduct.name + index;
-               const newUpload = bucket.file(`${product-images}/${newProduct.category}/${fileName}`);
+               const newUpload = bucket.file(`product-images/${newProduct.category}/${fileName}`);
 
                return newUpload.save(file.buffer, {
                   metadata: { contentType: file.mimetype },
@@ -202,7 +202,7 @@ exports.update = [
             // and deleting and adding images can jeopardize order
             let createImagesPromise = Promise.all(req.files.map((file, index) => {
                const fileName = req.body.name + index;
-               const newUpload = bucket.file(`${product-images}/${newProduct.category}/${fileName}`);
+               const newUpload = bucket.file(`product-images/${newProduct.category}/${fileName}`);
 
                return newUpload.save(file.buffer, {
                   metadata: { contentType: file.mimetype },
