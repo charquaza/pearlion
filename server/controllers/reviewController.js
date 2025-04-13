@@ -110,7 +110,6 @@ exports.create = [
 
                return newUpload.save(file.buffer, {
                   metadata: { contentType: file.mimetype },
-                  public: true
                })
                .then(() => {
                   return db.Image.create({
@@ -189,7 +188,6 @@ exports.update = [
 
                return newUpload.save(file.buffer, {
                   metadata: { contentType: file.mimetype },
-                  public: true
                })
                .then(() => {
                   return db.Image.create({
