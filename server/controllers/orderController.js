@@ -7,7 +7,7 @@ const orderValidators = require('../middleware/orderValidators');
 exports.checkout = [
    async function (req, res, next) {   
       try {
-         const customerId = req.user ? req.user.id : '570f5f82-fd73-4834-a872-88aa63938f47'; //guest user id
+         const customerId = req.user ? req.user.id : process.env.GUEST_USER_ID; //guest user id
          const totalBeforeTax = 100 * req.body.reduce((sum, item) => {
             return sum + (item.unitPrice * item.quantityPurchased);
          }, 0);
