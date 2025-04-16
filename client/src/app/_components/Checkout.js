@@ -51,7 +51,7 @@ export default function Checkout({ cart, setInCheckout }) {
          .then((data) => {
             setClientSecret(data.data.clientSecret);
             setPaymentIntentId(data.data.paymentIntentId);
-            setTax(data.data.taxEstimate || 0);
+            setTax(Number(data.data.taxEstimate) || 0);
          })
          .catch(err => setCheckoutError(err));
    }, [cart]);
@@ -113,7 +113,7 @@ export default function Checkout({ cart, setInCheckout }) {
             if (data.errors) {
                console.error(data.errors);
             } else {
-               setTax(data.data.taxAmount);
+               setTax(Number(data.data.taxAmount));
             }
          } catch (e) {
             console.error(e);
