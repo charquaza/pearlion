@@ -25,7 +25,7 @@ body {
       "footer";
    grid-template-rows: auto 1fr auto;
    background-color: #f8f6f0;
-   font-size: calc(0.4rem + 0.74vw);
+   font-size: calc(0.6rem + 1.11vw);
    /* at desktop width: 1.3vw === 1.05em (~0.8 multiplier) */
 }
 
@@ -48,5 +48,6 @@ button:hover {
          "sidebar   main"
          "footer    footer";
       grid-template-columns: var(--sidebar-width) 1fr;
+      font-size: calc(0.4rem + 0.74vw);
    }
 }
