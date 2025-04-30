@@ -230,20 +230,30 @@ exports.getAll = [
    async function (req, res, next) {
       try {
          let orderList = req.user.privilege === 'admin' 
-            ? await db.Order.findAll({ raw: true })
-            : await db.Order.findAll({ 
-               where: { 
-                  client: req.user.id,
-                  fulfillmentStatus: { [Op.not]: 'in-checkout' }
-               },
-               include: [
-                  {
-                     model: db.Product,
-                     order: [[ 'name', 'ASC' ]]
-                  }
-               ],
-               order: [ ['purchaseDate', 'DESC'] ]    
-            });
+            ? 
+               await db.Order.findAll({
+                  include: [
+                     {
+                        model: db.Product,
+                        order: [[ 'name', 'ASC' ]]
+                     }
+                  ],
+                  order: [ ['purchaseDate', 'DESC'] ]    
+               })
+            : 
+               await db.Order.findAll({ 
+                  where: { 
+                     client: req.user.id,
+                     fulfillmentStatus: { [Op.not]: 'in-checkout' }
+                  },
+                  include: [
+                     {
+                        model: db.Product,
+                        order: [[ 'name', 'ASC' ]]
+                     }
+                  ],
+                  order: [ ['purchaseDate', 'DESC'] ]    
+               });
          res.json({ data: orderList });
       } catch (err) {
          return next(err);
