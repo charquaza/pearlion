@@ -153,6 +153,7 @@ export default function Checkout({ cart, setInCheckout }) {
                      </div>
 
                      <h2>Payment</h2>
+                     <p>(to simulate a successful payment, use: <br/>Card # - 4242 4242 4242 4242 <br/>any Exp. Date, any CVC)</p>
                      <CheckoutForm clientSecret={clientSecret} />
                   </Elements>
                :
