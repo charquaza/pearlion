@@ -52,6 +52,25 @@
    background-color: #8c9b8c;
 }
 
+.login-form .guest-login-btn {
+   margin-top: 0;
+   background-color: var(--pastel-blue);
+}
+.login-form .guest-login-btn:hover {
+   background-color: #a4c0c0;
+}
+.login-form .guest-login-btn:active {
+   background-color: #879f9f;
+}
+
+.login-form hr {
+   width: 100%;
+   height: 1px;
+   border: 0;
+   background-color: black;
+   margin: 1em 0;
+}
+
 @media (min-width: 26rem) {
    .login-form {
       padding: 1.2vw 1.5vw;

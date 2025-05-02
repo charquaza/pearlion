@@ -22,7 +22,9 @@ export default function LoginFormPopover({ setShowLoginPopover, revalidateCurrUs
                'Content-Type': 'application/json',
                'Authorization': 'Bearer ' + localStorage.getItem('token')
             },
-            body: JSON.stringify(inputValues),
+            body: (e.target.id === 'guest-login-btn') 
+               ? JSON.stringify({ username: 'guestuser1', password: 'guest' }) 
+               : JSON.stringify(inputValues),
             mode: 'cors',
             credentials: 'include',
             cache: 'no-store'
@@ -73,7 +75,15 @@ export default function LoginFormPopover({ setShowLoginPopover, revalidateCurrUs
             onChange={handleInput}
          />
 
-         <button type='submit'>Log In</button>
+         <button type='submit' className={styles['login-btn']}>Log In</button>
+
+         <hr />
+
+         <button type='submit' className={styles['guest-login-btn']} id='guest-login-btn'
+            formNoValidate
+         >
+            Log In as Guest
+         </button>
       </form>
    );
 };
