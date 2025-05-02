@@ -22,7 +22,7 @@ export default function LoginFormPopover({ setShowLoginPopover, revalidateCurrUs
                'Content-Type': 'application/json',
                'Authorization': 'Bearer ' + localStorage.getItem('token')
             },
-            body: (e.target.id === 'guest-login-btn') 
+            body: (e.nativeEvent.submitter.id === 'guest-login-btn') 
                ? JSON.stringify({ username: 'guestuser1', password: 'guest' }) 
                : JSON.stringify(inputValues),
             mode: 'cors',
