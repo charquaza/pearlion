@@ -53,9 +53,9 @@ Developed as a proof of concept for my wife, who has aspirations of selling her 
 
 - **Product Catalog:** Dynamic product listings with images, descriptions, and customer reviews.
 - **User Dashboard:** Personalized space for order history, payment status, and profile settings.
-- **Secure Checkout:** Stripe integration for reliable tax calculations and secure, PCI-compliant payment processing.
-- **Authentication & Authorization:** JWT-based login with role-based access control.
-- **Order Management:** Automated order confirmation and webhook handling for fulfillment.
+- **Secure Checkout:** Stripe integration for accurate tax calculations and reliable, PCI-compliant payment processing.
+- **Authentication & Authorization:** JWT-based authentication with role-based access control.
+- **Order Management:** Automated order confirmation and webhook-driven fulfillment.
 - **Deployment:** Frontend on Vercel, backend on Google Cloud Run, PostgreSQL on AWS RDS, and image storage on Google Cloud.
 
 ---
@@ -67,11 +67,11 @@ Pearlion is designed with a service-oriented architecture to ensure modularity a
 - **Frontend:** Next.js with server-side rendering (SSR) for improved SEO and performance.
 - **Backend:** Express.js handles RESTful APIs, business logic, and Stripe webhook integration.
 - **Database:** PostgreSQL stores relational data including users, products, and orders.
-- **Storage:** Product images are served via Google Cloud Storage buckets.
+- **Storage:** Product images are hosted on Google Cloud Storage.
 - **Deployment:** 
   - Frontend: Vercel (automatic CI/CD from GitHub)
   - Backend: Google Cloud Run (Dockerized Node.js service)
-  - Database: AWS RDS for high availability and scaling
+  - Database: AWS RDS for high availability and scalability
 
 ---
 
@@ -131,7 +131,7 @@ Pearlion is designed with a service-oriented architecture to ensure modularity a
    `STRIPE_API_KEY` can be obtained by creating a Stripe developer account ([learn more here](https://docs.stripe.com/keys)).  
    `STRIPE_ENDPOINT_SECRET` is used with webhooks ([learn more here](https://docs.stripe.com/webhooks)).  
 
-   - For the frontend, create a `.env` file in the `client-next` directory and add:
+   - For the frontend, create a `.env` file in the `client` directory and add:
 
      ```env
      NEXT_PUBLIC_API_URL=your_backend_url
@@ -155,7 +155,7 @@ Pearlion is designed with a service-oriented architecture to ensure modularity a
      npm run dev
      ```
 
-   Both the frontend and backend will be available at `localhost`, with the ports being dependent on your specific configuration.
+   Both the frontend and backend will be available on `localhost` (ports may vary based on your configuration).
 
 ---
 
@@ -179,7 +179,7 @@ Pearlion is designed with a service-oriented architecture to ensure modularity a
 
 ### 2024
 
-- **Week 27 (Dec 22 - Dec 28):** Finalize styling, finetune checkout process (including storing purchase data in database for later reference by Stripe, since Stripe paymentIntent cannot store this data)
+- **Week 27 (Dec 22 - Dec 28):** Finalize styling, fine-tune checkout process (including storing purchase data in database for later reference by Stripe, since Stripe paymentIntent cannot store this data)
 
 - **Week 26 (Dec 15 - Dec 21):** Connect signup page to API, continue styling and responsive styling for cart and checkout
 
