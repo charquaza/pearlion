@@ -177,8 +177,6 @@ Pearlion is designed with a service-oriented architecture to ensure modularity a
 
 - **Week 28 (Mar 3 - Mar 9):** Deploy Pearlion
 
----
-
 ### 2024
 
 - **Week 27 (Dec 22 - Dec 28):** Finalize styling, finetune checkout process (including storing purchase data in database for later reference by Stripe, since Stripe paymentIntent cannot store this data)
@@ -216,7 +214,7 @@ Pearlion is designed with a service-oriented architecture to ensure modularity a
 
 - **Week 13 (Aug 25 - Aug 31):** Connect login to API; add not found page and account page; add images and reviews models, routes, controllers to database
 
-**Aug 18 - Aug 24** Continue researching data fetching methods
+- **Aug 18 - Aug 24** Continue researching data fetching methods
 
 - **Week 12 (Aug 11 - Aug 17):** Add seeder file for users, learn about data fetching with Next.js (SWR)
 
