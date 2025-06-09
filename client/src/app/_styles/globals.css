@@ -41,7 +41,7 @@ button:hover {
    cursor: pointer;
 }
 
-@media (min-width: 26rem) {
+@media (min-width: 32rem) {
    body {
       grid-template-areas:
          "header    header"

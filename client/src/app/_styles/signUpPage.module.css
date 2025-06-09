@@ -67,7 +67,7 @@
    background-color: #7f9ba5;
 }
 
-@media (min-width: 26rem) {
+@media (min-width: 32rem) {
    .sign-up-page {
       padding: 0 0 0 4vw;
    }

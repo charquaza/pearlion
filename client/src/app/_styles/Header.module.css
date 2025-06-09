@@ -21,7 +21,7 @@
    padding: 1vw 0;
 }
 
-@media (min-width: 26rem) {
+@media (min-width: 32rem) {
    .header {
       justify-content: center;
    }

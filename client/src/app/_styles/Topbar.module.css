@@ -86,7 +86,7 @@
    display: none;
 }
 
-@media (min-width: 26rem) {
+@media (min-width: 32rem) {
    .topbar {
       position: absolute;
       right: 0;

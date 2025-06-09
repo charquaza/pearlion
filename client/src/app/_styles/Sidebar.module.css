@@ -62,7 +62,7 @@
    font-weight: 550;
 }
 
-@media (min-width: 26rem) {
+@media (min-width: 32rem) {
    .sidebar {
       position: fixed;
       width: var(--sidebar-width);

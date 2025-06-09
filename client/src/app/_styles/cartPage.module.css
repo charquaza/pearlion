@@ -7,7 +7,7 @@
    font-weight: 450;
 }
 
-@media (min-width: 26rem) {
+@media (min-width: 32rem) {
    .cart {
       padding: 0 0 0 4vw;
       width: 58vw;

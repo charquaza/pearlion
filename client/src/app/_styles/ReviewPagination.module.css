@@ -40,7 +40,7 @@
    font-weight: 500;
 }
 
-@media (min-width: 26rem) {
+@media (min-width: 32rem) {
    .pages-list {
       margin: revert;
    }   

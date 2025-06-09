@@ -102,7 +102,7 @@
    font-weight: 450;
 }
 
-@media (min-width: 26rem) {
+@media (min-width: 32rem) {
    .cart-item h2 {
       margin: -0.2vw 0 0.5vw 0;
       font-weight: 400;

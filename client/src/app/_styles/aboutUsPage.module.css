@@ -29,7 +29,7 @@
    font-weight: 450;
 }
 
-@media (min-width: 26rem) {
+@media (min-width: 32rem) {
    .about-us-page {
       --video-width: 60vw;
       --text-margin-left: calc(var(--video-width) / 10);

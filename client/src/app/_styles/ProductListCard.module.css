@@ -71,7 +71,7 @@
    font-weight: 400;
 }
 
-@media (min-width: 26rem) {
+@media (min-width: 32rem) {
    .product-list-card {
       --width: 23vw;
    }

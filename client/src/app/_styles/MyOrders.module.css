@@ -122,7 +122,7 @@
    margin: 0.2em 0;
 }
 
-@media (min-width: 26rem) {
+@media (min-width: 32rem) {
    .my-orders {
       width: 48vw;
    }

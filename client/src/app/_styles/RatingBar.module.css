@@ -64,7 +64,7 @@
    --bar-width: calc( var(--size) * 0.23 );  
 }
 
-@media (min-width: 26rem) {
+@media (min-width: 32rem) {
    /* overrides for ReviewCard component */
    .review-card {
       --bar-width: calc( var(--size) * 0.16 );  

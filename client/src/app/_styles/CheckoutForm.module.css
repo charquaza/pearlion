@@ -110,7 +110,7 @@
    }
 }
 
-@media (min-width: 26rem) {
+@media (min-width: 32rem) {
    .payment-form button {
       padding: 12px 16px;
       font-size: 20px;

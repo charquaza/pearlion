@@ -111,7 +111,7 @@ li.selected-image-container img {
    opacity: 100%;
 }
 
-@media (min-width: 26rem) {
+@media (min-width: 32rem) {
    .curr-image-controls-container button {
       aspect-ratio: 1 / 1;
       width: 7%;

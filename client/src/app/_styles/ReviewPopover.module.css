@@ -104,7 +104,7 @@
    background-color: #ad6b63;
 }
 
-@media (min-width: 26rem) {
+@media (min-width: 32rem) {
    .prev-review-btn, .next-review-btn {
       top: 5vh;
       width: 4vw;

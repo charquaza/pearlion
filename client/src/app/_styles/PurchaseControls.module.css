@@ -88,7 +88,7 @@
    }
 }
 
-@media (min-width: 26rem) {
+@media (min-width: 32rem) {
    .input-group {
       border-radius: 1vw;
       padding: 0.6vw 0.8vw;

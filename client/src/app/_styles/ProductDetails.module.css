@@ -64,7 +64,7 @@
    font-size: 1.01em;
 }
 
-@media (min-width: 26rem) {
+@media (min-width: 32rem) {
    .product-details {
       padding: 1vw 2vw 1.5vw 4vw;
    }

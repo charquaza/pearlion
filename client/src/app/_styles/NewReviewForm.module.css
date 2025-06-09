@@ -242,7 +242,7 @@
    object-fit: contain;
 }
 
-@media (min-width: 26rem) {
+@media (min-width: 32rem) {
    .add-review-button {
       padding: 0.8vw;
    }

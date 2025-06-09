@@ -47,23 +47,27 @@
    font-weight: 400;
 }
 
-@media (min-width: 26rem) {
+@media (min-width: 32rem) {
    .slideshow-card h3 {
       font-size: 1.05em;
    }
 
+   .product-price {
+      font-size: 0.97em;
+   }   
+}
+
+@media (min-width: 52rem) {
    .rating-and-price-ctnr {
       --size: 0.97em;
-   
+
+      height: var(--size);
       display: flex;
       flex-direction: row;
       align-items: center;
-      height: var(--size);
-      padding: 0.5vw 0 0.3vw 0;
    }
 
    .product-price {
-      font-size: 0.97em;
       text-align: right;
       height: 1.5vw;
       line-height: 1.5vw;

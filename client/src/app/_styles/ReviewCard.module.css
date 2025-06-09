@@ -52,7 +52,7 @@ p.error-messages {
    font-size: 0.9em;
 }
 
-@media (min-width: 26rem) {
+@media (min-width: 32rem) {
    .review {
       padding: 1.5vw;
    }

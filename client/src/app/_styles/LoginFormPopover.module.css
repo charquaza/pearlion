@@ -71,7 +71,7 @@
    margin: 1em 0;
 }
 
-@media (min-width: 26rem) {
+@media (min-width: 32rem) {
    .login-form {
       padding: 1.2vw 1.5vw;
    }
